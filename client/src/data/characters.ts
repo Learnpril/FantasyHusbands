@@ -56,5 +56,33 @@ export const characters: Character[] = [
     favoriteGifts: ['throwing knife', 'shadow cloak', 'rare poison'],
     traits: ['mysterious', 'skilled', 'loyal', 'complex'],
     voiceType: 'mysterious'
+  },
+  {
+    id: 'ryuu',
+    name: 'Ryuu Dragonheart',
+    age: 28,
+    occupation: 'Dragon Tamer',
+    personality: 'Fierce and independent, with a wild spirit that matches the dragons he commands',
+    backstory: 'Born in the mountain clans, Ryuu formed a bond with dragons at a young age. Now he serves as the kingdom\'s Dragon Tamer, bridging the gap between human and dragon-kind. His untamed nature hides a surprisingly tender heart.',
+    sprite: '/images/characters/ryuu.svg',
+    affection: 0,
+    maxAffection: 100,
+    favoriteGifts: ['dragon scale', 'mountain flower', 'fire crystal'],
+    traits: ['wild', 'independent', 'fierce', 'protective'],
+    voiceType: 'deep'
+  },
+  {
+    id: 'zephyr',
+    name: 'Zephyr Moonlight',
+    age: 23,
+    occupation: 'Royal Scholar',
+    personality: 'Brilliant and bookish, but surprisingly flirtatious when he opens up',
+    backstory: 'A prodigy who earned his position as Royal Scholar at an unusually young age. Zephyr spends his days researching ancient magic and forgotten histories. Behind his scholarly exterior lies a playful, teasing personality that emerges around those he trusts.',
+    sprite: '/images/characters/zephyr.svg',
+    affection: 0,
+    maxAffection: 100,
+    favoriteGifts: ['ancient tome', 'rare ink', 'moonstone'],
+    traits: ['intelligent', 'witty', 'teasing', 'studious'],
+    voiceType: 'gentle'
   }
 ];

@@ -59,5 +59,31 @@ export const scenes: Scene[] = [
       }
     ],
     startDialogueId: 'mission_start'
+  },
+  {
+    id: 'dragon_flight',
+    title: 'Dragon Flight',
+    description: 'Soar through the skies with Ryuu and his dragons',
+    background: '/images/backgrounds/forest.svg',
+    unlockConditions: [
+      {
+        characterId: 'ryuu',
+        minAffection: 15
+      }
+    ],
+    startDialogueId: 'flight_start'
+  },
+  {
+    id: 'midnight_research',
+    title: 'Midnight Research',
+    description: 'Join Zephyr for late-night studies in the archives',
+    background: '/images/backgrounds/library.svg',
+    unlockConditions: [
+      {
+        characterId: 'zephyr',
+        minAffection: 12
+      }
+    ],
+    startDialogueId: 'research_start'
   }
 ];

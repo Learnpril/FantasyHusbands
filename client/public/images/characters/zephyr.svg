@@ -1,0 +1,203 @@
+<svg width="400" height="600" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Scholarly aura with celestial theme -->
+  <ellipse cx="200" cy="300" rx="170" ry="300" fill="url(#scholarAura)" opacity="0.4"/>
+  
+  <defs>
+    <linearGradient id="scholarAura" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4B0082;stop-opacity:0.5" />
+      <stop offset="50%" style="stop-color:#9370DB;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#DDA0DD;stop-opacity:0.2" />
+    </linearGradient>
+    <linearGradient id="skinTone" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FDBCB4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F7A693;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="lightHair" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F5F5DC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E6E6FA;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="scholarRobe" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#191970;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4B0082;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="vest" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2F2F2F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#696969;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Scholar's robe -->
+  <path d="M140 210 Q130 230 125 290 Q120 360 130 430 Q140 490 150 530 Q155 550 165 570 L175 590 Q185 595 200 590 Q215 585 225 590 L235 570 Q245 550 250 530 Q260 490 270 430 Q280 360 275 290 Q270 230 260 210 Q240 200 200 205 Q160 200 140 210 Z" fill="url(#scholarRobe)"/>
+  
+  <!-- Vest over robe -->
+  <rect x="175" y="280" width="50" height="85" rx="8" fill="url(#vest)"/>
+  <rect x="180" y="285" width="40" height="75" rx="5" fill="#2F2F2F" opacity="0.8"/>
+  
+  <!-- Vest buttons -->
+  <circle cx="200" cy="300" r="2.5" fill="#C0C0C0"/>
+  <circle cx="200" cy="320" r="2.5" fill="#C0C0C0"/>
+  <circle cx="200" cy="340" r="2.5" fill="#C0C0C0"/>
+  
+  <!-- Body -->
+  <ellipse cx="200" cy="370" rx="45" ry="85" fill="url(#scholarRobe)"/>
+  
+  <!-- Arms -->
+  <ellipse cx="155" cy="320" rx="14" ry="40" fill="url(#scholarRobe)" transform="rotate(-15 155 320)"/>
+  <ellipse cx="245" cy="320" rx="14" ry="40" fill="url(#scholarRobe)" transform="rotate(15 245 320)"/>
+  
+  <!-- Forearms -->
+  <ellipse cx="145" cy="360" rx="10" ry="25" fill="url(#skinTone)" transform="rotate(-15 145 360)"/>
+  <ellipse cx="255" cy="360" rx="10" ry="25" fill="url(#skinTone)" transform="rotate(15 255 360)"/>
+  
+  <!-- Hands -->
+  <circle cx="140" cy="385" r="10" fill="url(#skinTone)"/>
+  <circle cx="260" cy="385" r="10" fill="url(#skinTone)"/>
+  
+  <!-- Book in left hand -->
+  <rect x="130" y="375" width="20" height="25" rx="2" fill="#8B4513" transform="rotate(-10 140 387)"/>
+  <rect x="132" y="377" width="16" height="21" rx="1" fill="#F5DEB3" transform="rotate(-10 140 387)"/>
+  <line x1="135" y1="380" x2="145" y2="378" stroke="#8B4513" stroke-width="1" transform="rotate(-10 140 387)"/>
+  <line x1="135" y1="385" x2="145" y2="383" stroke="#8B4513" stroke-width="1" transform="rotate(-10 140 387)"/>
+  <line x1="135" y1="390" x2="145" y2="388" stroke="#8B4513" stroke-width="1" transform="rotate(-10 140 387)"/>
+  
+  <!-- Quill in right hand -->
+  <rect x="255" y="380" width="2" height="15" fill="#8B4513" transform="rotate(20 256 387)"/>
+  <ellipse cx="256" cy="375" rx="3" ry="8" fill="#DDA0DD" transform="rotate(20 256 375)"/>
+  
+  <!-- Belt with pouches -->
+  <rect x="175" y="385" width="50" height="10" fill="#8B4513"/>
+  <rect x="190" y="380" width="8" height="20" fill="#654321"/>
+  <rect x="202" y="380" width="8" height="20" fill="#654321"/>
+  
+  <!-- Legs -->
+  <ellipse cx="185" cy="460" rx="16" ry="65" fill="url(#scholarRobe)"/>
+  <ellipse cx="215" cy="460" rx="16" ry="65" fill="url(#scholarRobe)"/>
+  
+  <!-- Boots -->
+  <ellipse cx="185" cy="530" rx="18" ry="28" fill="#2F2F2F"/>
+  <ellipse cx="215" cy="530" rx="18" ry="28" fill="#2F2F2F"/>
+  
+  <!-- Boot buckles -->
+  <rect x="180" y="520" width="10" height="3" fill="#C0C0C0"/>
+  <rect x="210" y="520" width="10" height="3" fill="#C0C0C0"/>
+  
+  <!-- Neck -->
+  <ellipse cx="200" cy="240" rx="12" ry="18" fill="url(#skinTone)"/>
+  
+  <!-- Face -->
+  <circle cx="200" cy="180" r="38" fill="url(#skinTone)"/>
+  
+  <!-- Light wavy hair -->
+  <path d="M162 160 Q167 135 185 130 Q200 125 215 130 Q233 135 238 160 Q238 180 233 200 Q215 210 200 205 Q185 210 167 200 Q162 180 162 160 Z" fill="url(#lightHair)"/>
+  
+  <!-- Wavy hair details -->
+  <path d="M175 140 Q180 125 185 140" fill="url(#lightHair)"/>
+  <path d="M195 133 Q200 118 205 133" fill="url(#lightHair)"/>
+  <path d="M215 140 Q220 125 225 140" fill="url(#lightHair)"/>
+  <path d="M170 150 Q175 135 180 150" fill="url(#lightHair)"/>
+  <path d="M220 150 Q225 135 230 150" fill="url(#lightHair)"/>
+  
+  <!-- Hair with gentle waves -->
+  <path d="M168 170 Q175 165 182 170" stroke="url(#lightHair)" stroke-width="2" fill="none"/>
+  <path d="M218 170 Q225 165 232 170" stroke="url(#lightHair)" stroke-width="2" fill="none"/>
+  
+  <!-- Glasses -->
+  <circle cx="185" cy="175" r="12" fill="none" stroke="#C0C0C0" stroke-width="2"/>
+  <circle cx="215" cy="175" r="12" fill="none" stroke="#C0C0C0" stroke-width="2"/>
+  <line x1="197" y1="175" x2="203" y2="175" stroke="#C0C0C0" stroke-width="2"/>
+  <line x1="173" y1="175" x2="168" y2="178" stroke="#C0C0C0" stroke-width="2"/>
+  <line x1="227" y1="175" x2="232" y2="178" stroke="#C0C0C0" stroke-width="2"/>
+  
+  <!-- Eyes behind glasses -->
+  <circle cx="185" cy="175" r="6" fill="#4169E1"/>
+  <circle cx="215" cy="175" r="6" fill="#4169E1"/>
+  <circle cx="186" cy="173" r="2" fill="white"/>
+  <circle cx="216" cy="173" r="2" fill="white"/>
+  
+  <!-- Intelligent eyebrows -->
+  <path d="M173 165 Q183 162 193 165" stroke="#E6E6FA" stroke-width="2.5" fill="none"/>
+  <path d="M207 165 Q217 162 227 165" stroke="#E6E6FA" stroke-width="2.5" fill="none"/>
+  
+  <!-- Nose -->
+  <line x1="200" y1="180" x2="200" y2="187" stroke="#E8A798" stroke-width="1.5"/>
+  
+  <!-- Subtle smile -->
+  <path d="M190 198 Q200 204 210 198" stroke="#CD5C5C" stroke-width="2" fill="none"/>
+  
+  <!-- Scholar's pendant with star -->
+  <circle cx="200" cy="260" r="8" fill="#4B0082"/>
+  <polygon points="200,255 202,260 207,260 203,263 205,268 200,265 195,268 197,263 193,260 198,260" fill="#FFD700"/>
+  
+  <!-- Pendant chain -->
+  <path d="M200 252 Q200 245 200 238" stroke="#C0C0C0" stroke-width="2" fill="none"/>
+  
+  <!-- Floating magical formulae -->
+  <text x="110" y="150" font-family="serif" font-size="12" fill="#9370DB" opacity="0.6">α+β²</text>
+  <text x="290" y="180" font-family="serif" font-size="10" fill="#4B0082" opacity="0.5">∑∞</text>
+  <text x="80" y="250" font-family="serif" font-size="14" fill="#DDA0DD" opacity="0.7">∫dx</text>
+  <text x="320" y="280" font-family="serif" font-size="11" fill="#9370DB" opacity="0.4">φ→π</text>
+  
+  <!-- Floating formulae with animation -->
+  <text x="110" y="150" font-family="serif" font-size="12" fill="#9370DB" opacity="0.6">α+β²
+    <animateTransform attributeName="transform" type="translate" values="0,0; 20,-30; 40,-60" dur="8s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.6;0.2;0" dur="8s" repeatCount="indefinite"/>
+  </text>
+  <text x="290" y="180" font-family="serif" font-size="10" fill="#4B0082" opacity="0.5">∑∞
+    <animateTransform attributeName="transform" type="translate" values="0,0; -25,35; -50,70" dur="9s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.5;0.1;0" dur="9s" repeatCount="indefinite"/>
+  </text>
+  
+  <!-- Magical study sparkles -->
+  <circle cx="140" cy="120" r="2" fill="#9370DB" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;0.3;0.7" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="260" cy="140" r="1.5" fill="#4B0082" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="120" cy="200" r="2.5" fill="#DDA0DD" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;0.4;0.8" dur="3.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="280" cy="220" r="2" fill="#9370DB" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;0.1;0.5" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Scholarly tools floating -->
+  <g transform="translate(320,150) rotate(15)">
+    <rect x="0" y="0" width="15" height="2" fill="#8B4513"/>
+    <circle cx="15" cy="1" r="2" fill="#FFD700"/>
+    <animateTransform attributeName="transform" type="translate" values="0,0; -30,40; -60,80" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.8;0.3;0" dur="6s" repeatCount="indefinite"/>
+  </g>
+  
+  <g transform="translate(90,180) rotate(-20)">
+    <rect x="0" y="0" width="12" height="18" rx="1" fill="#4B0082"/>
+    <rect x="1" y="1" width="10" height="16" rx="0.5" fill="#F5DEB3"/>
+    <animateTransform attributeName="transform" type="translate" values="0,0; 35,25; 70,50" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.7;0.2;0" dur="7s" repeatCount="indefinite"/>
+  </g>
+  
+  <!-- Robe trim details -->
+  <path d="M160 250 Q200 255 240 250" stroke="#FFD700" stroke-width="1.5" fill="none"/>
+  <path d="M165 370 Q200 375 235 370" stroke="#FFD700" stroke-width="1.5" fill="none"/>
+  
+  <!-- Scholarly insignia on robe -->
+  <circle cx="180" cy="300" r="4" fill="#9370DB"/>
+  <polygon points="180,296 182,300 186,300 183,302 184,306 180,304 176,306 177,302 174,300 178,300" fill="#FFD700"/>
+  
+  <circle cx="220" cy="330" r="4" fill="#4B0082"/>
+  <polygon points="220,326 222,330 226,330 223,332 224,336 220,334 216,336 217,332 214,330 218,330" fill="#C0C0C0"/>
+  
+  <!-- Intelligent aura particles -->
+  <circle cx="100" cy="300" r="1.5" fill="#9370DB" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.1;0.6" dur="2.8s" repeatCount="indefinite"/>
+    <animateTransform attributeName="transform" type="translate" values="0,0; 15,20; 30,40" dur="5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="300" cy="320" r="2" fill="#4B0082" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;0.1;0.5" dur="3.2s" repeatCount="indefinite"/>
+    <animateTransform attributeName="transform" type="translate" values="0,0; -20,15; -40,30" dur="4.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="80" cy="380" r="1.8" fill="#DDA0DD" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;0.2;0.7" dur="2.2s" repeatCount="indefinite"/>
+    <animateTransform attributeName="transform" type="translate" values="0,0; 25,-10; 50,-20" dur="4s" repeatCount="indefinite"/>
+  </circle>
+</svg>
