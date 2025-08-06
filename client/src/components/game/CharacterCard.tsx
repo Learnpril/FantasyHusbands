@@ -1,0 +1,81 @@
+import { Card, CardContent } from '../ui/card';
+import { Badge } from '../ui/badge';
+import { Progress } from '../ui/progress';
+import { Character } from '../../types/game';
+import { Heart, User, Briefcase } from 'lucide-react';
+
+interface CharacterCardProps {
+  character: Character;
+  onClick: () => void;
+}
+
+export function CharacterCard({ character, onClick }: CharacterCardProps) {
+  const affectionPercentage = (character.affection / character.maxAffection) * 100;
+  
+  return (
+    <Card 
+      className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer transform hover:scale-105"
+      onClick={onClick}
+    >
+      <CardContent className="p-6">
+        {/* Character Avatar */}
+        <div className="w-full h-48 mb-4 bg-gradient-to-br from-pink-300 to-purple-300 rounded-lg flex items-center justify-center overflow-hidden relative">
+          <img 
+            src={character.sprite} 
+            alt={character.name}
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              // Fallback to icon if image fails to load
+              e.currentTarget.style.display = 'none';
+              e.currentTarget.nextElementSibling?.setAttribute('style', 'display: block');
+            }}
+          />
+          <User className="w-20 h-20 text-white/70 hidden" />
+        </div>
+        
+        {/* Character Info */}
+        <div className="text-white">
+          <h3 className="text-xl font-bold mb-1">{character.name}</h3>
+          <p className="text-gray-300 text-sm mb-3">{character.age} years old</p>
+          
+          <div className="flex items-center gap-2 mb-3">
+            <Briefcase className="w-4 h-4 text-gray-400" />
+            <span className="text-sm text-gray-300">{character.occupation}</span>
+          </div>
+          
+          {/* Personality */}
+          <p className="text-sm text-gray-300 mb-4 line-clamp-3">
+            {character.personality}
+          </p>
+          
+          {/* Traits */}
+          <div className="flex flex-wrap gap-1 mb-4">
+            {character.traits.slice(0, 3).map((trait) => (
+              <Badge 
+                key={trait} 
+                variant="secondary" 
+                className="text-xs bg-white/20 text-white border-0"
+              >
+                {trait}
+              </Badge>
+            ))}
+          </div>
+          
+          {/* Affection Level */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Heart className="w-4 h-4 text-pink-400" />
+              <span className="text-sm text-gray-300">
+                Affection: {character.affection}/{character.maxAffection}
+              </span>
+            </div>
+            <Progress 
+              value={affectionPercentage} 
+              className="h-2 bg-white/20"
+            />
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}

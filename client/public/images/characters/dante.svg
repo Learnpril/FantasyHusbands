@@ -1,0 +1,192 @@
+<svg width="400" height="600" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Romantic aura -->
+  <ellipse cx="200" cy="300" rx="170" ry="300" fill="url(#romanticAura)" opacity="0.3"/>
+  
+  <defs>
+    <linearGradient id="romanticAura" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFB6C1;stop-opacity:0.5" />
+      <stop offset="50%" style="stop-color:#DDA0DD;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#F0E68C;stop-opacity:0.2" />
+    </linearGradient>
+    <linearGradient id="skinTone" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FDBCB4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F7A693;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="silverHair" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#E6E6FA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C0C0C0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="bardOutfit" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B4513;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A0522D;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="vest" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2F4F4F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#708090;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Flowing cloak -->
+  <path d="M120 200 Q100 220 95 280 Q90 350 100 420 Q115 480 125 520 Q130 540 140 560 L160 580 Q170 585 200 580 Q230 575 240 580 L260 560 Q270 540 275 520 Q285 480 300 420 Q310 350 305 280 Q300 220 280 200 Q250 190 200 195 Q150 190 120 200 Z" fill="url(#bardOutfit)"/>
+  
+  <!-- Vest -->
+  <rect x="170" y="280" width="60" height="90" rx="8" fill="url(#vest)"/>
+  <rect x="175" y="285" width="50" height="80" rx="5" fill="#2F4F4F" opacity="0.7"/>
+  
+  <!-- Decorative vest buttons -->
+  <circle cx="200" cy="300" r="3" fill="#FFD700"/>
+  <circle cx="200" cy="320" r="3" fill="#FFD700"/>
+  <circle cx="200" cy="340" r="3" fill="#FFD700"/>
+  
+  <!-- Body -->
+  <ellipse cx="200" cy="360" rx="45" ry="90" fill="url(#bardOutfit)"/>
+  
+  <!-- Lute/Guitar (left side) -->
+  <ellipse cx="120" cy="300" rx="25" ry="45" fill="#D2691E" transform="rotate(-15 120 300)"/>
+  <ellipse cx="120" cy="300" rx="20" ry="40" fill="#F4A460" transform="rotate(-15 120 300)"/>
+  <circle cx="120" cy="300" r="12" fill="#2F2F2F" transform="rotate(-15 120 300)"/>
+  
+  <!-- Lute neck -->
+  <rect x="105" y="250" width="6" height="40" fill="#8B4513" transform="rotate(-15 108 270)"/>
+  
+  <!-- Lute strings -->
+  <line x1="110" y1="280" x2="130" y2="320" stroke="#C0C0C0" stroke-width="0.5" transform="rotate(-15 120 300)"/>
+  <line x1="112" y1="280" x2="132" y2="320" stroke="#C0C0C0" stroke-width="0.5" transform="rotate(-15 120 300)"/>
+  <line x1="114" y1="280" x2="134" y2="320" stroke="#C0C0C0" stroke-width="0.5" transform="rotate(-15 120 300)"/>
+  <line x1="116" y1="280" x2="136" y2="320" stroke="#C0C0C0" stroke-width="0.5" transform="rotate(-15 120 300)"/>
+  
+  <!-- Arms -->
+  <ellipse cx="150" cy="320" rx="12" ry="35" fill="url(#skinTone)" transform="rotate(-10 150 320)"/>
+  <ellipse cx="250" cy="320" rx="12" ry="35" fill="url(#skinTone)" transform="rotate(10 250 320)"/>
+  
+  <!-- Hands -->
+  <circle cx="140" cy="355" r="10" fill="url(#skinTone)"/>
+  <circle cx="260" cy="355" r="10" fill="url(#skinTone)"/>
+  
+  <!-- Belt with ornate buckle -->
+  <rect x="175" y="375" width="50" height="10" fill="#8B4513"/>
+  <rect x="195" y="370" width="10" height="20" fill="#FFD700"/>
+  <circle cx="200" cy="380" r="4" fill="#FFD700"/>
+  
+  <!-- Legs -->
+  <ellipse cx="185" cy="450" rx="15" ry="60" fill="url(#bardOutfit)"/>
+  <ellipse cx="215" cy="450" rx="15" ry="60" fill="url(#bardOutfit)"/>
+  
+  <!-- Boots -->
+  <ellipse cx="185" cy="520" rx="18" ry="28" fill="#654321"/>
+  <ellipse cx="215" cy="520" rx="18" ry="28" fill="#654321"/>
+  
+  <!-- Boot decorations -->
+  <rect x="180" y="510" width="10" height="3" fill="#FFD700"/>
+  <rect x="210" y="510" width="10" height="3" fill="#FFD700"/>
+  
+  <!-- Neck -->
+  <ellipse cx="200" cy="240" rx="10" ry="18" fill="url(#skinTone)"/>
+  
+  <!-- Face -->
+  <circle cx="200" cy="180" r="38" fill="url(#skinTone)"/>
+  
+  <!-- Hair (long and flowing) -->
+  <path d="M162 160 Q167 130 185 125 Q200 120 215 125 Q233 130 238 160 Q238 180 233 210 Q228 240 220 270 Q210 280 200 275 Q190 280 180 270 Q172 240 167 210 Q162 180 162 160 Z" fill="url(#silverHair)"/>
+  
+  <!-- Hair flowing detail -->
+  <path d="M238 180 Q245 200 250 230 Q248 260 240 280" fill="url(#silverHair)"/>
+  <path d="M162 180 Q155 200 150 230 Q152 260 160 280" fill="url(#silverHair)"/>
+  
+  <!-- Gentle waves in hair -->
+  <path d="M175 135 Q180 120 185 135" fill="url(#silverHair)"/>
+  <path d="M195 128 Q200 115 205 128" fill="url(#silverHair)"/>
+  <path d="M215 135 Q220 120 225 135" fill="url(#silverHair)"/>
+  
+  <!-- Eyes (gentle and kind) -->
+  <ellipse cx="185" cy="175" rx="9" ry="7" fill="white"/>
+  <ellipse cx="215" cy="175" rx="9" ry="7" fill="white"/>
+  <circle cx="185" cy="175" r="5" fill="#8A2BE2"/>
+  <circle cx="215" cy="175" r="5" fill="#8A2BE2"/>
+  <circle cx="186" cy="173" r="2" fill="white"/>
+  <circle cx="216" cy="173" r="2" fill="white"/>
+  
+  <!-- Soft eyebrows -->
+  <path d="M174 165 Q184 162 194 165" stroke="#C0C0C0" stroke-width="2.5" fill="none"/>
+  <path d="M206 165 Q216 162 226 165" stroke="#C0C0C0" stroke-width="2.5" fill="none"/>
+  
+  <!-- Nose -->
+  <line x1="200" y1="180" x2="200" y2="187" stroke="#E8A798" stroke-width="1.5"/>
+  
+  <!-- Gentle smile -->
+  <path d="M188 198 Q200 208 212 198" stroke="#CD5C5C" stroke-width="2.5" fill="none"/>
+  
+  <!-- Soft cheek highlights -->
+  <ellipse cx="175" cy="185" rx="8" ry="4" fill="#FFF0F5" opacity="0.4"/>
+  <ellipse cx="225" cy="185" rx="8" ry="4" fill="#FFF0F5" opacity="0.4"/>
+  
+  <!-- Poetic flower in hair -->
+  <circle cx="230" cy="150" r="6" fill="#FFB6C1"/>
+  <circle cx="227" cy="147" r="3" fill="#FF69B4"/>
+  <circle cx="233" cy="147" r="3" fill="#FF69B4"/>
+  <circle cx="227" cy="153" r="3" fill="#FF69B4"/>
+  <circle cx="233" cy="153" r="3" fill="#FF69B4"/>
+  <circle cx="230" cy="150" r="2" fill="#FFD700"/>
+  
+  <!-- Feather in hair -->
+  <path d="M170 140 Q175 125 180 140 Q178 142 175 140 Q172 142 170 140" fill="#F0E68C"/>
+  
+  <!-- Romantic floating petals -->
+  <ellipse cx="120" cy="120" rx="4" ry="2" fill="#FFB6C1" opacity="0.7" transform="rotate(15 120 120)">
+    <animateTransform attributeName="transform" type="translate" values="0,0; 10,30; 20,60" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.7;0.2;0" dur="6s" repeatCount="indefinite"/>
+  </ellipse>
+  <ellipse cx="280" cy="110" rx="3" ry="2" fill="#DDA0DD" opacity="0.8" transform="rotate(-20 280 110)">
+    <animateTransform attributeName="transform" type="translate" values="0,0; -15,40; -30,80" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.8;0.3;0" dur="7s" repeatCount="indefinite"/>
+  </ellipse>
+  <ellipse cx="160" cy="90" rx="3" ry="1.5" fill="#F0E68C" opacity="0.6" transform="rotate(10 160 90)">
+    <animateTransform attributeName="transform" type="translate" values="0,0; 5,35; 10,70" dur="5.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.6;0.2;0" dur="5.5s" repeatCount="indefinite"/>
+  </ellipse>
+  <ellipse cx="240" cy="95" rx="4" ry="2" fill="#FFB6C1" opacity="0.5" transform="rotate(-10 240 95)">
+    <animateTransform attributeName="transform" type="translate" values="0,0; -8,25; -16,50" dur="6.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.5;0.1;0" dur="6.5s" repeatCount="indefinite"/>
+  </ellipse>
+  
+  <!-- Musical notes floating -->
+  <text x="320" y="200" font-family="Arial" font-size="16" fill="#9370DB" opacity="0.6">♪</text>
+  <text x="80" y="180" font-family="Arial" font-size="14" fill="#FF69B4" opacity="0.5">♫</text>
+  <text x="300" y="250" font-family="Arial" font-size="12" fill="#DDA0DD" opacity="0.7">♪</text>
+  <text x="100" y="230" font-family="Arial" font-size="18" fill="#FFB6C1" opacity="0.4">♫</text>
+  
+  <!-- Musical note animations -->
+  <text x="320" y="200" font-family="Arial" font-size="16" fill="#9370DB" opacity="0.6">♪
+    <animateTransform attributeName="transform" type="translate" values="0,0; -20,-40; -40,-80" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.6;0.2;0" dur="4s" repeatCount="indefinite"/>
+  </text>
+  <text x="80" y="180" font-family="Arial" font-size="14" fill="#FF69B4" opacity="0.5">♫
+    <animateTransform attributeName="transform" type="translate" values="0,0; 25,-30; 50,-60" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.5;0.1;0" dur="5s" repeatCount="indefinite"/>
+  </text>
+  
+  <!-- Shirt/tunic details -->
+  <path d="M170 300 Q200 305 230 300" stroke="#FFD700" stroke-width="1.5" fill="none"/>
+  <path d="M175 360 Q200 365 225 360" stroke="#FFD700" stroke-width="1.5" fill="none"/>
+  
+  <!-- Pendant with heart -->
+  <circle cx="200" cy="265" r="6" fill="#FFD700"/>
+  <path d="M196 262 Q198 260 200 262 Q202 260 204 262 Q204 265 200 268 Q196 265 196 262 Z" fill="#FF69B4"/>
+  
+  <!-- Pendant chain -->
+  <path d="M200 259 Q200 252 200 245" stroke="#C0C0C0" stroke-width="1.5" fill="none"/>
+  
+  <!-- Romantic sparkles -->
+  <circle cx="140" cy="160" r="2" fill="#FFD700" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="260" cy="170" r="1.5" fill="#FFB6C1" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;0.2;0.7" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="180" cy="110" r="2" fill="#DDA0DD" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.1;0.6" dur="2.8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="220" cy="120" r="1.8" fill="#F0E68C" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;0.1;0.5" dur="3.2s" repeatCount="indefinite"/>
+  </circle>
+</svg>

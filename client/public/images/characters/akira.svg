@@ -1,0 +1,131 @@
+<svg width="400" height="600" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background aura -->
+  <ellipse cx="200" cy="300" rx="150" ry="280" fill="url(#heroAura)" opacity="0.3"/>
+  
+  <defs>
+    <linearGradient id="heroAura" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4169E1;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#1E90FF;stop-opacity:0.2" />
+    </linearGradient>
+    <linearGradient id="skinTone" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FDBCB4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F7A693;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="hairGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2F2F2F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1A1A1A;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="armorGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#C0C0C0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#808080;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="capeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#000080;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000040;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Cape -->
+  <path d="M120 200 Q100 220 90 280 Q85 350 95 420 Q110 480 130 520 Q140 540 160 560 L180 580 Q190 585 200 580 Q210 575 220 580 L240 560 Q260 540 270 520 Q290 480 305 420 Q315 350 310 280 Q300 220 280 200 Q250 190 200 195 Q150 190 120 200 Z" fill="url(#capeGradient)"/>
+  
+  <!-- Body outline -->
+  <ellipse cx="200" cy="350" rx="60" ry="120" fill="url(#armorGradient)"/>
+  
+  <!-- Armor chest plate -->
+  <rect x="160" y="280" width="80" height="100" rx="10" fill="url(#armorGradient)"/>
+  <rect x="170" y="290" width="60" height="80" rx="5" fill="#E6E6FA" opacity="0.3"/>
+  
+  <!-- Armor details -->
+  <circle cx="200" cy="320" r="15" fill="#FFD700"/>
+  <rect x="175" y="300" width="50" height="3" fill="#FFD700"/>
+  <rect x="175" y="350" width="50" height="3" fill="#FFD700"/>
+  
+  <!-- Arms -->
+  <ellipse cx="140" cy="320" rx="20" ry="50" fill="url(#armorGradient)" transform="rotate(-15 140 320)"/>
+  <ellipse cx="260" cy="320" rx="20" ry="50" fill="url(#armorGradient)" transform="rotate(15 260 320)"/>
+  
+  <!-- Gauntlets -->
+  <ellipse cx="125" cy="370" rx="15" ry="25" fill="url(#armorGradient)" transform="rotate(-15 125 370)"/>
+  <ellipse cx="275" cy="370" rx="15" ry="25" fill="url(#armorGradient)" transform="rotate(15 275 370)"/>
+  
+  <!-- Sword hilt (partially visible) -->
+  <rect x="310" y="250" width="8" height="40" fill="#8B4513" transform="rotate(30 314 270)"/>
+  <rect x="308" y="240" width="12" height="15" fill="#FFD700" transform="rotate(30 314 247)"/>
+  
+  <!-- Belt -->
+  <rect x="170" y="380" width="60" height="15" fill="#8B4513"/>
+  <rect x="190" y="378" width="20" height="19" fill="#FFD700"/>
+  
+  <!-- Legs -->
+  <ellipse cx="180" cy="450" rx="18" ry="60" fill="url(#armorGradient)"/>
+  <ellipse cx="220" cy="450" rx="18" ry="60" fill="url(#armorGradient)"/>
+  
+  <!-- Boots -->
+  <ellipse cx="180" cy="520" rx="22" ry="30" fill="#2F2F2F"/>
+  <ellipse cx="220" cy="520" rx="22" ry="30" fill="#2F2F2F"/>
+  
+  <!-- Head/neck -->
+  <ellipse cx="200" cy="240" rx="15" ry="25" fill="url(#skinTone)"/>
+  
+  <!-- Face -->
+  <circle cx="200" cy="180" r="45" fill="url(#skinTone)"/>
+  
+  <!-- Hair -->
+  <path d="M155 160 Q160 140 180 135 Q200 130 220 135 Q240 140 245 160 Q245 180 240 200 Q220 210 200 205 Q180 210 160 200 Q155 180 155 160 Z" fill="url(#hairGradient)"/>
+  
+  <!-- Hair spikes -->
+  <path d="M175 140 Q180 125 185 140" fill="url(#hairGradient)"/>
+  <path d="M195 132 Q200 115 205 132" fill="url(#hairGradient)"/>
+  <path d="M215 140 Q220 125 225 140" fill="url(#hairGradient)"/>
+  
+  <!-- Eyes -->
+  <ellipse cx="185" cy="175" rx="8" ry="6" fill="white"/>
+  <ellipse cx="215" cy="175" rx="8" ry="6" fill="white"/>
+  <circle cx="185" cy="175" r="5" fill="#4169E1"/>
+  <circle cx="215" cy="175" r="5" fill="#4169E1"/>
+  <circle cx="186" cy="173" r="2" fill="white"/>
+  <circle cx="216" cy="173" r="2" fill="white"/>
+  
+  <!-- Eyebrows -->
+  <path d="M175 165 Q185 162 195 165" stroke="#2F2F2F" stroke-width="3" fill="none"/>
+  <path d="M205 165 Q215 162 225 165" stroke="#2F2F2F" stroke-width="3" fill="none"/>
+  
+  <!-- Nose -->
+  <line x1="200" y1="180" x2="200" y2="190" stroke="#E8A798" stroke-width="2"/>
+  
+  <!-- Mouth -->
+  <path d="M190 200 Q200 205 210 200" stroke="#CD5C5C" stroke-width="2" fill="none"/>
+  
+  <!-- Facial scar -->
+  <path d="M175 190 Q180 195 185 200" stroke="#CD5C5C" stroke-width="1.5" fill="none" opacity="0.7"/>
+  
+  <!-- Serious expression lines -->
+  <path d="M175 195 L180 200" stroke="#E8A798" stroke-width="1" opacity="0.5"/>
+  <path d="M220 200 L225 195" stroke="#E8A798" stroke-width="1" opacity="0.5"/>
+  
+  <!-- Armor shoulder guards -->
+  <ellipse cx="130" cy="270" rx="25" ry="20" fill="url(#armorGradient)" transform="rotate(-20 130 270)"/>
+  <ellipse cx="270" cy="270" rx="25" ry="20" fill="url(#armorGradient)" transform="rotate(20 270 270)"/>
+  
+  <!-- Armor decorative elements -->
+  <rect x="125" y="265" width="10" height="10" fill="#FFD700" transform="rotate(-20 130 270)"/>
+  <rect x="265" y="265" width="10" height="10" fill="#FFD700" transform="rotate(20 270 270)"/>
+  
+  <!-- Honor emblem on chest -->
+  <polygon points="200,305 210,315 200,325 190,315" fill="#FFD700"/>
+  <circle cx="200" cy="315" r="5" fill="#FF6347"/>
+  
+  <!-- Stoic aura effects -->
+  <circle cx="160" cy="150" r="3" fill="#4169E1" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="240" cy="160" r="2" fill="#4169E1" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;0.1;0.5" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="180" cy="120" r="2.5" fill="#4169E1" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;0.3;0.7" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="220" cy="130" r="2" fill="#4169E1" opacity="0.4">
+    <animate attributeName="opacity" values="0.4;0.1;0.4" dur="3.5s" repeatCount="indefinite"/>
+  </circle>
+</svg>
