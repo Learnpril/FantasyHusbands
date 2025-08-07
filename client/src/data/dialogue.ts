@@ -7,8 +7,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'akira',
     speaker: 'Akira',
     text: 'Greetings. I am Akira Shadowbane, knight of the realm. It is my duty to ensure your safety during your stay at the castle.',
-    background: '/images/backgrounds/castle.svg',
-    characterSprite: '/images/characters/akira.png',
+    background: '/images/characters/akira.png',
     choices: [
       {
         id: 'akira_choice_1',
@@ -39,8 +38,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'akira',
     speaker: 'Akira',
     text: '*nods approvingly* Your understanding of duty is... refreshing. Many do not appreciate the weight of responsibility.',
-    background: '/images/backgrounds/castle.svg',
-    characterSprite: '/images/characters/akira.png',
+    background: '/images/characters/akira.png',
     choices: [
       {
         id: 'continue',
@@ -55,8 +53,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'akira',
     speaker: 'Akira',
     text: '*pauses thoughtfully* Personal time is... a luxury I rarely afford myself. Though I do enjoy the quiet moments at dawn before training.',
-    background: '/images/backgrounds/castle.svg',
-    characterSprite: '/images/characters/akira.png',
+    background: '/images/characters/akira.png',
     choices: [
       {
         id: 'continue',
@@ -71,8 +68,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'akira',
     speaker: 'Akira',
     text: '*furrows brow slightly* Seriousness is necessary when lives depend on your actions. Perhaps you will understand in time.',
-    background: '/images/backgrounds/castle.svg',
-    characterSprite: '/images/characters/akira.png',
+    background: '/images/characters/akira.png',
     choices: [
       {
         id: 'continue',
