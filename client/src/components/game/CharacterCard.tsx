@@ -14,7 +14,7 @@ export function CharacterCard({ character, onClick }: CharacterCardProps) {
   
   return (
     <Card 
-      className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer transform hover:scale-105"
+      className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer transform hover:scale-105 min-h-fit"
       onClick={onClick}
     >
       <CardContent className="p-4">

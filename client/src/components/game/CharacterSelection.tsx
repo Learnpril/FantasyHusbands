@@ -9,8 +9,8 @@ export function CharacterSelection() {
   const { characters, setPhase, selectCharacter } = useDatingSim();
   
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen w-full bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4 overflow-y-auto">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <Button
@@ -31,7 +31,7 @@ export function CharacterSelection() {
         </div>
         
         {/* Character Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-8">
           {characters.map((character) => (
             <CharacterCard
               key={character.id}
