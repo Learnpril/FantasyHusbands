@@ -17,9 +17,9 @@ export function CharacterCard({ character, onClick }: CharacterCardProps) {
       className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer transform hover:scale-105"
       onClick={onClick}
     >
-      <CardContent className="p-6">
+      <CardContent className="p-4">
         {/* Character Avatar */}
-        <div className="w-full h-48 mb-4 bg-gradient-to-br from-pink-300 to-purple-300 rounded-lg flex items-center justify-center overflow-hidden relative">
+        <div className="w-full h-32 mb-3 bg-gradient-to-br from-pink-300 to-purple-300 rounded-lg flex items-center justify-center overflow-hidden relative">
           <img 
             src={character.sprite} 
             alt={character.name}
@@ -35,26 +35,21 @@ export function CharacterCard({ character, onClick }: CharacterCardProps) {
         
         {/* Character Info */}
         <div className="text-white">
-          <h3 className="text-xl font-bold mb-1">{character.name}</h3>
-          <p className="text-gray-300 text-sm mb-3">{character.age} years old</p>
+          <h3 className="text-lg font-bold mb-1">{character.name}</h3>
+          <p className="text-gray-300 text-xs mb-2">{character.age} years old</p>
           
-          <div className="flex items-center gap-2 mb-3">
-            <Briefcase className="w-4 h-4 text-gray-400" />
-            <span className="text-sm text-gray-300">{character.occupation}</span>
+          <div className="flex items-center gap-1 mb-2">
+            <Briefcase className="w-3 h-3 text-gray-400" />
+            <span className="text-xs text-gray-300">{character.occupation}</span>
           </div>
           
-          {/* Personality */}
-          <p className="text-sm text-gray-300 mb-4 line-clamp-3">
-            {character.personality}
-          </p>
-          
           {/* Traits */}
-          <div className="flex flex-wrap gap-1 mb-4">
-            {character.traits.slice(0, 3).map((trait) => (
+          <div className="flex flex-wrap gap-1 mb-2">
+            {character.traits.slice(0, 2).map((trait) => (
               <Badge 
                 key={trait} 
                 variant="secondary" 
-                className="text-xs bg-white/20 text-white border-0"
+                className="text-xs bg-white/20 text-white border-0 px-1 py-0"
               >
                 {trait}
               </Badge>
@@ -62,16 +57,16 @@ export function CharacterCard({ character, onClick }: CharacterCardProps) {
           </div>
           
           {/* Affection Level */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <Heart className="w-4 h-4 text-pink-400" />
-              <span className="text-sm text-gray-300">
-                Affection: {character.affection}/{character.maxAffection}
+          <div className="space-y-1">
+            <div className="flex items-center gap-1">
+              <Heart className="w-3 h-3 text-pink-400" />
+              <span className="text-xs text-gray-300">
+                {character.affection}/{character.maxAffection}
               </span>
             </div>
             <Progress 
               value={affectionPercentage} 
-              className="h-2 bg-white/20"
+              className="h-1 bg-white/20"
             />
           </div>
         </div>

@@ -8,8 +8,6 @@ import { ArrowLeft, Heart } from 'lucide-react';
 export function CharacterSelection() {
   const { characters, setPhase, selectCharacter } = useDatingSim();
   
-  console.log('Characters in selection screen:', characters.length, characters.map(c => c.name));
-  
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4">
       <div className="max-w-6xl mx-auto">
@@ -33,7 +31,7 @@ export function CharacterSelection() {
         </div>
         
         {/* Character Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {characters.map((character) => (
             <CharacterCard
               key={character.id}
