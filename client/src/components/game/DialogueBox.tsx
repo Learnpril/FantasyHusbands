@@ -110,7 +110,7 @@ export function DialogueBox() {
       
       {/* Character Sprite */}
       {currentDialogue.characterSprite && (
-        <div className="absolute bottom-48 sm:bottom-40 right-4 sm:right-8 w-48 h-72 sm:w-80 sm:h-96 z-10">
+        <div className="absolute bottom-72 sm:bottom-64 right-4 sm:right-8 w-48 h-72 sm:w-80 sm:h-96 z-10">
           <img 
             src={currentDialogue.characterSprite}
             alt={currentDialogue.speaker}
