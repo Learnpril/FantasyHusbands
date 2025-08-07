@@ -8,7 +8,7 @@ export const characters: Character[] = [
     occupation: 'Royal Knight',
     personality: 'Stoic and honorable, but has a soft spot for those he cares about',
     backstory: 'The youngest knight to ever serve the royal family, Akira carries the weight of his duties with quiet determination. Born into a family of blacksmiths, he earned his position through skill and unwavering loyalty.',
-    sprite: '/images/characters/akira.svg',
+    sprite: '/images/characters/akira.png',
     affection: 0,
     maxAffection: 100,
     favoriteGifts: ['sword polish', 'training manual', 'honor medal'],
