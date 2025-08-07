@@ -1,6 +1,16 @@
 # Overview
 
-Fantasy Hearts is an anime-style dating simulation web application built with a modern React frontend and Express.js backend. The application provides an interactive visual novel experience where users can build relationships with fantasy characters through dialogue choices and story progression. The game features multiple romance routes, character affection systems, save/load functionality, and immersive audio-visual elements.
+Fantasy Hearts is an anime-style dating simulation web application built with a modern React frontend and Express.js backend. The application provides an interactive visual novel experience where users can build relationships with fantasy characters through dialogue choices and story progression. The game features 6 unique fantasy male characters, multiple romance routes, character affection systems, save/load functionality, and immersive audio-visual elements.
+
+## Recent Changes
+
+**January 2025 - Character Expansion & Mobile Optimization:**
+- Added two new characters: Ryuu Dragonheart (Dragon Tamer) and Zephyr Moonlight (Royal Scholar)
+- Created custom anime-style SVG artwork for all characters
+- Implemented full dialogue trees and character-specific scenes
+- Optimized character selection layout for mobile devices (Pixel 8a tested)
+- Fixed character sprite positioning to be visible above dialogue boxes
+- Enhanced responsive design for various screen sizes
 
 # User Preferences
 

@@ -9,8 +9,8 @@ export function CharacterSelection() {
   const { characters, setPhase, selectCharacter } = useDatingSim();
   
   return (
-    <div className="w-full bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4 min-h-screen">
-      <div className="max-w-7xl mx-auto pb-8">
+    <div className="w-full bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-2 sm:p-4 overflow-y-auto" style={{ height: '100vh' }}>
+      <div className="max-w-7xl mx-auto pb-8 min-h-full">
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
           <Button
