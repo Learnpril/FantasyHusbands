@@ -9,29 +9,29 @@ export function CharacterSelection() {
   const { characters, setPhase, selectCharacter } = useDatingSim();
   
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4 overflow-y-auto">
-      <div className="max-w-7xl mx-auto">
+    <div className="w-full bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4 min-h-screen">
+      <div className="max-w-7xl mx-auto pb-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
           <Button
             onClick={() => setPhase('menu')}
             variant="ghost"
-            className="text-white hover:bg-white/10"
+            className="text-white hover:bg-white/10 self-start"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Menu
           </Button>
           
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-white mb-2">Choose Your Destiny</h1>
-            <p className="text-gray-300">Select a character to begin your romantic journey</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Choose Your Destiny</h1>
+            <p className="text-gray-300 text-sm sm:text-base">Select a character to begin your romantic journey</p>
           </div>
           
-          <div className="w-24"></div> {/* Spacer for centering */}
+          <div className="hidden sm:block w-24"></div> {/* Spacer for centering on desktop */}
         </div>
         
         {/* Character Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-6 mb-8">
           {characters.map((character) => (
             <CharacterCard
               key={character.id}
@@ -42,12 +42,12 @@ export function CharacterSelection() {
         </div>
         
         {/* Instructions */}
-        <Card className="mt-8 bg-white/10 backdrop-blur-sm border-white/20">
-          <CardContent className="pt-6">
+        <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+          <CardContent className="p-4 sm:pt-6">
             <div className="text-center text-white">
-              <Heart className="w-8 h-8 mx-auto mb-4 text-pink-400" />
-              <h3 className="text-xl font-semibold mb-2">How to Play</h3>
-              <div className="text-gray-300 space-y-2">
+              <Heart className="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-3 sm:mb-4 text-pink-400" />
+              <h3 className="text-lg sm:text-xl font-semibold mb-2">How to Play</h3>
+              <div className="text-gray-300 space-y-1 sm:space-y-2 text-sm sm:text-base">
                 <p>• Click on a character to start a conversation</p>
                 <p>• Choose dialogue options that reflect your personality</p>
                 <p>• Build relationships through meaningful interactions</p>

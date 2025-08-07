@@ -17,9 +17,9 @@ export function CharacterCard({ character, onClick }: CharacterCardProps) {
       className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer transform hover:scale-105 min-h-fit"
       onClick={onClick}
     >
-      <CardContent className="p-4">
+      <CardContent className="p-3 sm:p-4">
         {/* Character Avatar */}
-        <div className="w-full h-32 mb-3 bg-gradient-to-br from-pink-300 to-purple-300 rounded-lg flex items-center justify-center overflow-hidden relative">
+        <div className="w-full h-24 sm:h-32 mb-2 sm:mb-3 bg-gradient-to-br from-pink-300 to-purple-300 rounded-lg flex items-center justify-center overflow-hidden relative">
           <img 
             src={character.sprite} 
             alt={character.name}
