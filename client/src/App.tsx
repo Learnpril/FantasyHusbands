@@ -16,45 +16,43 @@ function App() {
     isMusicMuted 
   } = useAudio();
 
-  // Initialize audio on component mount - singleton pattern with global flag
+  // Initialize audio on component mount - true singleton with global storage
   useEffect(() => {
-    // Global singleton flag to prevent multiple initializations
-    if (window.fantasyHeartsAudioInitialized) {
-      console.log("🎵 Audio system already exists globally, skipping initialization");
+    // Check if we already have a global background music instance
+    if (window.globalBackgroundMusic) {
+      console.log("🎵 Using existing global background music");
+      setBackgroundMusic(window.globalBackgroundMusic);
       return;
     }
 
-    // Mark as initialized globally to prevent future initializations
-    window.fantasyHeartsAudioInitialized = true;
-
-    const initAudio = () => {
-      console.log("🎵 Creating singleton audio system...");
-      
-      // Absolutely destroy any existing background music
-      const existingAudio = document.querySelectorAll('audio');
-      existingAudio.forEach(audio => {
-        if (audio.src.includes('background.mp3')) {
-          audio.pause();
-          audio.currentTime = 0;
-          audio.src = '';
-          if (audio.parentNode) {
-            audio.parentNode.removeChild(audio);
-          }
+    // Kill ALL existing background music completely
+    const existingAudio = document.querySelectorAll('audio');
+    existingAudio.forEach(audio => {
+      if (audio.src.includes('background.mp3')) {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.src = '';
+        if (audio.parentNode) {
+          audio.parentNode.removeChild(audio);
         }
-      });
-      
-      // Create THE ONLY background music instance
-      const bgMusic = new Audio('/sounds/background.mp3');
-      bgMusic.loop = true;
-      bgMusic.volume = 0.3;
-      bgMusic.id = 'singleton-background-music';
-      
-      // Store globally to prevent re-creation
-      window.singletonBackgroundMusic = bgMusic;
-      
-      setBackgroundMusic(bgMusic);
+      }
+    });
 
-      // Sound effects - initialize only once
+    console.log("🎵 Creating THE ONLY background music instance");
+    
+    // Create the ONLY background music instance that will ever exist
+    const bgMusic = new Audio('/sounds/background.mp3');
+    bgMusic.loop = true;
+    bgMusic.volume = 0.3;
+    bgMusic.id = 'the-only-background-music';
+    
+    // Store as global singleton - this will persist through hot reloads
+    window.globalBackgroundMusic = bgMusic;
+    
+    setBackgroundMusic(bgMusic);
+
+    // Initialize other sounds only if they don't exist
+    if (!window.globalSoundsInitialized) {
       const hitSfx = new Audio('/sounds/hit.mp3');
       hitSfx.volume = 0.5;
       setHitSound(hitSfx);
@@ -63,7 +61,6 @@ function App() {
       successSfx.volume = 0.6;
       setSuccessSound(successSfx);
 
-      // UI Sound effects
       const buttonHoverSfx = new Audio('/sounds/ui/button-hover.mp3');
       buttonHoverSfx.volume = 0.3;
       setButtonHoverSound(buttonHoverSfx);
@@ -76,7 +73,7 @@ function App() {
       pageTransitionSfx.volume = 0.5;
       setPageTransitionSound(pageTransitionSfx);
 
-      // Character voices - create and preload
+      // Character voices
       const characters = ['akira', 'felix', 'dante', 'kai', 'ryuu', 'zephyr'];
       characters.forEach(characterId => {
         const voice = new Audio(`/sounds/voices/${characterId}.mp3`);
@@ -94,23 +91,15 @@ function App() {
         setCharacterVoice(characterId, voice);
       });
 
-      // Start background music if music is not muted
-      if (!isMusicMuted) {
-        bgMusic.play().catch(error => {
-          console.log("Background music autoplay prevented:", error);
-        });
-      }
-    };
+      window.globalSoundsInitialized = true;
+    }
 
-    initAudio();
-
-    // Cleanup function to reset flag if component unmounts completely
-    return () => {
-      // Only reset flag if we're truly unmounting (not hot reload)
-      if (!import.meta.hot) {
-        window.fantasyHeartsAudioInitialized = false;
-      }
-    };
+    // Start background music if not muted
+    if (!isMusicMuted) {
+      bgMusic.play().catch(error => {
+        console.log("Background music autoplay prevented:", error);
+      });
+    }
   }, []); // Only run once on mount
 
   return (
