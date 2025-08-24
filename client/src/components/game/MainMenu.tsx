@@ -46,8 +46,7 @@ export function MainMenu() {
               <img 
                 src="/images/logo.png" 
                 alt="Fantasy Hearts" 
-                className="w-64 h-auto mx-auto drop-shadow-2xl"
-                style={{ filter: 'drop-shadow(0 0 20px rgba(147, 51, 234, 0.5))' }}
+                className="w-64 h-auto mx-auto"
               />
             </div>
             
