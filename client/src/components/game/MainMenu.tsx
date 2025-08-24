@@ -41,15 +41,16 @@ export function MainMenu() {
           
           {/* Title Section */}
           <div className="text-center mb-8">
-            {/* Heart gem icon */}
-            <div className="relative mx-auto mb-4 w-16 h-16">
-              <div className="absolute inset-0 bg-gradient-to-b from-purple-400 to-pink-500 rounded-full animate-pulse shadow-lg shadow-purple-500/50"></div>
-              <Heart className="relative w-16 h-16 text-white drop-shadow-lg" />
+            {/* Fantasy Hearts Logo */}
+            <div className="relative mx-auto mb-4">
+              <img 
+                src="/images/logo.png" 
+                alt="Fantasy Hearts" 
+                className="w-64 h-auto mx-auto drop-shadow-2xl"
+                style={{ filter: 'drop-shadow(0 0 20px rgba(147, 51, 234, 0.5))' }}
+              />
             </div>
             
-            <h1 className="text-4xl font-bold text-white mb-2 drop-shadow-lg tracking-wide fantasy-title">
-              Fantasy Hearts
-            </h1>
             <p className="text-purple-200 text-lg font-medium ui-text">
               An Anime Dating Simulation
             </p>
