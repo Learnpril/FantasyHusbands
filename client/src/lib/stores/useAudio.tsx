@@ -298,7 +298,7 @@ export const useAudio = create<AudioState>((set, get) => ({
       get().stopBackgroundMusic();
     }
     
-    if (window.speechSynthesis.speaking) {
+    if (window.speechSynthesis && window.speechSynthesis.speaking) {
       if (newMutedState) {
         window.speechSynthesis.pause();
       } else {
@@ -413,8 +413,8 @@ export const useAudio = create<AudioState>((set, get) => ({
       return;
     }
     
-    // Stop any current speech
-    if (window.speechSynthesis.speaking) {
+    // Stop any current speech - with mobile safety check
+    if (window.speechSynthesis && window.speechSynthesis.speaking) {
       window.speechSynthesis.cancel();
     }
     
@@ -433,6 +433,12 @@ export const useAudio = create<AudioState>((set, get) => ({
     // Create speech synthesis utterance
     const utterance = new SpeechSynthesisUtterance(cleanText);
     
+    // Check if Speech Synthesis is available (mobile compatibility)
+    if (!window.speechSynthesis) {
+      console.log(`🚫 Speech synthesis not available on this device for ${characterId}`);
+      return;
+    }
+
     // Wait for voices to load if needed
     const configureAndSpeak = (voices: SpeechSynthesisVoice[]) => {
       let selectedVoice = null;
@@ -577,7 +583,7 @@ export const useAudio = create<AudioState>((set, get) => ({
   },
   
   stopVoice: () => {
-    if (window.speechSynthesis.speaking) {
+    if (window.speechSynthesis && window.speechSynthesis.speaking) {
       window.speechSynthesis.cancel();
     }
     set({ 
@@ -587,14 +593,14 @@ export const useAudio = create<AudioState>((set, get) => ({
   },
   
   pauseVoice: () => {
-    if (window.speechSynthesis.speaking) {
+    if (window.speechSynthesis && window.speechSynthesis.speaking) {
       window.speechSynthesis.pause();
       set({ isVoicePlaying: false });
     }
   },
   
   resumeVoice: () => {
-    if (window.speechSynthesis.paused) {
+    if (window.speechSynthesis && window.speechSynthesis.paused) {
       window.speechSynthesis.resume();
       set({ isVoicePlaying: true });
     }
