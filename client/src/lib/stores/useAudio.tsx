@@ -370,44 +370,8 @@ export const useAudio = create<AudioState>((set, get) => ({
   },
 
   playAmbient: (soundKey: string) => {
-    const { ambientSound, backgroundMusic, isMusicMuted, ambientVolume, masterVolume } = get();
-    
-    // Stop ALL existing music first (including background music)
-    const existingAudio = document.querySelectorAll('audio');
-    existingAudio.forEach(audio => {
-      if (audio.src.includes('background.mp3') || audio.src.includes('ambient/')) {
-        audio.pause();
-        audio.currentTime = 0;
-        audio.src = '';
-      }
-    });
-    
-    // Stop current stored music
-    if (backgroundMusic) {
-      backgroundMusic.pause();
-      backgroundMusic.currentTime = 0;
-      backgroundMusic.src = '';
-    }
-    
-    if (ambientSound) {
-      ambientSound.pause();
-      ambientSound.currentTime = 0;
-      ambientSound.src = '';
-    }
-    
-    // Create new ambient audio
-    const newAmbient = new Audio(`/sounds/ambient/${soundKey}.mp3`);
-    newAmbient.loop = true;
-    newAmbient.volume = ambientVolume * masterVolume;
-    newAmbient.muted = isMusicMuted;
-    
-    set({ ambientSound: newAmbient, backgroundMusic: null });
-    
-    if (!isMusicMuted) {
-      newAmbient.play().catch(error => {
-        console.log(`Ambient sound play prevented for ${soundKey}:`, error);
-      });
-    }
+    console.log(`🔇 Ambient sound playback disabled - ignoring ${soundKey}`);
+    // All ambient sounds are disabled - do nothing
   },
   
   stopAmbient: () => {
