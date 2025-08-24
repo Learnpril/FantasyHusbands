@@ -110,7 +110,7 @@ export function ForestJourney() {
     <div 
       className="w-full h-screen p-4 overflow-y-auto"
       style={{
-        backgroundImage: 'url(/images/backgrounds/forest.svg)',
+        backgroundImage: 'url(/images/backgrounds/forest.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
