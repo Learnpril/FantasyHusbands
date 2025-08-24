@@ -208,18 +208,33 @@ export function DialogueBox() {
               {/* Voice Controls */}
               <div className="flex items-center gap-1">
                 <Button
+                  onClick={() => {
+                    if (currentDialogue?.characterId) {
+                      playCharacterVoice(currentDialogue.characterId, currentDialogue.id);
+                    }
+                  }}
+                  variant="ghost"
+                  size="sm"
+                  className="text-white hover:bg-white/10 p-1 h-8 w-8"
+                  title="Play voice"
+                >
+                  <Play className="w-4 h-4" />
+                </Button>
+                <Button
                   onClick={isVoicePlaying ? pauseVoice : resumeVoice}
                   variant="ghost"
                   size="sm"
                   className="text-white hover:bg-white/10 p-1 h-8 w-8"
+                  title={isVoicePlaying ? "Pause voice" : "Resume voice"}
                 >
-                  {isVoicePlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                  {isVoicePlaying ? <Pause className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                 </Button>
                 <Button
                   onClick={stopVoice}
                   variant="ghost"
                   size="sm"
                   className="text-white hover:bg-white/10 p-1 h-8 w-8"
+                  title="Stop voice"
                 >
                   <SkipForward className="w-4 h-4" />
                 </Button>

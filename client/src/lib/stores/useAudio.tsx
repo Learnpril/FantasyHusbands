@@ -18,6 +18,8 @@ interface AudioState {
   
   // Volume controls
   isMuted: boolean;
+  isMusicMuted: boolean;
+  isSoundMuted: boolean;
   masterVolume: number;
   musicVolume: number;
   soundVolume: number;
@@ -47,6 +49,8 @@ interface AudioState {
   
   // Control functions
   toggleMute: () => void;
+  toggleMusicMute: () => void;
+  toggleSoundMute: () => void;
   playHit: () => void;
   playSuccess: () => void;
   playButtonHover: () => void;
@@ -73,7 +77,9 @@ export const useAudio = create<AudioState>((set, get) => ({
   characterVoices: {},
   
   // Volume state
-  isMuted: true, // Start muted by default
+  isMuted: false, // Start unmuted so voice can be heard
+  isMusicMuted: false,
+  isSoundMuted: false,
   masterVolume: 1.0,
   musicVolume: 0.7,
   soundVolume: 0.8,
@@ -129,9 +135,34 @@ export const useAudio = create<AudioState>((set, get) => ({
     console.log(`Sound ${newMutedState ? 'muted' : 'unmuted'}`);
   },
   
+  toggleMusicMute: () => {
+    const { isMusicMuted, backgroundMusic, ambientSound } = get();
+    const newMutedState = !isMusicMuted;
+    
+    set({ isMusicMuted: newMutedState });
+    
+    if (backgroundMusic) {
+      backgroundMusic.muted = newMutedState;
+    }
+    if (ambientSound) {
+      ambientSound.muted = newMutedState;
+    }
+    
+    console.log(`Music ${newMutedState ? 'muted' : 'unmuted'}`);
+  },
+  
+  toggleSoundMute: () => {
+    const { isSoundMuted } = get();
+    const newMutedState = !isSoundMuted;
+    
+    set({ isSoundMuted: newMutedState });
+    
+    console.log(`Sound effects ${newMutedState ? 'muted' : 'unmuted'}`);
+  },
+  
   playHit: () => {
-    const { hitSound, isMuted, soundVolume, masterVolume } = get();
-    if (hitSound && !isMuted) {
+    const { hitSound, isSoundMuted, soundVolume, masterVolume } = get();
+    if (hitSound && !isSoundMuted) {
       const soundClone = hitSound.cloneNode() as HTMLAudioElement;
       soundClone.volume = soundVolume * masterVolume * 0.5;
       soundClone.play().catch(error => {
@@ -141,8 +172,8 @@ export const useAudio = create<AudioState>((set, get) => ({
   },
   
   playSuccess: () => {
-    const { successSound, isMuted, soundVolume, masterVolume } = get();
-    if (successSound && !isMuted) {
+    const { successSound, isSoundMuted, soundVolume, masterVolume } = get();
+    if (successSound && !isSoundMuted) {
       successSound.currentTime = 0;
       successSound.volume = soundVolume * masterVolume * 0.6;
       successSound.play().catch(error => {
@@ -152,8 +183,8 @@ export const useAudio = create<AudioState>((set, get) => ({
   },
   
   playButtonHover: () => {
-    const { buttonHoverSound, isMuted, soundVolume, masterVolume } = get();
-    if (buttonHoverSound && !isMuted) {
+    const { buttonHoverSound, isSoundMuted, soundVolume, masterVolume } = get();
+    if (buttonHoverSound && !isSoundMuted) {
       const soundClone = buttonHoverSound.cloneNode() as HTMLAudioElement;
       soundClone.volume = soundVolume * masterVolume * 0.3;
       soundClone.play().catch(error => {
@@ -163,8 +194,8 @@ export const useAudio = create<AudioState>((set, get) => ({
   },
   
   playButtonClick: () => {
-    const { buttonClickSound, isMuted, soundVolume, masterVolume } = get();
-    if (buttonClickSound && !isMuted) {
+    const { buttonClickSound, isSoundMuted, soundVolume, masterVolume } = get();
+    if (buttonClickSound && !isSoundMuted) {
       const soundClone = buttonClickSound.cloneNode() as HTMLAudioElement;
       soundClone.volume = soundVolume * masterVolume * 0.4;
       soundClone.play().catch(error => {
@@ -174,8 +205,8 @@ export const useAudio = create<AudioState>((set, get) => ({
   },
   
   playPageTransition: () => {
-    const { pageTransitionSound, isMuted, soundVolume, masterVolume } = get();
-    if (pageTransitionSound && !isMuted) {
+    const { pageTransitionSound, isSoundMuted, soundVolume, masterVolume } = get();
+    if (pageTransitionSound && !isSoundMuted) {
       pageTransitionSound.currentTime = 0;
       pageTransitionSound.volume = soundVolume * masterVolume * 0.5;
       pageTransitionSound.play().catch(error => {
@@ -208,9 +239,11 @@ export const useAudio = create<AudioState>((set, get) => ({
       voiceAudio = characterVoices[characterId];
     }
     
-    if (voiceAudio && !isMuted) {
+    // Always try to play voice (not affected by main mute, only by voice volume being 0)
+    if (voiceAudio && voiceVolume > 0) {
       voiceAudio.currentTime = 0;
       voiceAudio.volume = voiceVolume * masterVolume;
+      voiceAudio.muted = isMuted; // Respect global mute
       
       set({ 
         currentVoice: voiceAudio,
@@ -226,21 +259,29 @@ export const useAudio = create<AudioState>((set, get) => ({
         });
       };
       
-      voiceAudio.onerror = () => {
-        console.log(`Voice playback error for ${voiceKey}`);
+      voiceAudio.onerror = (error) => {
+        console.log(`Voice playback error for ${voiceKey}:`, error);
         set({ 
           isVoicePlaying: false,
           currentVoiceId: null
         });
       };
       
+      voiceAudio.onloadeddata = () => {
+        console.log(`Voice loaded successfully for ${characterId}`);
+      };
+      
       voiceAudio.play().catch(error => {
         console.log(`Voice play prevented for ${voiceKey}:`, error);
+        // Try to load and play a simple test sound to verify voice system works
+        console.log(`Attempting to play voice file: /sounds/voices/${characterId}.mp3`);
         set({ 
           isVoicePlaying: false,
           currentVoiceId: null
         });
       });
+    } else {
+      console.log(`Voice not found for ${characterId} or voice volume is 0`);
     }
   },
   
@@ -275,7 +316,7 @@ export const useAudio = create<AudioState>((set, get) => ({
   },
   
   playAmbient: (soundKey: string) => {
-    const { ambientSound, isMuted, ambientVolume, masterVolume } = get();
+    const { ambientSound, isMusicMuted, ambientVolume, masterVolume } = get();
     
     // Stop current ambient sound
     if (ambientSound) {
@@ -286,11 +327,11 @@ export const useAudio = create<AudioState>((set, get) => ({
     const newAmbient = new Audio(`/sounds/ambient/${soundKey}.mp3`);
     newAmbient.loop = true;
     newAmbient.volume = ambientVolume * masterVolume;
-    newAmbient.muted = isMuted;
+    newAmbient.muted = isMusicMuted;
     
     set({ ambientSound: newAmbient });
     
-    if (!isMuted) {
+    if (!isMusicMuted) {
       newAmbient.play().catch(error => {
         console.log(`Ambient sound play prevented for ${soundKey}:`, error);
       });

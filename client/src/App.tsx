@@ -46,11 +46,21 @@ function App() {
       pageTransitionSfx.volume = 0.5;
       setPageTransitionSound(pageTransitionSfx);
 
-      // Character voices
+      // Character voices - create and preload
       const characters = ['akira', 'felix', 'dante', 'kai', 'ryuu', 'zephyr'];
       characters.forEach(characterId => {
         const voice = new Audio(`/sounds/voices/${characterId}.mp3`);
-        voice.volume = 0.8;
+        voice.volume = 0.9;
+        voice.preload = 'auto'; // Preload for faster playback
+        
+        voice.addEventListener('loadeddata', () => {
+          console.log(`Voice loaded for ${characterId}`);
+        });
+        
+        voice.addEventListener('error', (e) => {
+          console.log(`Voice loading error for ${characterId}:`, e);
+        });
+        
         setCharacterVoice(characterId, voice);
       });
 
