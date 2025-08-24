@@ -226,104 +226,140 @@ export const useAudio = create<AudioState>((set, get) => ({
     }
   },
   
-  playCharacterVoice: (characterId: string, dialogueId: string) => {
-    const { 
-      characterVoices, 
-      currentVoice, 
-      voiceVolume, 
-      masterVolume 
-    } = get();
+  playCharacterVoice: (characterId: string, text: string) => {
+    const { voiceVolume, isMuted } = get();
     
-    // Stop current voice if playing
-    if (currentVoice) {
-      currentVoice.pause();
-      currentVoice.currentTime = 0;
+    if (isMuted || voiceVolume === 0) {
+      console.log(`🔇 Voice muted for ${characterId}`);
+      return;
     }
     
-    // Get character voice
-    const voiceAudio = characterVoices[characterId];
+    // Stop any current speech
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+    }
     
-    if (voiceAudio && voiceVolume > 0) {
-      try {
-        // Reset and configure the audio for maximum audibility
-        voiceAudio.currentTime = 0;
-        voiceAudio.volume = 1.0; // Max volume for voices to ensure they're heard
-        voiceAudio.muted = false; // Never mute voices
-        
-        // Set state immediately
+    // Create speech synthesis utterance
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Wait for voices to load if needed
+    const configureAndSpeak = (voices: SpeechSynthesisVoice[]) => {
+      let selectedVoice = null;
+      
+      // Try to find appropriate voices for each character
+      switch (characterId) {
+      case 'akira':
+        selectedVoice = voices.find(voice => 
+          voice.name.includes('Male') || voice.name.includes('Daniel') || voice.gender === 'male'
+        ) || voices.find(voice => voice.lang.startsWith('en'));
+        utterance.pitch = 0.9;
+        utterance.rate = 0.9;
+        break;
+      case 'felix':
+        selectedVoice = voices.find(voice => 
+          voice.name.includes('Male') || voice.name.includes('Alex') || voice.gender === 'male'
+        ) || voices.find(voice => voice.lang.startsWith('en'));
+        utterance.pitch = 1.1;
+        utterance.rate = 1.0;
+        break;
+      case 'dante':
+        selectedVoice = voices.find(voice => 
+          voice.name.includes('Male') || voice.name.includes('Thomas') || voice.gender === 'male'
+        ) || voices.find(voice => voice.lang.startsWith('en'));
+        utterance.pitch = 0.8;
+        utterance.rate = 0.8;
+        break;
+      case 'kai':
+        selectedVoice = voices.find(voice => 
+          voice.name.includes('Male') || voice.name.includes('Aaron') || voice.gender === 'male'
+        ) || voices.find(voice => voice.lang.startsWith('en'));
+        utterance.pitch = 1.0;
+        utterance.rate = 1.1;
+        break;
+      case 'ryuu':
+        selectedVoice = voices.find(voice => 
+          voice.name.includes('Male') || voice.name.includes('James') || voice.gender === 'male'
+        ) || voices.find(voice => voice.lang.startsWith('en'));
+        utterance.pitch = 0.85;
+        utterance.rate = 0.9;
+        break;
+      case 'zephyr':
+        selectedVoice = voices.find(voice => 
+          voice.name.includes('Male') || voice.name.includes('David') || voice.gender === 'male'
+        ) || voices.find(voice => voice.lang.startsWith('en'));
+        utterance.pitch = 1.05;
+        utterance.rate = 0.95;
+        break;
+        default:
+          selectedVoice = voices.find(voice => voice.lang.startsWith('en'));
+      }
+      
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
+      }
+      
+      utterance.volume = voiceVolume;
+      
+      // Set up event listeners
+      utterance.onstart = () => {
         set({ 
-          currentVoice: voiceAudio,
           isVoicePlaying: true,
-          currentVoiceId: `${characterId}_${dialogueId}`
+          currentVoiceId: `${characterId}_tts`
         });
-        
-        // Setup event listeners
-        voiceAudio.onended = () => {
-          set({ 
-            isVoicePlaying: false,
-            currentVoiceId: null
-          });
-        };
-        
-        voiceAudio.onerror = (error) => {
-          console.log(`Voice error for ${characterId}:`, error);
-          set({ 
-            isVoicePlaying: false,
-            currentVoiceId: null
-          });
-        };
-        
-        // Force play the audio with user interaction
-        const playPromise = voiceAudio.play();
-        if (playPromise !== undefined) {
-          playPromise.then(() => {
-            console.log(`🔊 VOICE PLAYING for ${characterId} - you should hear this!`);
-          }).catch(error => {
-            console.log(`Voice play blocked for ${characterId}:`, error.message);
-            set({ 
-              isVoicePlaying: false,
-              currentVoiceId: null
-            });
-          });
-        }
-      } catch (error) {
-        console.log(`Voice playback error for ${characterId}:`, error);
+        console.log(`🎤 Speaking as ${characterId}: "${text.substring(0, 50)}..."`);
+      };
+      
+      utterance.onend = () => {
         set({ 
           isVoicePlaying: false,
           currentVoiceId: null
         });
-      }
+      };
+      
+      utterance.onerror = (error) => {
+        console.log(`Speech error for ${characterId}:`, error);
+        set({ 
+          isVoicePlaying: false,
+          currentVoiceId: null
+        });
+      };
+      
+      // Speak the text
+      window.speechSynthesis.speak(utterance);
+    };
+    
+    // Get voices and configure
+    let voices = window.speechSynthesis.getVoices();
+    if (voices.length > 0) {
+      configureAndSpeak(voices);
     } else {
-      console.log(`No voice available for ${characterId} (available: ${Object.keys(characterVoices).join(', ')}, volume: ${voiceVolume})`);
+      window.speechSynthesis.onvoiceschanged = () => {
+        voices = window.speechSynthesis.getVoices();
+        configureAndSpeak(voices);
+      };
     }
   },
   
   stopVoice: () => {
-    const { currentVoice } = get();
-    if (currentVoice) {
-      currentVoice.pause();
-      currentVoice.currentTime = 0;
-      set({ 
-        isVoicePlaying: false,
-        currentVoiceId: null
-      });
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
     }
+    set({ 
+      isVoicePlaying: false,
+      currentVoiceId: null
+    });
   },
   
   pauseVoice: () => {
-    const { currentVoice } = get();
-    if (currentVoice) {
-      currentVoice.pause();
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.pause();
       set({ isVoicePlaying: false });
     }
   },
   
   resumeVoice: () => {
-    const { currentVoice, isMuted } = get();
-    if (currentVoice && !isMuted) {
-      currentVoice.play().catch(error => {
-        console.log("Voice resume prevented:", error);
-      });
+    if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
       set({ isVoicePlaying: true });
     }
   },

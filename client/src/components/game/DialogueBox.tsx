@@ -48,7 +48,7 @@ export function DialogueBox() {
     
     // Play character voice when dialogue starts
     if (currentDialogue.characterId) {
-      playCharacterVoice(currentDialogue.characterId, currentDialogue.id);
+      playCharacterVoice(currentDialogue.characterId, currentDialogue.text);
     }
     
     // Ambient sounds disabled - no background audio will play
@@ -204,7 +204,7 @@ export function DialogueBox() {
                 <Button
                   onClick={() => {
                     if (currentDialogue?.characterId) {
-                      playCharacterVoice(currentDialogue.characterId, currentDialogue.id);
+                      playCharacterVoice(currentDialogue.characterId, currentDialogue.text);
                     }
                   }}
                   variant="ghost"
