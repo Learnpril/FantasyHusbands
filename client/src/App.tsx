@@ -4,7 +4,16 @@ import { GameScene } from "./components/game/GameScene";
 import "@fontsource/inter";
 
 function App() {
-  const { setBackgroundMusic, setHitSound, setSuccessSound, isMuted } = useAudio();
+  const { 
+    setBackgroundMusic, 
+    setHitSound, 
+    setSuccessSound, 
+    setButtonHoverSound,
+    setButtonClickSound,
+    setPageTransitionSound,
+    setCharacterVoice,
+    isMuted 
+  } = useAudio();
 
   // Initialize audio on component mount
   useEffect(() => {
@@ -24,6 +33,27 @@ function App() {
       successSfx.volume = 0.6;
       setSuccessSound(successSfx);
 
+      // UI Sound effects
+      const buttonHoverSfx = new Audio('/sounds/ui/button-hover.mp3');
+      buttonHoverSfx.volume = 0.3;
+      setButtonHoverSound(buttonHoverSfx);
+
+      const buttonClickSfx = new Audio('/sounds/ui/button-click.mp3');
+      buttonClickSfx.volume = 0.4;
+      setButtonClickSound(buttonClickSfx);
+
+      const pageTransitionSfx = new Audio('/sounds/ui/page-transition.mp3');
+      pageTransitionSfx.volume = 0.5;
+      setPageTransitionSound(pageTransitionSfx);
+
+      // Character voices
+      const characters = ['akira', 'felix', 'dante', 'kai', 'ryuu', 'zephyr'];
+      characters.forEach(characterId => {
+        const voice = new Audio(`/sounds/voices/${characterId}.mp3`);
+        voice.volume = 0.8;
+        setCharacterVoice(characterId, voice);
+      });
+
       // Start background music if not muted
       if (!isMuted) {
         bgMusic.play().catch(error => {
@@ -33,7 +63,16 @@ function App() {
     };
 
     initAudio();
-  }, [setBackgroundMusic, setHitSound, setSuccessSound, isMuted]);
+  }, [
+    setBackgroundMusic, 
+    setHitSound, 
+    setSuccessSound, 
+    setButtonHoverSound,
+    setButtonClickSound,
+    setPageTransitionSound,
+    setCharacterVoice,
+    isMuted
+  ]);
 
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden' }}>

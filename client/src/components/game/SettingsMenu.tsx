@@ -4,7 +4,8 @@ import { Label } from '../ui/label';
 import { Slider } from '../ui/slider';
 import { Switch } from '../ui/switch';
 import { useDatingSim } from '../../lib/stores/useDatingSim';
-import { X, Volume2, MessageSquare, Clock, RotateCcw } from 'lucide-react';
+import { useAudio } from '../../lib/stores/useAudio';
+import { X, Volume2, MessageSquare, Clock, RotateCcw, Mic, Music } from 'lucide-react';
 
 export function SettingsMenu() {
   const {
@@ -20,6 +21,14 @@ export function SettingsMenu() {
     resetGame
   } = useDatingSim();
   
+  const {
+    voiceVolume,
+    ambientVolume,
+    setVoiceVolume,
+    setAmbientVolume,
+    playButtonClick
+  } = useAudio();
+  
   const handleReset = () => {
     if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
       resetGame();
@@ -33,7 +42,10 @@ export function SettingsMenu() {
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <CardTitle className="text-xl">Settings</CardTitle>
           <Button
-            onClick={toggleSettings}
+            onClick={() => {
+              playButtonClick();
+              toggleSettings();
+            }}
             variant="ghost"
             size="sm"
             className="text-gray-400 hover:text-white"
@@ -79,6 +91,38 @@ export function SettingsMenu() {
                   />
                   <div className="text-xs text-gray-400 mt-1">
                     {Math.round(soundVolume * 100)}%
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <Label className="text-sm text-gray-300">Voice Acting Volume</Label>
+                <div className="mt-2">
+                  <Slider
+                    value={[voiceVolume * 100]}
+                    onValueChange={(value) => setVoiceVolume(value[0] / 100)}
+                    max={100}
+                    step={1}
+                    className="w-full"
+                  />
+                  <div className="text-xs text-gray-400 mt-1">
+                    {Math.round(voiceVolume * 100)}%
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <Label className="text-sm text-gray-300">Ambient Sounds Volume</Label>
+                <div className="mt-2">
+                  <Slider
+                    value={[ambientVolume * 100]}
+                    onValueChange={(value) => setAmbientVolume(value[0] / 100)}
+                    max={100}
+                    step={1}
+                    className="w-full"
+                  />
+                  <div className="text-xs text-gray-400 mt-1">
+                    {Math.round(ambientVolume * 100)}%
                   </div>
                 </div>
               </div>

@@ -5,7 +5,7 @@ import { Badge } from '../ui/badge';
 import { useDatingSim } from '../../lib/stores/useDatingSim';
 import { useAudio } from '../../lib/stores/useAudio';
 import { dialogueNodes } from '../../data/dialogue';
-import { ArrowLeft, Heart, Save, Settings, Volume2 } from 'lucide-react';
+import { ArrowLeft, Heart, Save, Settings, Volume2, VolumeX, Pause, Play, SkipForward } from 'lucide-react';
 
 export function DialogueBox() {
   const { 
@@ -21,19 +21,45 @@ export function DialogueBox() {
     toggleSaveLoad
   } = useDatingSim();
   
-  const { playHit } = useAudio();
+  const { 
+    playHit, 
+    playCharacterVoice, 
+    stopVoice, 
+    isVoicePlaying,
+    pauseVoice,
+    resumeVoice,
+    playAmbient,
+    stopAmbient,
+    playButtonClick
+  } = useAudio();
   const [displayedText, setDisplayedText] = useState('');
   const [isTextComplete, setIsTextComplete] = useState(false);
   
   const currentDialogue = currentDialogueId ? dialogueNodes[currentDialogueId] : null;
   const currentCharacter = currentCharacterId ? getCharacter(currentCharacterId) : null;
   
-  // Text animation effect
+  // Text animation and voice acting effect
   useEffect(() => {
     if (!currentDialogue) return;
     
     setDisplayedText('');
     setIsTextComplete(false);
+    
+    // Play character voice when dialogue starts
+    if (currentDialogue.characterId) {
+      playCharacterVoice(currentDialogue.characterId, currentDialogue.id);
+    }
+    
+    // Play ambient sound based on background
+    if (currentDialogue.background) {
+      if (currentDialogue.background.includes('castle')) {
+        playAmbient('castle');
+      } else if (currentDialogue.background.includes('forest')) {
+        playAmbient('forest');
+      } else if (currentDialogue.background.includes('library')) {
+        playAmbient('library');
+      }
+    }
     
     const text = currentDialogue.text;
     let currentIndex = 0;
@@ -54,10 +80,10 @@ export function DialogueBox() {
     }, 100 - textSpeed);
     
     return () => clearInterval(interval);
-  }, [currentDialogue, textSpeed, autoAdvance]);
+  }, [currentDialogue, textSpeed, autoAdvance, playCharacterVoice]);
   
   const handleChoiceSelect = (choice: any) => {
-    playHit();
+    playButtonClick();
     
     // Update affection if specified
     if (choice.affectionChange && choice.characterId) {
@@ -165,17 +191,39 @@ export function DialogueBox() {
       <div className="absolute bottom-4 left-4 right-4 z-20">
         <Card className="bg-black/80 backdrop-blur-sm border-white/20">
           <CardContent className="p-6">
-            {/* Speaker Name */}
-            <div className="flex items-center gap-2 mb-3">
-              <Badge variant="secondary" className="bg-purple-600 text-white">
-                {currentDialogue.speaker}
-              </Badge>
-              {currentCharacter && currentDialogue.characterId && (
-                <Badge variant="outline" className="border-pink-400 text-pink-400">
-                  <Heart className="w-3 h-3 mr-1" />
-                  {currentCharacter.affection}
+            {/* Speaker Name and Voice Controls */}
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <Badge variant="secondary" className="bg-purple-600 text-white">
+                  {currentDialogue.speaker}
                 </Badge>
-              )}
+                {currentCharacter && currentDialogue.characterId && (
+                  <Badge variant="outline" className="border-pink-400 text-pink-400">
+                    <Heart className="w-3 h-3 mr-1" />
+                    {currentCharacter.affection}
+                  </Badge>
+                )}
+              </div>
+              
+              {/* Voice Controls */}
+              <div className="flex items-center gap-1">
+                <Button
+                  onClick={isVoicePlaying ? pauseVoice : resumeVoice}
+                  variant="ghost"
+                  size="sm"
+                  className="text-white hover:bg-white/10 p-1 h-8 w-8"
+                >
+                  {isVoicePlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                </Button>
+                <Button
+                  onClick={stopVoice}
+                  variant="ghost"
+                  size="sm"
+                  className="text-white hover:bg-white/10 p-1 h-8 w-8"
+                >
+                  <SkipForward className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
             
             {/* Dialogue Text */}

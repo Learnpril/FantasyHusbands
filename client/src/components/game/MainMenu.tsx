@@ -6,9 +6,18 @@ import { Heart, Play, Save, Settings, Volume2, VolumeX } from 'lucide-react';
 
 export function MainMenu() {
   const { setPhase, toggleSettings, toggleSaveLoad, getSaves } = useDatingSim();
-  const { toggleMute, isMuted } = useAudio();
+  const { toggleMute, isMuted, playButtonClick, playButtonHover, playPageTransition } = useAudio();
   
   const saves = getSaves();
+  
+  const handleMenuAction = (action: () => void, playTransition = false) => {
+    if (playTransition) {
+      playPageTransition();
+    } else {
+      playButtonClick();
+    }
+    action();
+  };
   
   return (
     <div 
@@ -50,7 +59,8 @@ export function MainMenu() {
           <div className="space-y-4">
             {/* New Game Button */}
             <button
-              onClick={() => setPhase('character-selection')}
+              onClick={() => handleMenuAction(() => setPhase('character-selection'), true)}
+              onMouseEnter={() => playButtonHover()}
               className="group relative w-full py-4 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg border-2 border-purple-300/50 shadow-lg group-hover:shadow-purple-500/50 group-hover:border-purple-300"></div>
@@ -63,7 +73,8 @@ export function MainMenu() {
             {/* Load Game Button */}
             {saves.length > 0 && (
               <button
-                onClick={() => toggleSaveLoad()}
+                onClick={() => handleMenuAction(() => toggleSaveLoad())}
+                onMouseEnter={() => playButtonHover()}
                 className="group relative w-full py-4 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105"
               >
                 <div className="absolute inset-0 bg-transparent rounded-lg border-2 border-purple-300/60 shadow-lg group-hover:shadow-purple-400/50 group-hover:border-purple-300 group-hover:bg-purple-600/20"></div>
@@ -76,7 +87,8 @@ export function MainMenu() {
             
             {/* Settings Button */}
             <button
-              onClick={() => toggleSettings()}
+              onClick={() => handleMenuAction(() => toggleSettings())}
+              onMouseEnter={() => playButtonHover()}
               className="group relative w-full py-4 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105"
             >
               <div className="absolute inset-0 bg-transparent rounded-lg border-2 border-purple-300/60 shadow-lg group-hover:shadow-purple-400/50 group-hover:border-purple-300 group-hover:bg-purple-600/20"></div>
@@ -88,7 +100,8 @@ export function MainMenu() {
             
             {/* Audio Toggle Button */}
             <button
-              onClick={() => toggleMute()}
+              onClick={() => handleMenuAction(() => toggleMute())}
+              onMouseEnter={() => playButtonHover()}
               className="group relative w-full py-3 px-6 text-purple-200 font-medium transition-all duration-300 hover:text-white"
             >
               <div className="relative flex items-center justify-center">
