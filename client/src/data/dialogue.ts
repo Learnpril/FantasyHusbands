@@ -235,8 +235,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'kai',
     speaker: 'Kai',
     text: '*emerges from the shadows* You shouldn\'t wander alone at night. The darkness holds more dangers than you know. I am Kai.',
-    background: '/images/backgrounds/forest.svg',
-    characterSprite: '/images/characters/kai.svg',
+    background: '/images/characters/kai.png',
     choices: [
       {
         id: 'kai_choice_1',
@@ -267,8 +266,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'kai',
     speaker: 'Kai',
     text: '*nods approvingly* Wisdom. Those who heed warnings tend to live longer. I respect that.',
-    background: '/images/backgrounds/forest.svg',
-    characterSprite: '/images/characters/kai.svg',
+    background: '/images/characters/kai.png',
     choices: [
       {
         id: 'continue',
@@ -283,8 +281,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'kai',
     speaker: 'Kai',
     text: '*slight smile* Good. If I can startle you, so can enemies. Consider it a lesson in awareness.',
-    background: '/images/backgrounds/forest.svg',
-    characterSprite: '/images/characters/kai.svg',
+    background: '/images/characters/kai.png',
     choices: [
       {
         id: 'continue',
@@ -299,8 +296,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'kai',
     speaker: 'Kai',
     text: '*raises an eyebrow* Perhaps. But confidence without caution is how people end up dead. Remember that.',
-    background: '/images/backgrounds/forest.svg',
-    characterSprite: '/images/characters/kai.svg',
+    background: '/images/characters/kai.png',
     choices: [
       {
         id: 'continue',

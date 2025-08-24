@@ -50,7 +50,7 @@ export const characters: Character[] = [
     occupation: 'Royal Assassin',
     personality: 'Mysterious and aloof, but deeply passionate beneath the surface',
     backstory: 'Once an orphan on the streets, Kai was taken in by the royal spy network and trained in the arts of stealth and combat. He operates in the shadows to protect the kingdom, though few know of his true role.',
-    sprite: '/images/characters/kai.svg',
+    sprite: '/images/characters/kai.png',
     affection: 0,
     maxAffection: 100,
     favoriteGifts: ['throwing knife', 'shadow cloak', 'rare poison'],
