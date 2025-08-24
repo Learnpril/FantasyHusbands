@@ -7,6 +7,7 @@ import { useAudio } from '../../lib/stores/useAudio';
 import { dialogueNodes } from '../../data/dialogue';
 import { ArrowLeft, Heart, Save, Settings, Volume2, VolumeX, Pause, Play, SkipForward } from 'lucide-react';
 import { AudioControls } from '../ui/AudioControls';
+import { VoiceTest } from '../ui/VoiceTest';
 
 export function DialogueBox() {
   const { 
@@ -48,6 +49,7 @@ export function DialogueBox() {
     
     // Play character voice when dialogue starts
     if (currentDialogue.characterId) {
+      console.log(`Auto-playing voice for ${currentDialogue.characterId}, dialogue: ${currentDialogue.id}`);
       playCharacterVoice(currentDialogue.characterId, currentDialogue.id);
     }
     
@@ -243,6 +245,9 @@ export function DialogueBox() {
                 </Button>
               </div>
             </div>
+            
+            {/* Voice Test - Temporary for debugging */}
+            <VoiceTest />
             
             {/* Dialogue Text */}
             <div 

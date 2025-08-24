@@ -243,7 +243,7 @@ export const useAudio = create<AudioState>((set, get) => ({
     if (voiceAudio && voiceVolume > 0) {
       voiceAudio.currentTime = 0;
       voiceAudio.volume = voiceVolume * masterVolume;
-      voiceAudio.muted = isMuted; // Respect global mute
+      voiceAudio.muted = false; // Voices should not be affected by global mute
       
       set({ 
         currentVoice: voiceAudio,
@@ -272,9 +272,10 @@ export const useAudio = create<AudioState>((set, get) => ({
       };
       
       voiceAudio.play().catch(error => {
-        console.log(`Voice play prevented for ${voiceKey}:`, error);
-        // Try to load and play a simple test sound to verify voice system works
-        console.log(`Attempting to play voice file: /sounds/voices/${characterId}.mp3`);
+        console.error(`Voice play prevented for ${voiceKey}:`, error);
+        console.log(`File path: /sounds/voices/${characterId}.mp3`);
+        console.log(`Voice volume: ${voiceVolume}, Master volume: ${masterVolume}`);
+        console.log(`Audio element:`, voiceAudio);
         set({ 
           isVoicePlaying: false,
           currentVoiceId: null
@@ -282,6 +283,8 @@ export const useAudio = create<AudioState>((set, get) => ({
       });
     } else {
       console.log(`Voice not found for ${characterId} or voice volume is 0`);
+      console.log(`Available voices:`, Object.keys(characterVoices));
+      console.log(`Voice volume: ${voiceVolume}, Master volume: ${masterVolume}`);
     }
   },
   
