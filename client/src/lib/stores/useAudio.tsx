@@ -93,47 +93,13 @@ export const useAudio = create<AudioState>((set, get) => ({
   
   // Setters
   setBackgroundMusic: (music) => {
-    const { backgroundMusic } = get();
-    
-    // Prevent setting music if we already have the same global instance
-    if (window.globalBackgroundMusic && music === window.globalBackgroundMusic) {
-      if (backgroundMusic !== music) {
-        console.log("🎵 Setting global background music in store");
-        set({ backgroundMusic: music });
-      }
-      return;
-    }
-    
-    // If trying to set a different music instance, destroy it and use global
-    if (music && music !== window.globalBackgroundMusic) {
-      console.log("🎵 Rejecting non-global background music instance");
+    // Background music is disabled - reject all attempts to set it
+    console.log("🔇 Background music disabled - ignoring setBackgroundMusic call");
+    if (music) {
       music.pause();
       music.src = '';
-      
-      // Use the global instance instead
-      if (window.globalBackgroundMusic) {
-        set({ backgroundMusic: window.globalBackgroundMusic });
-      }
-      return;
     }
-    
-    // Clean up any rogue audio elements
-    const existingAudio = document.querySelectorAll('audio');
-    existingAudio.forEach(audio => {
-      if (audio.src.includes('background.mp3') && audio !== window.globalBackgroundMusic) {
-        audio.pause();
-        audio.currentTime = 0;
-        audio.src = '';
-        if (audio.parentNode) {
-          audio.parentNode.removeChild(audio);
-        }
-      }
-    });
-    
-    if (music) {
-      console.log("🎵 Setting background music in store");
-      set({ backgroundMusic: music });
-    }
+    set({ backgroundMusic: null });
   },
   setAmbientSound: (sound) => set({ ambientSound: sound }),
   setHitSound: (sound) => set({ hitSound: sound }),
@@ -187,25 +153,13 @@ export const useAudio = create<AudioState>((set, get) => ({
     
     set({ isMusicMuted: newMutedState });
     
-    // Always use the global background music instance
-    const music = window.globalBackgroundMusic;
-    if (music) {
-      if (newMutedState) {
-        music.pause();
-        console.log('🎵 Music muted - paused global instance');
-      } else {
-        music.play().catch(error => {
-          console.log("Background music play prevented:", error);
-        });
-        console.log('🎵 Music unmuted - playing global instance');
-      }
-    }
+    console.log('🔇 Background music disabled - music mute toggle has no effect');
     
     if (ambientSound) {
       ambientSound.muted = newMutedState;
     }
     
-    console.log(`Music ${newMutedState ? 'muted' : 'unmuted'}`);
+    console.log(`Music controls ${newMutedState ? 'muted' : 'unmuted'} (background music disabled)`);
   },
   
   toggleSoundMute: () => {
@@ -374,23 +328,17 @@ export const useAudio = create<AudioState>((set, get) => ({
     }
   },
   
-  // Only stop ambient sounds - NEVER touch the global background music
+  // Stop ambient sounds and any remaining background music
   stopAllMusic: () => {
     const { ambientSound } = get();
     
-    console.log("🎵 Stopping ambient sounds only, preserving global background music");
+    console.log("🔇 Stopping all music and ambient sounds (background music disabled)");
     
-    // Only stop ambient sounds and any rogue background music that isn't our global instance
+    // Stop ALL audio including any remaining background music
     const existingAudio = document.querySelectorAll('audio');
     existingAudio.forEach(audio => {
-      if (audio.src.includes('ambient/')) {
-        audio.pause();
-        audio.currentTime = 0;
-        audio.src = '';
-      }
-      // Kill any background music that isn't our global singleton
-      if (audio.src.includes('background.mp3') && audio !== window.globalBackgroundMusic) {
-        console.log("🎵 Destroying rogue background music instance");
+      if (audio.src.includes('ambient/') || audio.src.includes('background.mp3')) {
+        console.log("🔇 Stopping audio:", audio.src);
         audio.pause();
         audio.currentTime = 0;
         audio.src = '';
@@ -400,14 +348,14 @@ export const useAudio = create<AudioState>((set, get) => ({
       }
     });
     
-    // Only clear ambient sound, never touch global background music
+    // Clear ambient sound
     if (ambientSound) {
       ambientSound.pause();
       ambientSound.currentTime = 0;
       ambientSound.src = '';
     }
     
-    set({ ambientSound: null }); // Keep backgroundMusic untouched
+    set({ ambientSound: null, backgroundMusic: null });
   },
 
   playAmbient: (soundKey: string) => {

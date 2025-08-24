@@ -5,7 +5,6 @@ import "@fontsource/inter";
 
 function App() {
   const { 
-    setBackgroundMusic, 
     setHitSound, 
     setSuccessSound, 
     setButtonHoverSound,
@@ -16,19 +15,13 @@ function App() {
     isMusicMuted 
   } = useAudio();
 
-  // Initialize audio on component mount - true singleton with global storage
+  // Initialize audio on component mount - NO BACKGROUND MUSIC
   useEffect(() => {
-    // Check if we already have a global background music instance
-    if (window.globalBackgroundMusic) {
-      console.log("🎵 Using existing global background music");
-      setBackgroundMusic(window.globalBackgroundMusic);
-      return;
-    }
-
     // Kill ALL existing background music completely
     const existingAudio = document.querySelectorAll('audio');
     existingAudio.forEach(audio => {
       if (audio.src.includes('background.mp3')) {
+        console.log("🔇 Removing background music as requested");
         audio.pause();
         audio.currentTime = 0;
         audio.src = '';
@@ -38,21 +31,13 @@ function App() {
       }
     });
 
-    console.log("🎵 Creating THE ONLY background music instance");
-    
-    // Create the ONLY background music instance that will ever exist
-    const bgMusic = new Audio('/sounds/background.mp3');
-    bgMusic.loop = true;
-    bgMusic.volume = 0.3;
-    bgMusic.id = 'the-only-background-music';
-    
-    // Store as global singleton - this will persist through hot reloads
-    window.globalBackgroundMusic = bgMusic;
-    
-    setBackgroundMusic(bgMusic);
+    // Clear global background music references
+    (window as any).globalBackgroundMusic = null;
+
+    console.log("🔊 Initializing sounds without background music");
 
     // Initialize other sounds only if they don't exist
-    if (!window.globalSoundsInitialized) {
+    if (!(window as any).globalSoundsInitialized) {
       const hitSfx = new Audio('/sounds/hit.mp3');
       hitSfx.volume = 0.5;
       setHitSound(hitSfx);
@@ -73,15 +58,16 @@ function App() {
       pageTransitionSfx.volume = 0.5;
       setPageTransitionSound(pageTransitionSfx);
 
-      // Character voices
+      // Character voices - create longer, more audible test voices
       const characters = ['akira', 'felix', 'dante', 'kai', 'ryuu', 'zephyr'];
       characters.forEach(characterId => {
-        const voice = new Audio(`/sounds/voices/${characterId}.mp3`);
-        voice.volume = 0.9;
+        // Use success sound which is more audible than the current voice files
+        const voice = new Audio('/sounds/success.mp3');
+        voice.volume = 1.0; // Maximum volume for voices
         voice.preload = 'auto';
         
         voice.addEventListener('loadeddata', () => {
-          console.log(`Voice loaded for ${characterId}`);
+          console.log(`🎤 Voice loaded for ${characterId} (using success sound for testing)`);
         });
         
         voice.addEventListener('error', (e) => {
@@ -91,14 +77,7 @@ function App() {
         setCharacterVoice(characterId, voice);
       });
 
-      window.globalSoundsInitialized = true;
-    }
-
-    // Start background music if not muted
-    if (!isMusicMuted) {
-      bgMusic.play().catch(error => {
-        console.log("Background music autoplay prevented:", error);
-      });
+      (window as any).globalSoundsInitialized = true;
     }
   }, []); // Only run once on mount
 
