@@ -23,7 +23,7 @@ export function CharacterCard({ character, onClick }: CharacterCardProps) {
           <img 
             src={character.sprite} 
             alt={character.name}
-            className={`w-full h-full object-cover ${character.id === 'felix' ? 'object-[center_25%]' : 'object-top'}`}
+            className={`w-full h-full object-cover ${(character.id === 'felix' || character.id === 'akira') ? 'object-[center_25%]' : 'object-top'}`}
             onError={(e) => {
               // Fallback to icon if image fails to load
               e.currentTarget.style.display = 'none';
