@@ -239,60 +239,95 @@ export const useAudio = create<AudioState>((set, get) => ({
       window.speechSynthesis.cancel();
     }
     
+    // Filter out action text in asterisks - only speak the dialogue
+    const cleanText = text.replace(/\*[^*]*\*/g, '').trim();
+    
+    if (!cleanText) {
+      console.log(`No dialogue to speak for ${characterId} after filtering actions`);
+      return;
+    }
+    
     // Create speech synthesis utterance
-    const utterance = new SpeechSynthesisUtterance(text);
+    const utterance = new SpeechSynthesisUtterance(cleanText);
     
     // Wait for voices to load if needed
     const configureAndSpeak = (voices: SpeechSynthesisVoice[]) => {
       let selectedVoice = null;
       
-      // Try to find appropriate voices for each character
+      // Find realistic male voices for each character
+      const maleVoices = voices.filter(voice => 
+        voice.lang.startsWith('en') && 
+        (voice.name.toLowerCase().includes('male') || 
+         voice.name.toLowerCase().includes('man') ||
+         voice.name.toLowerCase().includes('david') ||
+         voice.name.toLowerCase().includes('daniel') ||
+         voice.name.toLowerCase().includes('alex') ||
+         voice.name.toLowerCase().includes('james') ||
+         voice.name.toLowerCase().includes('thomas') ||
+         voice.name.toLowerCase().includes('aaron') ||
+         voice.name.toLowerCase().includes('mark') ||
+         voice.name.toLowerCase().includes('paul') ||
+         voice.name.toLowerCase().includes('mike') ||
+         voice.name.toLowerCase().includes('john'))
+      );
+      
+      // Assign different voices to each character
       switch (characterId) {
-      case 'akira':
-        selectedVoice = voices.find(voice => 
-          voice.name.includes('Male') || voice.name.includes('Daniel') || voice.gender === 'male'
-        ) || voices.find(voice => voice.lang.startsWith('en'));
-        utterance.pitch = 0.9;
-        utterance.rate = 0.9;
-        break;
-      case 'felix':
-        selectedVoice = voices.find(voice => 
-          voice.name.includes('Male') || voice.name.includes('Alex') || voice.gender === 'male'
-        ) || voices.find(voice => voice.lang.startsWith('en'));
-        utterance.pitch = 1.1;
-        utterance.rate = 1.0;
-        break;
-      case 'dante':
-        selectedVoice = voices.find(voice => 
-          voice.name.includes('Male') || voice.name.includes('Thomas') || voice.gender === 'male'
-        ) || voices.find(voice => voice.lang.startsWith('en'));
-        utterance.pitch = 0.8;
-        utterance.rate = 0.8;
-        break;
-      case 'kai':
-        selectedVoice = voices.find(voice => 
-          voice.name.includes('Male') || voice.name.includes('Aaron') || voice.gender === 'male'
-        ) || voices.find(voice => voice.lang.startsWith('en'));
-        utterance.pitch = 1.0;
-        utterance.rate = 1.1;
-        break;
-      case 'ryuu':
-        selectedVoice = voices.find(voice => 
-          voice.name.includes('Male') || voice.name.includes('James') || voice.gender === 'male'
-        ) || voices.find(voice => voice.lang.startsWith('en'));
-        utterance.pitch = 0.85;
-        utterance.rate = 0.9;
-        break;
-      case 'zephyr':
-        selectedVoice = voices.find(voice => 
-          voice.name.includes('Male') || voice.name.includes('David') || voice.gender === 'male'
-        ) || voices.find(voice => voice.lang.startsWith('en'));
-        utterance.pitch = 1.05;
-        utterance.rate = 0.95;
-        break;
+        case 'akira':
+          // Deep, authoritative voice
+          selectedVoice = maleVoices.find(voice => 
+            voice.name.toLowerCase().includes('david') || 
+            voice.name.toLowerCase().includes('daniel')
+          ) || maleVoices[0] || voices.find(voice => voice.lang.startsWith('en'));
+          utterance.pitch = 0.8; // Deep voice
+          break;
+        case 'felix':
+          // Charming, smooth voice
+          selectedVoice = maleVoices.find(voice => 
+            voice.name.toLowerCase().includes('alex') || 
+            voice.name.toLowerCase().includes('mark')
+          ) || maleVoices[1] || voices.find(voice => voice.lang.startsWith('en'));
+          utterance.pitch = 0.9; // Smooth voice
+          break;
+        case 'dante':
+          // Romantic, refined voice
+          selectedVoice = maleVoices.find(voice => 
+            voice.name.toLowerCase().includes('thomas') || 
+            voice.name.toLowerCase().includes('paul')
+          ) || maleVoices[2] || voices.find(voice => voice.lang.startsWith('en'));
+          utterance.pitch = 0.85; // Refined voice
+          break;
+        case 'kai':
+          // Mysterious, cool voice
+          selectedVoice = maleVoices.find(voice => 
+            voice.name.toLowerCase().includes('aaron') || 
+            voice.name.toLowerCase().includes('mike')
+          ) || maleVoices[3] || voices.find(voice => voice.lang.startsWith('en'));
+          utterance.pitch = 0.75; // Lower, mysterious voice
+          break;
+        case 'ryuu':
+          // Strong, confident voice
+          selectedVoice = maleVoices.find(voice => 
+            voice.name.toLowerCase().includes('james') || 
+            voice.name.toLowerCase().includes('john')
+          ) || maleVoices[4] || voices.find(voice => voice.lang.startsWith('en'));
+          utterance.pitch = 0.9; // Strong voice
+          break;
+        case 'zephyr':
+          // Intelligent, sophisticated voice
+          selectedVoice = maleVoices.find(voice => 
+            voice.name.toLowerCase().includes('daniel') || 
+            voice.name.toLowerCase().includes('david')
+          ) || maleVoices[5] || voices.find(voice => voice.lang.startsWith('en'));
+          utterance.pitch = 0.95; // Sophisticated voice
+          break;
         default:
-          selectedVoice = voices.find(voice => voice.lang.startsWith('en'));
+          selectedVoice = maleVoices[0] || voices.find(voice => voice.lang.startsWith('en'));
+          utterance.pitch = 0.9;
       }
+      
+      // Set normal pace for all characters
+      utterance.rate = 1.0;
       
       if (selectedVoice) {
         utterance.voice = selectedVoice;
@@ -306,7 +341,7 @@ export const useAudio = create<AudioState>((set, get) => ({
           isVoicePlaying: true,
           currentVoiceId: `${characterId}_tts`
         });
-        console.log(`🎤 Speaking as ${characterId}: "${text.substring(0, 50)}..."`);
+        console.log(`🎤 Speaking as ${characterId}: "${cleanText.substring(0, 50)}..."`);
       };
       
       utterance.onend = () => {
