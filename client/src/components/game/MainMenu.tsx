@@ -46,7 +46,7 @@ export function MainMenu() {
               <img 
                 src="/images/logo.png" 
                 alt="Fantasy Hearts" 
-                className="w-64 h-auto mx-auto"
+                className="w-96 h-auto mx-auto"
               />
             </div>
             
