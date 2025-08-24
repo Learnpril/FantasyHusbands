@@ -6,6 +6,7 @@ import { useDatingSim } from '../../lib/stores/useDatingSim';
 import { useAudio } from '../../lib/stores/useAudio';
 import { dialogueNodes } from '../../data/dialogue';
 import { ArrowLeft, Heart, Save, Settings, Volume2, VolumeX, Pause, Play, SkipForward } from 'lucide-react';
+import { AudioControls } from '../ui/AudioControls';
 
 export function DialogueBox() {
   const { 
@@ -184,6 +185,8 @@ export function DialogueBox() {
           >
             <Settings className="w-4 h-4" />
           </Button>
+          
+          <AudioControls size="sm" variant="minimal" />
         </div>
       </div>
       

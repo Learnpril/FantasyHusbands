@@ -3,6 +3,7 @@ import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { useDatingSim } from '../../lib/stores/useDatingSim';
 import { CharacterCard } from './CharacterCard';
+import { AudioControls } from '../ui/AudioControls';
 import { ArrowLeft, Heart } from 'lucide-react';
 
 export function CharacterSelection() {
@@ -27,7 +28,7 @@ export function CharacterSelection() {
             <p className="text-gray-300 text-sm sm:text-base">Select a character to begin your romantic journey</p>
           </div>
           
-          <div className="hidden sm:block w-24"></div> {/* Spacer for centering on desktop */}
+          <AudioControls size="md" />
         </div>
         
         {/* Character Grid */}

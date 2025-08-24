@@ -6,6 +6,7 @@ import { Switch } from '../ui/switch';
 import { useDatingSim } from '../../lib/stores/useDatingSim';
 import { useAudio } from '../../lib/stores/useAudio';
 import { X, Volume2, MessageSquare, Clock, RotateCcw, Mic, Music } from 'lucide-react';
+import { AudioControls } from '../ui/AudioControls';
 
 export function SettingsMenu() {
   const {
@@ -41,8 +42,10 @@ export function SettingsMenu() {
       <Card className="w-full max-w-md bg-gray-900 border-gray-700 text-white">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <CardTitle className="text-xl">Settings</CardTitle>
-          <Button
-            onClick={() => {
+          <div className="flex items-center gap-2">
+            <AudioControls size="sm" variant="minimal" />
+            <Button
+              onClick={() => {
               playButtonClick();
               toggleSettings();
             }}
@@ -52,6 +55,7 @@ export function SettingsMenu() {
           >
             <X className="w-4 h-4" />
           </Button>
+          </div>
         </CardHeader>
         
         <CardContent className="space-y-6">

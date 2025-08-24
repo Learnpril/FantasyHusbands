@@ -5,6 +5,7 @@ import { Label } from '../ui/label';
 import { useDatingSim } from '../../lib/stores/useDatingSim';
 import { useState } from 'react';
 import { X, Save, Trash2, Clock } from 'lucide-react';
+import { AudioControls } from '../ui/AudioControls';
 
 export function SaveLoadMenu() {
   const {
@@ -34,14 +35,17 @@ export function SaveLoadMenu() {
       <Card className="w-full max-w-2xl bg-gray-900 border-gray-700 text-white max-h-[80vh] overflow-y-auto">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <CardTitle className="text-xl">Save & Load Game</CardTitle>
-          <Button
-            onClick={toggleSaveLoad}
-            variant="ghost"
-            size="sm"
-            className="text-gray-400 hover:text-white"
-          >
-            <X className="w-4 h-4" />
-          </Button>
+          <div className="flex items-center gap-2">
+            <AudioControls size="sm" variant="minimal" />
+            <Button
+              onClick={toggleSaveLoad}
+              variant="ghost"
+              size="sm"
+              className="text-gray-400 hover:text-white"
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
         </CardHeader>
         
         <CardContent className="space-y-6">

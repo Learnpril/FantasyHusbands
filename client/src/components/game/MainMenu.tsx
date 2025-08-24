@@ -2,17 +2,12 @@ import { Card, CardContent } from '../ui/card';
 import { Button } from '../ui/button';
 import { useDatingSim } from '../../lib/stores/useDatingSim';
 import { useAudio } from '../../lib/stores/useAudio';
-import { Heart, Play, Save, Settings, Volume2, VolumeX, Music, Zap } from 'lucide-react';
+import { Heart, Play, Save, Settings } from 'lucide-react';
+import { AudioControls } from '../ui/AudioControls';
 
 export function MainMenu() {
   const { setPhase, toggleSettings, toggleSaveLoad, getSaves } = useDatingSim();
   const { 
-    toggleMute, 
-    toggleMusicMute, 
-    toggleSoundMute, 
-    isMuted, 
-    isMusicMuted, 
-    isSoundMuted, 
     playButtonClick, 
     playButtonHover, 
     playPageTransition 
@@ -108,37 +103,9 @@ export function MainMenu() {
               </div>
             </button>
             
-            {/* Audio Toggle Buttons */}
-            <div className="flex gap-2">
-              <button
-                onClick={() => handleMenuAction(() => toggleMusicMute())}
-                onMouseEnter={() => playButtonHover()}
-                className="group relative flex-1 py-3 px-4 text-purple-200 font-medium transition-all duration-300 hover:text-white"
-              >
-                <div className="relative flex items-center justify-center">
-                  {isMusicMuted ? (
-                    <VolumeX className="w-4 h-4 mr-2" />
-                  ) : (
-                    <Music className="w-4 h-4 mr-2" />
-                  )}
-                  {isMusicMuted ? 'Music Off' : 'Music On'}
-                </div>
-              </button>
-              
-              <button
-                onClick={() => handleMenuAction(() => toggleSoundMute())}
-                onMouseEnter={() => playButtonHover()}
-                className="group relative flex-1 py-3 px-4 text-purple-200 font-medium transition-all duration-300 hover:text-white"
-              >
-                <div className="relative flex items-center justify-center">
-                  {isSoundMuted ? (
-                    <VolumeX className="w-4 h-4 mr-2" />
-                  ) : (
-                    <Zap className="w-4 h-4 mr-2" />
-                  )}
-                  {isSoundMuted ? 'SFX Off' : 'SFX On'}
-                </div>
-              </button>
+            {/* Audio Controls */}
+            <div className="flex justify-center">
+              <AudioControls size="lg" />
             </div>
           </div>
           
