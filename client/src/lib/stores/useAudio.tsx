@@ -75,60 +75,158 @@ export const useAudio = create<AudioState>((set, get) => ({
         if (!context) return;
         
         try {
-          // Create a simple, pleasant background loop
-          const createTone = (frequency: number, startTime: number, duration: number, volume: number = 0.05) => {
+          // Create sophisticated medieval fantasy soundscape
+          const createInstrument = (frequency: number, startTime: number, duration: number, type: 'bass' | 'chord' | 'melody' | 'arp', volume: number = 0.05) => {
             const oscillator = context.createOscillator();
             const gainNode = context.createGain();
+            const filterNode = context.createBiquadFilter();
             
-            oscillator.connect(gainNode);
+            oscillator.connect(filterNode);
+            filterNode.connect(gainNode);
             gainNode.connect(context.destination);
             
             oscillator.frequency.setValueAtTime(frequency, startTime);
-            oscillator.type = 'sine';
             
+            // Different instrument timbres
+            switch (type) {
+              case 'bass':
+                oscillator.type = 'sawtooth';
+                filterNode.type = 'lowpass';
+                filterNode.frequency.setValueAtTime(300, startTime);
+                break;
+              case 'chord':
+                oscillator.type = 'triangle';
+                filterNode.type = 'bandpass';
+                filterNode.frequency.setValueAtTime(800, startTime);
+                break;
+              case 'melody':
+                oscillator.type = 'sine';
+                filterNode.type = 'highpass';
+                filterNode.frequency.setValueAtTime(400, startTime);
+                // Add vibrato for more organic sound
+                const vibrato = context.createOscillator();
+                const vibratoGain = context.createGain();
+                vibrato.frequency.setValueAtTime(5, startTime);
+                vibratoGain.gain.setValueAtTime(10, startTime);
+                vibrato.connect(vibratoGain);
+                vibratoGain.connect(oscillator.frequency);
+                vibrato.start(startTime);
+                vibrato.stop(startTime + duration);
+                break;
+              case 'arp':
+                oscillator.type = 'square';
+                filterNode.type = 'lowpass';
+                filterNode.frequency.setValueAtTime(1200, startTime);
+                // Add resonance for more character
+                filterNode.Q.setValueAtTime(5, startTime);
+                break;
+            }
+            
+            // Dynamic envelope based on instrument type
             gainNode.gain.setValueAtTime(0, startTime);
-            gainNode.gain.linearRampToValueAtTime(volume, startTime + 0.1);
-            gainNode.gain.linearRampToValueAtTime(volume * 0.7, startTime + duration - 0.5);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+            if (type === 'bass') {
+              gainNode.gain.linearRampToValueAtTime(volume, startTime + 0.05);
+              gainNode.gain.setValueAtTime(volume * 0.8, startTime + duration - 0.2);
+              gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+            } else if (type === 'arp') {
+              gainNode.gain.linearRampToValueAtTime(volume, startTime + 0.01);
+              gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + 0.3);
+            } else {
+              gainNode.gain.linearRampToValueAtTime(volume, startTime + 0.1);
+              gainNode.gain.linearRampToValueAtTime(volume * 0.6, startTime + duration - 0.5);
+              gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+            }
             
             oscillator.start(startTime);
             oscillator.stop(startTime + duration);
           };
           
-          // Simple fantasy chord progression
-          const playChord = (startTime: number) => {
-            // Am chord (A-C-E)
-            createTone(220, startTime, 2, 0.03); // A3
-            createTone(261.63, startTime, 2, 0.025); // C4
-            createTone(329.63, startTime, 2, 0.02); // E4
+          // Medieval fantasy chord progression (Am - F - C - G - Dm - Am - E - Am)
+          const playFantasyProgression = (startTime: number) => {
+            const chordDuration = 1.5;
             
-            // F chord (F-A-C) 
-            createTone(174.61, startTime + 2, 2, 0.03); // F3
-            createTone(220, startTime + 2, 2, 0.025); // A3
-            createTone(261.63, startTime + 2, 2, 0.02); // C4
+            // Chord 1: Am (A minor) - mysterious opening
+            createInstrument(110, startTime, chordDuration * 2, 'bass', 0.04); // A2
+            createInstrument(220, startTime + 0.1, chordDuration, 'chord', 0.025); // A3
+            createInstrument(261.63, startTime + 0.2, chordDuration, 'chord', 0.02); // C4
+            createInstrument(329.63, startTime + 0.3, chordDuration, 'chord', 0.018); // E4
+            // Arpeggiated pattern
+            createInstrument(440, startTime + 0.4, 0.3, 'arp', 0.015); // A4
+            createInstrument(523.25, startTime + 0.8, 0.3, 'arp', 0.012); // C5
+            createInstrument(659.25, startTime + 1.2, 0.3, 'arp', 0.01); // E5
             
-            // C chord (C-E-G)
-            createTone(130.81, startTime + 4, 2, 0.03); // C3
-            createTone(164.81, startTime + 4, 2, 0.025); // E3
-            createTone(196, startTime + 4, 2, 0.02); // G3
+            // Chord 2: F major - hopeful lift
+            const t1 = startTime + chordDuration;
+            createInstrument(87.31, t1, chordDuration * 2, 'bass', 0.04); // F2
+            createInstrument(174.61, t1 + 0.1, chordDuration, 'chord', 0.025); // F3
+            createInstrument(220, t1 + 0.2, chordDuration, 'chord', 0.02); // A3
+            createInstrument(261.63, t1 + 0.3, chordDuration, 'chord', 0.018); // C4
+            createInstrument(349.23, t1 + 0.4, 0.3, 'arp', 0.015); // F4
+            createInstrument(440, t1 + 0.8, 0.3, 'arp', 0.012); // A4
             
-            // G chord (G-B-D)
-            createTone(98, startTime + 6, 2, 0.03); // G2
-            createTone(123.47, startTime + 6, 2, 0.025); // B2
-            createTone(146.83, startTime + 6, 2, 0.02); // D3
+            // Chord 3: C major - bright resolution
+            const t2 = startTime + chordDuration * 2;
+            createInstrument(65.41, t2, chordDuration * 2, 'bass', 0.04); // C2
+            createInstrument(130.81, t2 + 0.1, chordDuration, 'chord', 0.025); // C3
+            createInstrument(164.81, t2 + 0.2, chordDuration, 'chord', 0.02); // E3
+            createInstrument(196, t2 + 0.3, chordDuration, 'chord', 0.018); // G3
+            createInstrument(261.63, t2 + 0.4, 0.3, 'arp', 0.015); // C4
+            createInstrument(329.63, t2 + 0.8, 0.3, 'arp', 0.012); // E4
+            createInstrument(392, t2 + 1.2, 0.3, 'arp', 0.01); // G4
+            
+            // Chord 4: G major - return to mystery
+            const t3 = startTime + chordDuration * 3;
+            createInstrument(98, t3, chordDuration * 2, 'bass', 0.04); // G2
+            createInstrument(196, t3 + 0.1, chordDuration, 'chord', 0.025); // G3
+            createInstrument(246.94, t3 + 0.2, chordDuration, 'chord', 0.02); // B3
+            createInstrument(293.66, t3 + 0.3, chordDuration, 'chord', 0.018); // D4
+            
+            // Chord 5: Dm (D minor) - deeper mystery
+            const t4 = startTime + chordDuration * 4;
+            createInstrument(73.42, t4, chordDuration * 2, 'bass', 0.04); // D2
+            createInstrument(146.83, t4 + 0.1, chordDuration, 'chord', 0.025); // D3
+            createInstrument(174.61, t4 + 0.2, chordDuration, 'chord', 0.02); // F3
+            createInstrument(220, t4 + 0.3, chordDuration, 'chord', 0.018); // A3
+            createInstrument(293.66, t4 + 0.4, 0.3, 'arp', 0.015); // D4
+            createInstrument(349.23, t4 + 0.8, 0.3, 'arp', 0.012); // F4
+            
+            // Chord 6: Am - return home
+            const t5 = startTime + chordDuration * 5;
+            createInstrument(110, t5, chordDuration * 2, 'bass', 0.04); // A2
+            createInstrument(220, t5 + 0.1, chordDuration, 'chord', 0.025); // A3
+            createInstrument(261.63, t5 + 0.2, chordDuration, 'chord', 0.02); // C4
+            createInstrument(329.63, t5 + 0.3, chordDuration, 'chord', 0.018); // E4
+            
+            // Chord 7: E major - tension before resolution
+            const t6 = startTime + chordDuration * 6;
+            createInstrument(82.41, t6, chordDuration, 'bass', 0.04); // E2
+            createInstrument(164.81, t6 + 0.1, chordDuration, 'chord', 0.025); // E3
+            createInstrument(207.65, t6 + 0.2, chordDuration, 'chord', 0.02); // G#3
+            createInstrument(246.94, t6 + 0.3, chordDuration, 'chord', 0.018); // B3
+            
+            // Final Am - peaceful resolution with melody
+            const t7 = startTime + chordDuration * 7;
+            createInstrument(110, t7, chordDuration * 2, 'bass', 0.04); // A2
+            createInstrument(220, t7 + 0.1, chordDuration * 1.5, 'chord', 0.025); // A3
+            createInstrument(261.63, t7 + 0.2, chordDuration * 1.5, 'chord', 0.02); // C4
+            createInstrument(329.63, t7 + 0.3, chordDuration * 1.5, 'chord', 0.018); // E4
+            // Beautiful ending melody
+            createInstrument(440, t7 + 0.4, 0.4, 'melody', 0.018); // A4
+            createInstrument(523.25, t7 + 0.8, 0.4, 'melody', 0.016); // C5
+            createInstrument(440, t7 + 1.2, 0.6, 'melody', 0.014); // A4
           };
           
-          // Play the progression and loop
+          // Play the medieval fantasy progression and loop
           const loopMusic = () => {
             const now = context.currentTime;
-            playChord(now);
+            playFantasyProgression(now);
             
-            // Schedule next loop
+            // Schedule next loop (12 seconds for full progression)
             setTimeout(() => {
               if (get().isBackgroundMusicPlaying) {
                 loopMusic();
               }
-            }, 8000); // 8 second loop
+            }, 12000); // 12 second loop for richer progression
           };
           
           return loopMusic;
