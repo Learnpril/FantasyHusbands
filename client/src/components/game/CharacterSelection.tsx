@@ -2,12 +2,19 @@ import { Card, CardContent } from '../ui/card';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { useDatingSim } from '../../lib/stores/useDatingSim';
+import { useAudio } from '../../lib/stores/useAudio';
 import { CharacterCard } from './CharacterCard';
 import { AudioControls } from '../ui/AudioControls';
 import { ArrowLeft, Heart } from 'lucide-react';
 
 export function CharacterSelection() {
   const { characters, setPhase, selectCharacter } = useDatingSim();
+  const { stopAllMusic } = useAudio();
+  
+  const handleCharacterSelect = (characterId: string) => {
+    stopAllMusic(); // Stop all music before selecting character
+    selectCharacter(characterId);
+  };
   
   return (
     <div className="w-full bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-2 sm:p-4 overflow-y-auto" style={{ height: '100vh' }}>
@@ -15,7 +22,10 @@ export function CharacterSelection() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
           <Button
-            onClick={() => setPhase('menu')}
+            onClick={() => {
+              stopAllMusic(); // Stop all music before going back to menu
+              setPhase('menu');
+            }}
             variant="ghost"
             className="text-white hover:bg-white/10 self-start"
           >
@@ -37,7 +47,7 @@ export function CharacterSelection() {
             <CharacterCard
               key={character.id}
               character={character}
-              onClick={() => selectCharacter(character.id)}
+              onClick={() => handleCharacterSelect(character.id)}
             />
           ))}
         </div>
