@@ -311,8 +311,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'ryuu',
     speaker: 'Ryuu',
     text: '*emerges from behind a tree, a small dragon perched on his shoulder* You\'re either very brave or very foolish to wander into dragon territory. I\'m Ryuu.',
-    background: '/images/backgrounds/forest.svg',
-    characterSprite: '/images/characters/ryuu.svg',
+    background: '/images/characters/ryuu.png',
     choices: [
       {
         id: 'ryuu_choice_1',
@@ -343,8 +342,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'ryuu',
     speaker: 'Ryuu',
     text: '*grins and the dragon chirps proudly* Her name is Ember. Most people are terrified of her, but you... you see her beauty. That\'s rare.',
-    background: '/images/backgrounds/forest.svg',
-    characterSprite: '/images/characters/ryuu.svg',
+    background: '/images/characters/ryuu.png',
     choices: [
       {
         id: 'continue',
@@ -359,8 +357,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'ryuu',
     speaker: 'Ryuu',
     text: '*looks surprised, then softens* Hurt you? I protect these lands and all who walk them peacefully. You have nothing to fear from me.',
-    background: '/images/backgrounds/forest.svg',
-    characterSprite: '/images/characters/ryuu.svg',
+    background: '/images/characters/ryuu.png',
     choices: [
       {
         id: 'continue',
@@ -375,8 +372,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'ryuu',
     speaker: 'Ryuu',
     text: '*laughs heartily* Good! Fear makes people do stupid things. I respect courage, even when it borders on recklessness.',
-    background: '/images/backgrounds/forest.svg',
-    characterSprite: '/images/characters/ryuu.svg',
+    background: '/images/characters/ryuu.png',
     choices: [
       {
         id: 'continue',

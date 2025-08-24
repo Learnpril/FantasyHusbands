@@ -64,7 +64,7 @@ export const characters: Character[] = [
     occupation: 'Dragon Tamer',
     personality: 'Fierce and independent, with a wild spirit that matches the dragons he commands',
     backstory: 'Born in the mountain clans, Ryuu formed a bond with dragons at a young age. Now he serves as the kingdom\'s Dragon Tamer, bridging the gap between human and dragon-kind. His untamed nature hides a surprisingly tender heart.',
-    sprite: '/images/characters/ryuu.svg',
+    sprite: '/images/characters/ryuu.png',
     affection: 0,
     maxAffection: 100,
     favoriteGifts: ['dragon scale', 'mountain flower', 'fire crystal'],
