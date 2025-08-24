@@ -377,9 +377,25 @@ export const useAudio = create<AudioState>((set, get) => ({
   },
 
   playAmbient: (soundKey: string) => {
-    const { ambientSound, isMusicMuted, ambientVolume, masterVolume } = get();
+    const { ambientSound, backgroundMusic, isMusicMuted, ambientVolume, masterVolume } = get();
     
-    // Stop current ambient sound
+    // Stop ALL existing music first (including background music)
+    const existingAudio = document.querySelectorAll('audio');
+    existingAudio.forEach(audio => {
+      if (audio.src.includes('background.mp3') || audio.src.includes('ambient/')) {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.src = '';
+      }
+    });
+    
+    // Stop current stored music
+    if (backgroundMusic) {
+      backgroundMusic.pause();
+      backgroundMusic.currentTime = 0;
+      backgroundMusic.src = '';
+    }
+    
     if (ambientSound) {
       ambientSound.pause();
       ambientSound.currentTime = 0;
@@ -392,7 +408,7 @@ export const useAudio = create<AudioState>((set, get) => ({
     newAmbient.volume = ambientVolume * masterVolume;
     newAmbient.muted = isMusicMuted;
     
-    set({ ambientSound: newAmbient });
+    set({ ambientSound: newAmbient, backgroundMusic: null });
     
     if (!isMusicMuted) {
       newAmbient.play().catch(error => {

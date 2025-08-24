@@ -16,7 +16,7 @@ function App() {
     isMusicMuted 
   } = useAudio();
 
-  // Initialize audio on component mount
+  // Initialize audio on component mount (only once)
   useEffect(() => {
     const initAudio = () => {
       // Stop ANY existing background music first - more thorough cleanup
@@ -85,17 +85,7 @@ function App() {
     };
 
     initAudio();
-  }, [
-    setBackgroundMusic, 
-    setHitSound, 
-    setSuccessSound, 
-    setButtonHoverSound,
-    setButtonClickSound,
-    setPageTransitionSound,
-    setCharacterVoice,
-    isMuted,
-    isMusicMuted
-  ]);
+  }, []); // Only run once on mount
 
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden' }}>
