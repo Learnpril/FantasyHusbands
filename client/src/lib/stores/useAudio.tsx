@@ -95,24 +95,30 @@ export const useAudio = create<AudioState>((set, get) => ({
   setBackgroundMusic: (music) => {
     const { backgroundMusic } = get();
     
-    // Stop ALL existing audio elements that might be background music
+    // If we already have a background music instance, don't replace it
+    if (backgroundMusic && music && backgroundMusic.src === music.src) {
+      console.log("🎵 Background music already set, skipping duplicate");
+      return;
+    }
+    
+    // Clean up any existing instances (except our singleton)
     const existingAudio = document.querySelectorAll('audio');
     existingAudio.forEach(audio => {
-      if (audio.src.includes('background.mp3') && !audio.paused) {
+      if (audio.src.includes('background.mp3') && audio.id !== 'singleton-background-music') {
         audio.pause();
         audio.currentTime = 0;
-        audio.src = ''; // Clear source to prevent reuse
+        audio.src = '';
+        if (audio.parentNode) {
+          audio.parentNode.removeChild(audio);
+        }
       }
     });
     
-    // Stop current stored music if exists
-    if (backgroundMusic) {
-      backgroundMusic.pause();
-      backgroundMusic.currentTime = 0;
-      backgroundMusic.src = '';
+    // Only set the new music if it's actually new
+    if (music) {
+      console.log("🎵 Setting singleton background music");
+      set({ backgroundMusic: music });
     }
-    
-    set({ backgroundMusic: music });
   },
   setAmbientSound: (sound) => set({ ambientSound: sound }),
   setHitSound: (sound) => set({ hitSound: sound }),
@@ -166,20 +172,21 @@ export const useAudio = create<AudioState>((set, get) => ({
     
     set({ isMusicMuted: newMutedState });
     
-    // Stop ALL background music if muting
-    if (newMutedState) {
-      const existingAudio = document.querySelectorAll('audio');
-      existingAudio.forEach(audio => {
-        if (audio.src.includes('background.mp3')) {
-          audio.pause();
-          audio.currentTime = 0;
-        }
-      });
+    if (backgroundMusic) {
+      if (newMutedState) {
+        // Pause the music when muted
+        backgroundMusic.pause();
+        console.log('Music muted - paused');
+      } else {
+        // Resume the music when unmuted
+        backgroundMusic.play().catch(error => {
+          console.log("Background music play prevented:", error);
+        });
+        console.log('Music unmuted - playing');
+      }
+      backgroundMusic.muted = false; // Don't use muted property, use pause/play instead
     }
     
-    if (backgroundMusic) {
-      backgroundMusic.muted = newMutedState;
-    }
     if (ambientSound) {
       ambientSound.muted = newMutedState;
     }
@@ -353,34 +360,37 @@ export const useAudio = create<AudioState>((set, get) => ({
     }
   },
   
-  // Global music cleanup function
+  // Global music cleanup function - but preserve singleton background music
   stopAllMusic: () => {
     const { backgroundMusic, ambientSound } = get();
     
-    // Stop ALL audio elements that could be background music
+    // Only stop ambient sounds and duplicate background music, NOT the main singleton
     const existingAudio = document.querySelectorAll('audio');
     existingAudio.forEach(audio => {
-      if (audio.src.includes('background.mp3') || audio.src.includes('ambient/')) {
+      if (audio.src.includes('ambient/')) {
         audio.pause();
         audio.currentTime = 0;
         audio.src = '';
       }
+      // Only stop background music if it's NOT our singleton
+      if (audio.src.includes('background.mp3') && audio.id !== 'singleton-background-music') {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.src = '';
+        if (audio.parentNode) {
+          audio.parentNode.removeChild(audio);
+        }
+      }
     });
     
-    // Clear stored references
-    if (backgroundMusic) {
-      backgroundMusic.pause();
-      backgroundMusic.currentTime = 0;
-      backgroundMusic.src = '';
-    }
-    
+    // Only clear ambient sound, keep background music singleton
     if (ambientSound) {
       ambientSound.pause();
       ambientSound.currentTime = 0;
       ambientSound.src = '';
     }
     
-    set({ backgroundMusic: null, ambientSound: null });
+    set({ ambientSound: null }); // Keep backgroundMusic, only clear ambient
   },
 
   playAmbient: (soundKey: string) => {

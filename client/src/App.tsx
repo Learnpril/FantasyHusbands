@@ -16,27 +16,45 @@ function App() {
     isMusicMuted 
   } = useAudio();
 
-  // Initialize audio on component mount (only once)
+  // Initialize audio on component mount - singleton pattern with global flag
   useEffect(() => {
+    // Global singleton flag to prevent multiple initializations
+    if (window.fantasyHeartsAudioInitialized) {
+      console.log("🎵 Audio system already exists globally, skipping initialization");
+      return;
+    }
+
+    // Mark as initialized globally to prevent future initializations
+    window.fantasyHeartsAudioInitialized = true;
+
     const initAudio = () => {
-      // Stop ANY existing background music first - more thorough cleanup
+      console.log("🎵 Creating singleton audio system...");
+      
+      // Absolutely destroy any existing background music
       const existingAudio = document.querySelectorAll('audio');
       existingAudio.forEach(audio => {
         if (audio.src.includes('background.mp3')) {
           audio.pause();
           audio.currentTime = 0;
-          audio.src = ''; // Clear source completely
-          audio.remove(); // Remove from DOM if possible
+          audio.src = '';
+          if (audio.parentNode) {
+            audio.parentNode.removeChild(audio);
+          }
         }
       });
       
-      // Background music
+      // Create THE ONLY background music instance
       const bgMusic = new Audio('/sounds/background.mp3');
       bgMusic.loop = true;
       bgMusic.volume = 0.3;
+      bgMusic.id = 'singleton-background-music';
+      
+      // Store globally to prevent re-creation
+      window.singletonBackgroundMusic = bgMusic;
+      
       setBackgroundMusic(bgMusic);
 
-      // Sound effects
+      // Sound effects - initialize only once
       const hitSfx = new Audio('/sounds/hit.mp3');
       hitSfx.volume = 0.5;
       setHitSound(hitSfx);
@@ -63,7 +81,7 @@ function App() {
       characters.forEach(characterId => {
         const voice = new Audio(`/sounds/voices/${characterId}.mp3`);
         voice.volume = 0.9;
-        voice.preload = 'auto'; // Preload for faster playback
+        voice.preload = 'auto';
         
         voice.addEventListener('loadeddata', () => {
           console.log(`Voice loaded for ${characterId}`);
@@ -85,6 +103,14 @@ function App() {
     };
 
     initAudio();
+
+    // Cleanup function to reset flag if component unmounts completely
+    return () => {
+      // Only reset flag if we're truly unmounting (not hot reload)
+      if (!import.meta.hot) {
+        window.fantasyHeartsAudioInitialized = false;
+      }
+    };
   }, []); // Only run once on mount
 
   return (
