@@ -254,22 +254,41 @@ export const useAudio = create<AudioState>((set, get) => ({
     const configureAndSpeak = (voices: SpeechSynthesisVoice[]) => {
       let selectedVoice = null;
       
-      // Find realistic male voices for each character
-      const maleVoices = voices.filter(voice => 
+      // Find masculine voices - prioritize explicitly male voices
+      const explicitMaleVoices = voices.filter(voice => 
         voice.lang.startsWith('en') && 
         (voice.name.toLowerCase().includes('male') || 
-         voice.name.toLowerCase().includes('man') ||
-         voice.name.toLowerCase().includes('david') ||
+         voice.name.toLowerCase().includes('man'))
+      );
+      
+      // Find deep-voiced male names
+      const deepMaleVoices = voices.filter(voice => 
+        voice.lang.startsWith('en') && 
+        (voice.name.toLowerCase().includes('david') ||
          voice.name.toLowerCase().includes('daniel') ||
-         voice.name.toLowerCase().includes('alex') ||
          voice.name.toLowerCase().includes('james') ||
          voice.name.toLowerCase().includes('thomas') ||
          voice.name.toLowerCase().includes('aaron') ||
          voice.name.toLowerCase().includes('mark') ||
          voice.name.toLowerCase().includes('paul') ||
          voice.name.toLowerCase().includes('mike') ||
-         voice.name.toLowerCase().includes('john'))
+         voice.name.toLowerCase().includes('john') ||
+         voice.name.toLowerCase().includes('alex'))
       );
+      
+      // Look for Korean voices for Ryuu
+      const koreanVoices = voices.filter(voice => 
+        voice.lang.includes('ko') || 
+        voice.name.toLowerCase().includes('korean') ||
+        voice.name.toLowerCase().includes('korea')
+      );
+      
+      // Combine for maximum masculine voice selection
+      const maleVoices = [...explicitMaleVoices, ...deepMaleVoices];
+      
+      console.log(`Available voices: ${voices.map(v => v.name).join(', ')}`);
+      console.log(`Male voices found: ${maleVoices.map(v => v.name).join(', ')}`);
+      console.log(`Korean voices found: ${koreanVoices.map(v => v.name).join(', ')}`);
       
       // Assign different voices to each character
       switch (characterId) {
@@ -282,12 +301,15 @@ export const useAudio = create<AudioState>((set, get) => ({
           utterance.pitch = 0.8; // Deep voice
           break;
         case 'felix':
-          // Charming, smooth voice
-          selectedVoice = maleVoices.find(voice => 
+          // Charming, masculine voice - prioritize explicit male voices
+          selectedVoice = explicitMaleVoices.find(voice => 
+            voice.name.toLowerCase().includes('male')
+          ) || deepMaleVoices.find(voice => 
             voice.name.toLowerCase().includes('alex') || 
-            voice.name.toLowerCase().includes('mark')
+            voice.name.toLowerCase().includes('mark') ||
+            voice.name.toLowerCase().includes('james')
           ) || maleVoices[1] || voices.find(voice => voice.lang.startsWith('en'));
-          utterance.pitch = 0.9; // Smooth voice
+          utterance.pitch = 0.75; // Much deeper, masculine voice
           break;
         case 'dante':
           // Romantic, refined voice
@@ -298,20 +320,28 @@ export const useAudio = create<AudioState>((set, get) => ({
           utterance.pitch = 0.85; // Refined voice
           break;
         case 'kai':
-          // Mysterious, cool voice
-          selectedVoice = maleVoices.find(voice => 
+          // Deep, mysterious masculine voice
+          selectedVoice = explicitMaleVoices.find(voice => 
+            voice.name.toLowerCase().includes('male')
+          ) || deepMaleVoices.find(voice => 
             voice.name.toLowerCase().includes('aaron') || 
-            voice.name.toLowerCase().includes('mike')
+            voice.name.toLowerCase().includes('mike') ||
+            voice.name.toLowerCase().includes('david')
           ) || maleVoices[3] || voices.find(voice => voice.lang.startsWith('en'));
-          utterance.pitch = 0.75; // Lower, mysterious voice
+          utterance.pitch = 0.65; // Very deep, mysterious voice
           break;
         case 'ryuu':
-          // Strong, confident voice
-          selectedVoice = maleVoices.find(voice => 
+          // Korean-accented masculine voice - try Korean voices first, then deep male voices
+          selectedVoice = koreanVoices.find(voice => 
+            voice.name.toLowerCase().includes('male') || voice.gender === 'male'
+          ) || koreanVoices[0] || explicitMaleVoices.find(voice => 
+            voice.name.toLowerCase().includes('male')
+          ) || deepMaleVoices.find(voice => 
             voice.name.toLowerCase().includes('james') || 
-            voice.name.toLowerCase().includes('john')
+            voice.name.toLowerCase().includes('john') ||
+            voice.name.toLowerCase().includes('daniel')
           ) || maleVoices[4] || voices.find(voice => voice.lang.startsWith('en'));
-          utterance.pitch = 0.9; // Strong voice
+          utterance.pitch = 0.7; // Deep, confident Korean-accented voice
           break;
         case 'zephyr':
           // Intelligent, sophisticated voice
