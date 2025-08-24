@@ -21,61 +21,61 @@ const forestLocations: ForestLocation[] = [
   {
     id: 'castle-path',
     name: 'Castle Training Grounds',
-    description: 'Stone paths lead to the castle training grounds where knights practice their swordsmanship.',
+    description: 'Clashing steel and oaths of loyalty echo from stone walls.',
     icon: Swords,
     characterId: 'akira',
     characterName: 'Akira Shadowbane',
-    characterHint: 'You hear the sound of steel clashing against steel...',
+    characterHint: 'The sound of disciplined practice and knightly honor resonates...',
     explored: false
   },
   {
     id: 'magical-clearing',
     name: 'Enchanted Clearing',
-    description: 'A mystical grove where magical energy seems to dance in the air.',
+    description: 'Arcane runes glow amid swirling mists.',
     icon: Sparkles,
     characterId: 'felix',
-    characterName: 'Felix Brightwater',
-    characterHint: 'Colorful lights flicker through the trees ahead...',
+    characterName: 'Felix Starweaver',
+    characterHint: 'Magical energy dances through the air, beckoning you forward...',
     explored: false
   },
   {
     id: 'forest-heart',
     name: 'Heart of the Forest',
-    description: 'The deepest part of the woods, where ancient trees whisper old songs.',
+    description: 'Wandering tunes drift on the breeze from hidden glades.',
     icon: Trees,
     characterId: 'dante',
-    characterName: 'Dante Heartstring',
-    characterHint: 'A beautiful melody drifts through the ancient trees...',
+    characterName: 'Dante Moonwhisper',
+    characterHint: 'A melodic voice carries tales from distant lands...',
     explored: false
   },
   {
     id: 'shadow-path',
     name: 'Shadow Path',
-    description: 'A dark trail where shadows seem to move on their own.',
+    description: 'Silent footsteps vanish into the gloom.',
     icon: Mountain,
     characterId: 'kai',
     characterName: 'Kai Nightfall',
-    characterHint: 'Something moves silently in the shadows...',
+    characterHint: 'Something moves with deadly grace in the darkness...',
     explored: false
   },
   {
     id: 'dragon-ridge',
     name: 'Dragon Ridge',
-    description: 'Rocky cliffs where dragons are said to nest.',
+    description: 'Fiery breaths warm the craggy heights.',
     icon: Mountain,
     characterId: 'ryuu',
     characterName: 'Ryuu Dragonheart',
-    characterHint: 'A dragon\'s call echoes from the mountain peaks...',
+    characterHint: 'The call of ancient dragons echoes from the peaks...',
     explored: false
   },
   {
-    id: 'ancient-library',
-    name: 'Forest Archive',
-    description: 'An old stone structure hidden among the trees, filled with forgotten knowledge.',
+    id: 'forgotten-archives',
+    name: 'Forgotten Archives',
+    description: 'Faded scrolls whisper ancient knowledge from overgrown ruins.',
     icon: BookOpen,
     characterId: 'zephyr',
     characterName: 'Zephyr Moonlight',
-    characterHint: 'Candlelight flickers through ivy-covered windows...',
+    characterHint: 'Candlelight flickers over mysterious texts and forgotten wisdom...',
     explored: false
   }
 ];

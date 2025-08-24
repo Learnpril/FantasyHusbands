@@ -1,16 +1,17 @@
 # Overview
 
-Fantasy Hearts is an anime-style dating simulation web application built with a modern React frontend and Express.js backend. The application provides an interactive visual novel experience where users can build relationships with fantasy characters through dialogue choices and story progression. The game features 6 unique fantasy male characters, multiple romance routes, character affection systems, save/load functionality, and immersive audio-visual elements.
+Fantasy Hearts is an anime-style dating simulation web application built with a modern React frontend and Express.js backend. Players explore an enchanted forest bordering a grand kingdom, encountering anime-style male characters tied to royal or adventurous roles. The forest serves as neutral ground for intrigue, magic, and romance, with paths that hint at character professions through atmospheric descriptions. The game features 6 unique characters with royal connections, "Veiled Paths" exploration mechanics, character affection systems tied to their roles, and immersive audio-visual elements with court politics undertones.
 
 ## Recent Changes
 
-**January 2025 - Character Expansion & Mobile Optimization:**
-- Added two new characters: Ryuu Dragonheart (Dragon Tamer) and Zephyr Moonlight (Royal Scholar)
-- Created custom anime-style SVG artwork for all characters
-- Implemented full dialogue trees and character-specific scenes
-- Optimized character selection layout for mobile devices (Pixel 8a tested)
-- Fixed character sprite positioning to be visible above dialogue boxes
-- Enhanced responsive design for various screen sizes
+**January 2025 - Royal Theme Integration & Enhanced Forest Journey:**
+- Updated all character roles with royal/adventurous themes: Royal Knight (Akira), Court Mage (Felix), Travelling Bard (Dante), Royal Assassin (Kai), Dragon Tamer (Ryuu), Royal Scholar (Zephyr)
+- Enhanced Forest Journey paths with job-specific descriptions and atmospheric hints
+- Renamed "Forest Archive" to "Forgotten Archives" for better thematic consistency
+- Implemented "Veiled Paths" mechanic where exploration hints at character professions without direct reveals
+- Added beautiful Fantasy Hearts heart-shaped logo to replace text branding
+- Updated mystical forest background with ethereal purple-pink artwork
+- Enhanced character discovery system with royal intrigue undertones
 
 # User Preferences
 

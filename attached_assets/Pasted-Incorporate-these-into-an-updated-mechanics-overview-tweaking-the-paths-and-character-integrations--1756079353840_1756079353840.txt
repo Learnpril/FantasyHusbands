@@ -1,0 +1,59 @@
+Incorporate these into an updated mechanics overview, tweaking the paths and character integrations for better alignment. I've suggested a fitting path for Zephyr (e.g., "Forgotten Archives") to keep the obfuscation and mystery intact, but we can adjust if you have something in mind.
+
+If this looks good, we can dive deeper—maybe flesh out bios, sample dialogues, or mini-game ideas specific to their roles. Or if you'd like to pivot to another aspect (e.g., monetization or tech stack for mobile), just let me know!
+
+### Game Design Document: Fantasy Dating Sim Mechanics Update (Character Focus)
+
+#### 1. Game Overview (Refined)
+- **Theme Update**: Players explore an enchanted forest bordering a grand kingdom, encountering anime-style guys tied to royal or adventurous roles. The forest serves as a neutral ground for intrigue, magic, and romance, with paths hinting at their professions without direct reveals.
+- **Core Cast**: Six datable characters, each with unique personalities, backstories, and affinity arcs. Their royal ties (for most) add layers like court politics or forbidden romances, while Dante's traveller status introduces worldly tales.
+- **USP Refinement**: "Veiled Paths" with royal twists—exploration uncovers kingdom secrets, where bonding with one guy might influence others (e.g., Kai the assassin spying on Akira the knight's path).
+
+#### 2. Screen Flow and Progression (Updated Paths)
+- **Forest Journey Hub (Choose Your Path)**:
+  - Buttons remain obfuscated, now flavored to subtly nod to their updated roles/jobs without spoiling.
+    - **Castle Training Grounds**: Leads to Akira (Royal Knight). Flavor: "Clashing steel and oaths of loyalty echo from stone walls." (Hints at chivalric duty.)
+    - **Enchanted Clearing**: Leads to Felix (Court Mage). Flavor: "Arcane runes glow amid swirling mists." (Evokes courtly magic.)
+    - **Heart of the Forest**: Leads to Dante (Travelling Bard). Flavor: "Wandering tunes drift on the breeze from hidden glades." (Suggests a nomadic performer.)
+    - **Shadow Path**: Leads to Kai (Royal Assassin). Flavor: "Silent footsteps vanish into the gloom." (Implies stealthy royal intrigue.)
+    - **Dragon Ridge**: Leads to Ryuu (Dragon Tamer). Flavor: "Fiery breaths warm the craggy heights." (Alludes to taming mythical beasts.)
+    - **Forgotten Archives**: Leads to Zephyr (Royal Scholar). Flavor: "Faded scrolls whisper ancient knowledge from overgrown ruins." (Hints at scholarly pursuits; alternative ideas: "Whispering Library" or "Lorekeeper's Thicket" if you prefer.)
+  - Mechanic Note: Paths could unlock "royal favors" as progression perks—e.g., after bonding with Zephyr, gain "Lore Insights" to reveal hidden hub options.
+
+- **Path Screens: Events and Conversations**:
+  - Tailored to Jobs: Short convos (5-10 exchanges) incorporate their roles for immersion.
+    - E.g., Akira: Sparring banter about knightly honor.
+    - Felix: Magical demonstrations or spell discussions.
+    - Dante: Sharing bardic songs or travel stories.
+    - Kai: Tense, shadowy encounters with hints of assassination plots.
+    - Ryuu: Interactions involving dragon lore or taming tips.
+    - Zephyr: Intellectual debates or riddle-solving about ancient texts.
+  - Back Button/Reflection Screen: Unchanged—use it for quick affinity checks or journal notes on their roles.
+
+#### 3. Core Mechanics (Job-Integrated Enhancements)
+To keep it fun and less click-heavy, I've woven their updated jobs into the mechanics for thematic depth.
+
+- **Affinity and Bonding System**:
+  - Each guy's affinity ties to their job: E.g., Akira values "Honor" choices (+points for loyal responses); Zephyr rewards "Wisdom" (e.g., puzzle-solving in dialogues).
+  - Cross-Interactions: Royal ties enable rivalries—e.g., high affinity with Kai (assassin) might trigger a "suspicious event" on Akira's (knight) path, adding drama.
+
+- **Exploration and Randomization**:
+  - Job-Flavored Collectibles: Find items like "Knight's Crest" (for Akira) or "Ancient Tome" (for Zephyr) in random hub spots, usable as gifts for +affinity.
+
+- **Mini-Games (Role-Specific, Light Fun)**:
+  - Keep mobile-friendly (taps/swipes, 10-20 sec):
+    - Akira (Royal Knight): Tap-rhythm QTE for a mock duel, emphasizing chivalry.
+    - Felix (Court Mage): Swipe to connect runes in a simple puzzle, unlocking magic effects.
+    - Dante (Travelling Bard): Tap notes to harmonize a melody, sharing "bardic tales."
+    - Kai (Royal Assassin): Timing-based stealth swipe to evade shadows.
+    - Ryuu (Dragon Tamer): Drag to direct a dragon's flight path, avoiding obstacles.
+    - Zephyr (Royal Scholar): Quick riddle-tap (select correct answers from options) to decipher lore, rewarding insights.
+  - Optional but rewarding: Success grants job-themed bonuses, like Zephyr's mini-game unlocking "secret knowledge" for better choices in other routes.
+
+- **Progression and Endings**:
+  - Job Arcs: Each route builds on their role—e.g., Ryuu's culminates in a dragon-riding date; Zephyr's in uncovering a forest prophecy.
+  - Multi-Route Twists: Pursuing royals (Akira, Felix, Kai, Zephyr) might reveal a "court conspiracy" meta-plot, while Dante and Ryuu add outsider perspectives.
+
+#### 4. UI/UX and Balancing Notes
+- **Character Art**: Anime-style portraits reflecting jobs—e.g., Akira in armor, Zephyr with books/spectacles, Dante with a lute.
+- **Balancing**: Ensure Zephyr's scholarly route isn't too "talky"—balance with
