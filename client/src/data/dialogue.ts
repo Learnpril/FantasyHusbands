@@ -387,8 +387,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'zephyr',
     speaker: 'Zephyr',
     text: '*looks up from an ancient tome, adjusting his glasses* Oh! I didn\'t expect company in the archives. I\'m Zephyr, Royal Scholar. Are you here for research, or... *smirks* something more interesting?',
-    background: '/images/backgrounds/library.svg',
-    characterSprite: '/images/characters/zephyr.svg',
+    background: '/images/characters/zephyr.png',
     choices: [
       {
         id: 'zephyr_choice_1',
@@ -419,8 +418,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'zephyr',
     speaker: 'Zephyr',
     text: '*eyes light up* Ancient magical theory! This particular text describes lost enchantments that could... *pauses, noticing your interest* Well, aren\'t you a delightful surprise.',
-    background: '/images/backgrounds/library.svg',
-    characterSprite: '/images/characters/zephyr.svg',
+    background: '/images/characters/zephyr.png',
     choices: [
       {
         id: 'continue',
@@ -435,8 +433,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'zephyr',
     speaker: 'Zephyr',
     text: '*closes book and leans back with a playful smile* Well, well. Someone who picks up on subtlety. I like that in a person. Perhaps we should get better acquainted.',
-    background: '/images/backgrounds/library.svg',
-    characterSprite: '/images/characters/zephyr.svg',
+    background: '/images/characters/zephyr.png',
     choices: [
       {
         id: 'continue',
@@ -451,8 +448,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'zephyr',
     speaker: 'Zephyr',
     text: '*chuckles and adjusts glasses* Age is just a number when you have a brilliant mind. Though I admit, being a prodigy does have its... lonely moments.',
-    background: '/images/backgrounds/library.svg',
-    characterSprite: '/images/characters/zephyr.svg',
+    background: '/images/characters/zephyr.png',
     choices: [
       {
         id: 'continue',
@@ -547,8 +543,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'zephyr',
     speaker: 'Zephyr',
     text: '*looks up from a pile of ancient books, candlelight flickering* You\'re here late. Perfect timing actually - I could use someone with fresh eyes to help with this translation.',
-    background: '/images/backgrounds/library.svg',
-    characterSprite: '/images/characters/zephyr.svg',
+    background: '/images/characters/zephyr.png',
     choices: [
       {
         id: 'research_help',
@@ -579,8 +574,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'zephyr',
     speaker: 'Zephyr',
     text: '*face lights up* Wonderful! *scoots closer, sharing the candlelight* This passage describes a lost magic that could revolutionize how we understand elemental theory. Your presence makes this work... enjoyable.',
-    background: '/images/backgrounds/library.svg',
-    characterSprite: '/images/characters/zephyr.svg',
+    background: '/images/characters/zephyr.png',
     choices: [
       {
         id: 'continue',
@@ -595,8 +589,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'zephyr',
     speaker: 'Zephyr',
     text: '*adjusts glasses excitedly* Ancient Draconic texts about barrier magic. Most scholars think it\'s theoretical, but I believe it was once real. *grins* Care to help me prove them wrong?',
-    background: '/images/backgrounds/library.svg',
-    characterSprite: '/images/characters/zephyr.svg',
+    background: '/images/characters/zephyr.png',
     choices: [
       {
         id: 'continue',
@@ -611,8 +604,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'zephyr',
     speaker: 'Zephyr',
     text: '*smiles softly* Sleep is for those who don\'t have fascinating mysteries to unravel. Though... *looks at you warmly* having company does make the night more pleasant.',
-    background: '/images/backgrounds/library.svg',
-    characterSprite: '/images/characters/zephyr.svg',
+    background: '/images/characters/zephyr.png',
     choices: [
       {
         id: 'continue',

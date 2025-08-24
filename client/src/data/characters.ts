@@ -78,7 +78,7 @@ export const characters: Character[] = [
     occupation: 'Royal Scholar',
     personality: 'Brilliant and bookish, but surprisingly flirtatious when he opens up',
     backstory: 'A prodigy who earned his position as Royal Scholar at an unusually young age. Zephyr spends his days researching ancient magic and forgotten histories. Behind his scholarly exterior lies a playful, teasing personality that emerges around those he trusts.',
-    sprite: '/images/characters/zephyr.svg',
+    sprite: '/images/characters/zephyr.png',
     affection: 0,
     maxAffection: 100,
     favoriteGifts: ['ancient tome', 'rare ink', 'moonstone'],
