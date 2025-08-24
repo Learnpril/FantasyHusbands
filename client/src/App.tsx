@@ -12,7 +12,8 @@ function App() {
     setButtonClickSound,
     setPageTransitionSound,
     setCharacterVoice,
-    isMuted 
+    isMuted,
+    isMusicMuted 
   } = useAudio();
 
   // Initialize audio on component mount
@@ -64,8 +65,8 @@ function App() {
         setCharacterVoice(characterId, voice);
       });
 
-      // Start background music if not muted
-      if (!isMuted) {
+      // Start background music if music is not muted
+      if (!isMusicMuted) {
         bgMusic.play().catch(error => {
           console.log("Background music autoplay prevented:", error);
         });
@@ -81,7 +82,8 @@ function App() {
     setButtonClickSound,
     setPageTransitionSound,
     setCharacterVoice,
-    isMuted
+    isMuted,
+    isMusicMuted
   ]);
 
   return (
