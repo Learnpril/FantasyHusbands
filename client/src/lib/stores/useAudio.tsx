@@ -263,56 +263,61 @@ export const useAudio = create<AudioState>((set, get) => ({
       currentVoice.currentTime = 0;
     }
     
-    // Try to find character-specific voice file
-    const voiceKey = `${characterId}_${dialogueId}`;
-    let voiceAudio = characterVoices[voiceKey];
+    // Get character voice
+    const voiceAudio = characterVoices[characterId];
     
-    // Fallback to character generic voice
-    if (!voiceAudio) {
-      voiceAudio = characterVoices[characterId];
-    }
-    
-    // Always try to play voice (not affected by main mute, only by voice volume being 0)
     if (voiceAudio && voiceVolume > 0) {
-      voiceAudio.currentTime = 0;
-      voiceAudio.volume = voiceVolume * masterVolume;
-      voiceAudio.muted = false; // Voices should not be affected by global mute
-      
-      set({ 
-        currentVoice: voiceAudio,
-        isVoicePlaying: true,
-        currentVoiceId: voiceKey
-      });
-      
-      // Setup event listeners
-      voiceAudio.onended = () => {
+      try {
+        // Reset and configure the audio
+        voiceAudio.currentTime = 0;
+        voiceAudio.volume = voiceVolume * masterVolume;
+        voiceAudio.muted = false; // Never mute voices - they should always be audible when triggered
+        
+        // Set state immediately
+        set({ 
+          currentVoice: voiceAudio,
+          isVoicePlaying: true,
+          currentVoiceId: `${characterId}_${dialogueId}`
+        });
+        
+        // Setup event listeners
+        voiceAudio.onended = () => {
+          set({ 
+            isVoicePlaying: false,
+            currentVoiceId: null
+          });
+        };
+        
+        voiceAudio.onerror = (error) => {
+          console.log(`Voice error for ${characterId}:`, error);
+          set({ 
+            isVoicePlaying: false,
+            currentVoiceId: null
+          });
+        };
+        
+        // Force play the audio
+        const playPromise = voiceAudio.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            console.log(`✓ Playing voice for ${characterId}`);
+          }).catch(error => {
+            console.log(`Voice play blocked for ${characterId}:`, error.message);
+            set({ 
+              isVoicePlaying: false,
+              currentVoiceId: null
+            });
+          });
+        }
+      } catch (error) {
+        console.log(`Voice playback error for ${characterId}:`, error);
         set({ 
           isVoicePlaying: false,
           currentVoiceId: null
         });
-      };
-      
-      voiceAudio.onerror = (error) => {
-        console.log(`Voice playback error for ${voiceKey}:`, error);
-        set({ 
-          isVoicePlaying: false,
-          currentVoiceId: null
-        });
-      };
-      
-      voiceAudio.onloadeddata = () => {
-        // Voice loaded successfully
-      };
-      
-      voiceAudio.play().catch(error => {
-        console.log(`Voice play prevented for ${voiceKey}:`, error);
-        set({ 
-          isVoicePlaying: false,
-          currentVoiceId: null
-        });
-      });
+      }
     } else {
-      console.log(`Voice not found for ${characterId} or voice volume is 0`);
+      console.log(`No voice available for ${characterId} (available: ${Object.keys(characterVoices).join(', ')}, volume: ${voiceVolume})`);
     }
   },
   

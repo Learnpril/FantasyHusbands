@@ -54,11 +54,11 @@ export function DialogueBox() {
     // Play ambient sound based on background (with delay to ensure cleanup)
     if (currentDialogue.background) {
       setTimeout(() => {
-        if (currentDialogue.background.includes('castle')) {
+        if (currentDialogue.background?.includes('castle')) {
           playAmbient('castle');
-        } else if (currentDialogue.background.includes('forest')) {
+        } else if (currentDialogue.background?.includes('forest')) {
           playAmbient('forest');
-        } else if (currentDialogue.background.includes('library')) {
+        } else if (currentDialogue.background?.includes('library')) {
           playAmbient('library');
         }
       }, 100); // Small delay to ensure all music cleanup is complete
