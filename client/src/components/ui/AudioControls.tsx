@@ -46,9 +46,6 @@ export function AudioControls({
         onClick={() => {
           playButtonClick();
           toggleMusicMute();
-          if (!isMusicMuted && !isBackgroundMusicPlaying) {
-            toggleBackgroundMusic();
-          }
         }}
         onMouseEnter={() => playButtonHover()}
         className={buttonClass}

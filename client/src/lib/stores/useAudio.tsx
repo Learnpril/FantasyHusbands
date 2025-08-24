@@ -193,9 +193,11 @@ export const useAudio = create<AudioState>((set, get) => ({
     const newMutedState = !get().isMuted;
     set({ isMuted: newMutedState });
     
-    const { backgroundMusic } = get();
-    if (backgroundMusic) {
-      backgroundMusic.muted = newMutedState;
+    // Handle background music based on mute state
+    if (!newMutedState && !get().isMusicMuted) {
+      get().playBackgroundMusic();
+    } else {
+      get().stopBackgroundMusic();
     }
     
     if (window.speechSynthesis.speaking) {
@@ -213,9 +215,11 @@ export const useAudio = create<AudioState>((set, get) => ({
     const newMutedState = !get().isMusicMuted;
     set({ isMusicMuted: newMutedState });
     
-    const { backgroundMusic } = get();
-    if (backgroundMusic) {
-      backgroundMusic.muted = newMutedState || get().isMuted;
+    // If unmuting music, start playing it
+    if (!newMutedState && !get().isMuted) {
+      get().playBackgroundMusic();
+    } else {
+      get().stopBackgroundMusic();
     }
     
     console.log(`Music ${newMutedState ? 'muted' : 'unmuted'}`);
@@ -316,8 +320,12 @@ export const useAudio = create<AudioState>((set, get) => ({
       window.speechSynthesis.cancel();
     }
     
+    console.log(`🎤 Original text for ${characterId}: "${text}"`);
+    
     // Filter out action text in asterisks - only speak the dialogue
-    const cleanText = text.replace(/\\*[^*]*\\*/g, '').trim();
+    const cleanText = text.replace(/\*[^*]*\*/g, '').trim();
+    
+    console.log(`🎤 Filtered text for ${characterId}: "${cleanText}"`);
     
     if (!cleanText) {
       console.log(`No dialogue to speak for ${characterId} after filtering actions`);
@@ -436,7 +444,7 @@ export const useAudio = create<AudioState>((set, get) => ({
           isVoicePlaying: true,
           currentVoiceId: `${characterId}_tts`
         });
-        console.log(`🎤 Speaking as ${characterId}: "${cleanText.substring(0, 50)}..."`);
+        console.log(`🎤 Speaking as ${characterId}: "${cleanText}"`);
       };
       
       utterance.onend = () => {
