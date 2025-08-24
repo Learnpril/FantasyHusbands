@@ -91,7 +91,15 @@ export const useAudio = create<AudioState>((set, get) => ({
   currentVoiceId: null,
   
   // Setters
-  setBackgroundMusic: (music) => set({ backgroundMusic: music }),
+  setBackgroundMusic: (music) => {
+    const { backgroundMusic } = get();
+    // Stop any existing background music first
+    if (backgroundMusic) {
+      backgroundMusic.pause();
+      backgroundMusic.currentTime = 0;
+    }
+    set({ backgroundMusic: music });
+  },
   setAmbientSound: (sound) => set({ ambientSound: sound }),
   setHitSound: (sound) => set({ hitSound: sound }),
   setSuccessSound: (sound) => set({ successSound: sound }),
@@ -268,14 +276,11 @@ export const useAudio = create<AudioState>((set, get) => ({
       };
       
       voiceAudio.onloadeddata = () => {
-        console.log(`Voice loaded successfully for ${characterId}`);
+        // Voice loaded successfully
       };
       
       voiceAudio.play().catch(error => {
-        console.error(`Voice play prevented for ${voiceKey}:`, error);
-        console.log(`File path: /sounds/voices/${characterId}.mp3`);
-        console.log(`Voice volume: ${voiceVolume}, Master volume: ${masterVolume}`);
-        console.log(`Audio element:`, voiceAudio);
+        console.log(`Voice play prevented for ${voiceKey}:`, error);
         set({ 
           isVoicePlaying: false,
           currentVoiceId: null
@@ -283,8 +288,6 @@ export const useAudio = create<AudioState>((set, get) => ({
       });
     } else {
       console.log(`Voice not found for ${characterId} or voice volume is 0`);
-      console.log(`Available voices:`, Object.keys(characterVoices));
-      console.log(`Voice volume: ${voiceVolume}, Master volume: ${masterVolume}`);
     }
   },
   

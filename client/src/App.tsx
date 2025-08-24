@@ -19,6 +19,15 @@ function App() {
   // Initialize audio on component mount
   useEffect(() => {
     const initAudio = () => {
+      // Stop any existing background music first
+      const existingAudio = document.querySelectorAll('audio');
+      existingAudio.forEach(audio => {
+        if (audio.src.includes('background.mp3')) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      });
+      
       // Background music
       const bgMusic = new Audio('/sounds/background.mp3');
       bgMusic.loop = true;
