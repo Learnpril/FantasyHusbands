@@ -83,7 +83,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'felix',
     speaker: 'Felix',
     text: '*grins mischievously* Well hello there! I\'m Felix, the court\'s resident magic enthusiast. Care to see something amazing?',
-    background: '/images/backgrounds/library.svg',
+    background: '/images/characters/felix.png',
     characterSprite: '/images/characters/felix.svg',
     choices: [
       {
@@ -115,7 +115,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'felix',
     speaker: 'Felix',
     text: '*eyes light up* Excellent! *waves hand and sparkles dance through the air* Just a simple light charm, but I\'ve been working on making the patterns more intricate!',
-    background: '/images/backgrounds/library.svg',
+    background: '/images/characters/felix.png',
     characterSprite: '/images/characters/felix.svg',
     choices: [
       {
@@ -131,7 +131,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'felix',
     speaker: 'Felix',
     text: '*laughs* Of course it\'s safe! Well... mostly. I only set the library on fire once, and that was months ago!',
-    background: '/images/backgrounds/library.svg',
+    background: '/images/characters/felix.png',
     characterSprite: '/images/characters/felix.svg',
     choices: [
       {
@@ -147,7 +147,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'felix',
     speaker: 'Felix',
     text: '*pouts slightly* Aw, come on! Magic is so much more fun when you have an audience. But I suppose I can wait...',
-    background: '/images/backgrounds/library.svg',
+    background: '/images/characters/felix.png',
     characterSprite: '/images/characters/felix.svg',
     choices: [
       {
