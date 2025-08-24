@@ -36,7 +36,7 @@ export const characters: Character[] = [
     occupation: 'Traveling Bard',
     personality: 'Gentle and artistic, speaks in poetry and song',
     backstory: 'A wandering bard who captures hearts with his melodies and stories. Dante has traveled across many kingdoms, collecting tales and songs, but something about this place makes him want to stay.',
-    sprite: '/images/characters/dante.svg',
+    sprite: '/images/characters/dante.png',
     affection: 0,
     maxAffection: 100,
     favoriteGifts: ['musical instrument', 'poetry book', 'pressed flower'],

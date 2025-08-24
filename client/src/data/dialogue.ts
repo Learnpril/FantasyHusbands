@@ -159,8 +159,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'dante',
     speaker: 'Dante',
     text: '*bows gracefully* Like moonlight upon still waters, you grace this humble place with beauty. I am Dante, weaver of words and melodies.',
-    background: '/images/backgrounds/forest.svg',
-    characterSprite: '/images/characters/dante.svg',
+    background: '/images/characters/dante.png',
     choices: [
       {
         id: 'dante_choice_1',
@@ -191,8 +190,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'dante',
     speaker: 'Dante',
     text: '*smiles warmly* Your appreciation warms my heart like sunrise after the darkest night. Few truly listen to the music in words.',
-    background: '/images/backgrounds/forest.svg',
-    characterSprite: '/images/characters/dante.svg',
+    background: '/images/characters/dante.png',
     choices: [
       {
         id: 'continue',
@@ -207,8 +205,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'dante',
     speaker: 'Dante',
     text: '*chuckles softly* When the world itself sings with such beauty, how can one not respond in kind? Though I admit, ordering breakfast can become rather elaborate.',
-    background: '/images/backgrounds/forest.svg',
-    characterSprite: '/images/characters/dante.svg',
+    background: '/images/characters/dante.png',
     choices: [
       {
         id: 'continue',
@@ -223,8 +220,7 @@ export const dialogueNodes: Record<string, DialogueNode> = {
     characterId: 'dante',
     speaker: 'Dante',
     text: '*laughs melodiously* Charm is but truth dressed in beautiful words, and truth demands I say you are enchanting.',
-    background: '/images/backgrounds/forest.svg',
-    characterSprite: '/images/characters/dante.svg',
+    background: '/images/characters/dante.png',
     choices: [
       {
         id: 'continue',
