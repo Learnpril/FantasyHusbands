@@ -108,12 +108,13 @@ export function ForestJourney() {
 
   return (
     <div 
-      className="min-h-screen w-full p-4 overflow-y-auto"
+      className="w-full h-screen p-4 overflow-y-auto"
       style={{
         backgroundImage: 'url(/images/backgrounds/forest.svg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed'
       }}
     >
       {/* Header */}
@@ -138,7 +139,7 @@ export function ForestJourney() {
       </div>
 
       {/* Journey Progress */}
-      <div className="max-w-4xl mx-auto mb-8">
+      <div className="max-w-6xl mx-auto mb-8">
         <Card className="bg-white/10 backdrop-blur-sm border-white/20 mb-6">
           <CardContent className="p-4">
             <div className="text-center text-white">
@@ -160,8 +161,8 @@ export function ForestJourney() {
         {/* Available Locations */}
         {unexploredLocations.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-white mb-4 text-center drop-shadow-lg">Choose Your Path</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <h2 className="text-2xl font-bold text-white mb-6 text-center drop-shadow-lg">Choose Your Path</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {unexploredLocations.map((location) => {
                 const Icon = location.icon;
                 return (
@@ -170,11 +171,11 @@ export function ForestJourney() {
                     className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer transform hover:scale-105"
                     onClick={() => exploreLocation(location)}
                   >
-                    <CardContent className="p-4">
+                    <CardContent className="p-6">
                       <div className="text-center text-white">
-                        <Icon className="w-12 h-12 mx-auto mb-3 text-purple-300" />
-                        <h3 className="text-lg font-bold mb-2">{location.name}</h3>
-                        <p className="text-gray-300 text-sm mb-3">{location.description}</p>
+                        <Icon className="w-16 h-16 mx-auto mb-4 text-purple-300" />
+                        <h3 className="text-xl font-bold mb-3">{location.name}</h3>
+                        <p className="text-gray-300 text-sm mb-4">{location.description}</p>
                         {location.characterHint && (
                           <p className="text-yellow-300 text-sm italic font-medium">
                             {location.characterHint}
@@ -239,12 +240,12 @@ export function ForestJourney() {
         )}
 
         {/* Instructions */}
-        <Card className="bg-white/10 backdrop-blur-sm border-white/20 mt-6">
-          <CardContent className="p-4">
+        <Card className="bg-white/10 backdrop-blur-sm border-white/20 mt-8 mb-8">
+          <CardContent className="p-6">
             <div className="text-center text-white">
               <MapPin className="w-8 h-8 mx-auto mb-3 text-yellow-400" />
               <h3 className="text-lg font-semibold mb-2">Forest Guide</h3>
-              <div className="text-gray-300 space-y-1 text-sm">
+              <div className="text-gray-300 space-y-2 text-sm">
                 <p>• Each location holds a different character waiting to meet you</p>
                 <p>• Follow the hints to discover what lies ahead</p>
                 <p>• Click on any location to begin your encounter</p>
