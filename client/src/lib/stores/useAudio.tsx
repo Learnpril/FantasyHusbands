@@ -360,11 +360,13 @@ export const useAudio = create<AudioState>((set, get) => ({
     }
   },
   
-  // Global music cleanup function - but preserve singleton background music
+  // Only stop ambient sounds - NEVER touch the singleton background music
   stopAllMusic: () => {
-    const { backgroundMusic, ambientSound } = get();
+    const { ambientSound } = get();
     
-    // Only stop ambient sounds and duplicate background music, NOT the main singleton
+    console.log("🎵 Stopping ambient sounds only, preserving background music");
+    
+    // Only stop ambient sounds, never background music
     const existingAudio = document.querySelectorAll('audio');
     existingAudio.forEach(audio => {
       if (audio.src.includes('ambient/')) {
@@ -372,25 +374,16 @@ export const useAudio = create<AudioState>((set, get) => ({
         audio.currentTime = 0;
         audio.src = '';
       }
-      // Only stop background music if it's NOT our singleton
-      if (audio.src.includes('background.mp3') && audio.id !== 'singleton-background-music') {
-        audio.pause();
-        audio.currentTime = 0;
-        audio.src = '';
-        if (audio.parentNode) {
-          audio.parentNode.removeChild(audio);
-        }
-      }
     });
     
-    // Only clear ambient sound, keep background music singleton
+    // Only clear ambient sound, never touch background music
     if (ambientSound) {
       ambientSound.pause();
       ambientSound.currentTime = 0;
       ambientSound.src = '';
     }
     
-    set({ ambientSound: null }); // Keep backgroundMusic, only clear ambient
+    set({ ambientSound: null }); // Keep backgroundMusic untouched
   },
 
   playAmbient: (soundKey: string) => {

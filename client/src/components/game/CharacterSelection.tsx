@@ -9,10 +9,9 @@ import { ArrowLeft, Heart } from 'lucide-react';
 
 export function CharacterSelection() {
   const { characters, setPhase, selectCharacter } = useDatingSim();
-  const { stopAllMusic } = useAudio();
+  const { } = useAudio();
   
   const handleCharacterSelect = (characterId: string) => {
-    stopAllMusic(); // Stop all music before selecting character
     selectCharacter(characterId);
   };
   
@@ -23,7 +22,6 @@ export function CharacterSelection() {
         <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
           <Button
             onClick={() => {
-              stopAllMusic(); // Stop all music before going back to menu
               setPhase('menu');
             }}
             variant="ghost"
