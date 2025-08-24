@@ -121,12 +121,15 @@ export const useAudio = create<AudioState>((set, get) => ({
   setButtonClickSound: (sound) => set({ buttonClickSound: sound }),
   setPageTransitionSound: (sound) => set({ pageTransitionSound: sound }),
   setCharacterVoice: (characterId, voice) => {
+    console.log(`🎤 Setting voice for ${characterId}`);
     const { characterVoices } = get();
+    const newVoices = { 
+      ...characterVoices, 
+      [characterId]: voice 
+    };
+    console.log(`Voice storage updated:`, Object.keys(newVoices));
     set({ 
-      characterVoices: { 
-        ...characterVoices, 
-        [characterId]: voice 
-      } 
+      characterVoices: newVoices
     });
   },
   
@@ -252,7 +255,6 @@ export const useAudio = create<AudioState>((set, get) => ({
     const { 
       characterVoices, 
       currentVoice, 
-      isMuted, 
       voiceVolume, 
       masterVolume 
     } = get();
@@ -268,10 +270,10 @@ export const useAudio = create<AudioState>((set, get) => ({
     
     if (voiceAudio && voiceVolume > 0) {
       try {
-        // Reset and configure the audio
+        // Reset and configure the audio for maximum audibility
         voiceAudio.currentTime = 0;
-        voiceAudio.volume = voiceVolume * masterVolume;
-        voiceAudio.muted = false; // Never mute voices - they should always be audible when triggered
+        voiceAudio.volume = 1.0; // Max volume for voices to ensure they're heard
+        voiceAudio.muted = false; // Never mute voices
         
         // Set state immediately
         set({ 
@@ -296,11 +298,11 @@ export const useAudio = create<AudioState>((set, get) => ({
           });
         };
         
-        // Force play the audio
+        // Force play the audio with user interaction
         const playPromise = voiceAudio.play();
         if (playPromise !== undefined) {
           playPromise.then(() => {
-            console.log(`✓ Playing voice for ${characterId}`);
+            console.log(`🔊 VOICE PLAYING for ${characterId} - you should hear this!`);
           }).catch(error => {
             console.log(`Voice play blocked for ${characterId}:`, error.message);
             set({ 
