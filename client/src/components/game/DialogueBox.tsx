@@ -101,7 +101,7 @@ export function DialogueBox() {
     return (
       <div className="min-h-screen w-full flex items-center justify-center bg-gray-900 text-white">
         <div className="text-center">
-          <h2 className="text-2xl mb-4">Dialogue not found</h2>
+          <h2 className="text-2xl mb-4 fantasy-title">Dialogue not found</h2>
           <Button onClick={() => setPhase('character-selection')}>
             Return to Character Selection
           </Button>
@@ -186,7 +186,7 @@ export function DialogueBox() {
             {/* Speaker Name and Voice Controls */}
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <Badge variant="secondary" className="bg-purple-600 text-white">
+                <Badge variant="secondary" className="bg-purple-600 text-white character-name">
                   {currentDialogue.speaker}
                 </Badge>
                 {currentCharacter && currentDialogue.characterId && (
@@ -235,7 +235,7 @@ export function DialogueBox() {
             
             {/* Dialogue Text */}
             <div 
-              className="text-white text-lg leading-relaxed mb-4 min-h-[3rem] cursor-pointer"
+              className="text-white text-lg leading-relaxed mb-4 min-h-[3rem] cursor-pointer dialogue-text"
               onClick={!isTextComplete ? skipToEnd : undefined}
             >
               {displayedText}
@@ -252,7 +252,7 @@ export function DialogueBox() {
                     key={choice.id}
                     onClick={() => handleChoiceSelect(choice)}
                     variant="outline"
-                    className="w-full text-left justify-start border-white/30 text-white hover:bg-white/10"
+                    className="w-full text-left justify-start border-white/30 text-white hover:bg-white/10 ui-text"
                   >
                     <span className="flex-1">{choice.text}</span>
                     {choice.affectionChange && (
@@ -276,7 +276,7 @@ export function DialogueBox() {
             
             {/* Continue prompt for single choice dialogues */}
             {!isTextComplete && (
-              <div className="text-gray-400 text-sm text-center">
+              <div className="text-gray-400 text-sm text-center ui-text">
                 Click to skip text animation
               </div>
             )}

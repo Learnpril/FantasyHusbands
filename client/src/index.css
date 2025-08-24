@@ -8,12 +8,52 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply antialiased bg-background text-foreground;
+    font-family: 'EB Garamond', 'Crimson Text', serif;
     margin: 0;
     padding: 0;
     overflow: hidden;
     width: 100vw;
     height: 100vh;
+    letter-spacing: 0.025em;
+  }
+
+  /* Fantasy typography hierarchy */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cinzel', 'EB Garamond', serif;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  /* Dialogue and narrative text */
+  .dialogue-text {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    letter-spacing: 0.015em;
+  }
+
+  /* Character names and titles */
+  .character-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* UI buttons and interface elements */
+  button, .ui-text {
+    font-family: 'Crimson Text', serif;
+    font-weight: 400;
+    letter-spacing: 0.025em;
+  }
+
+  /* Fantasy flourishes for special text */
+  .fantasy-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 }
 

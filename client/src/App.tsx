@@ -1,7 +1,13 @@
 import { useEffect } from "react";
 import { useAudio } from "./lib/stores/useAudio";
 import { GameScene } from "./components/game/GameScene";
-import "@fontsource/inter";
+import "@fontsource/cinzel/400.css";
+import "@fontsource/cinzel/500.css";
+import "@fontsource/cinzel/600.css";
+import "@fontsource/crimson-text/400.css";
+import "@fontsource/crimson-text/600.css";
+import "@fontsource/eb-garamond/400.css";
+import "@fontsource/eb-garamond/500.css";
 
 function App() {
   const { initAudioContext } = useAudio();

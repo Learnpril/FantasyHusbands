@@ -47,10 +47,10 @@ export function MainMenu() {
               <Heart className="relative w-16 h-16 text-white drop-shadow-lg" />
             </div>
             
-            <h1 className="text-4xl font-bold text-white mb-2 drop-shadow-lg tracking-wide">
+            <h1 className="text-4xl font-bold text-white mb-2 drop-shadow-lg tracking-wide fantasy-title">
               Fantasy Hearts
             </h1>
-            <p className="text-purple-200 text-lg font-medium">
+            <p className="text-purple-200 text-lg font-medium ui-text">
               An Anime Dating Simulation
             </p>
           </div>
@@ -63,7 +63,7 @@ export function MainMenu() {
                 setPhase('character-selection');
               })}
               onMouseEnter={() => playButtonHover()}
-              className="group relative w-full py-4 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105"
+              className="group relative w-full py-4 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105 ui-text"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg border-2 border-purple-300/50 shadow-lg group-hover:shadow-purple-500/50 group-hover:border-purple-300"></div>
               <div className="relative flex items-center justify-center">
@@ -108,7 +108,7 @@ export function MainMenu() {
           
           {/* Footer text */}
           <div className="mt-8 text-center">
-            <p className="text-purple-200 font-medium tracking-wide">
+            <p className="text-purple-200 font-medium tracking-wide ui-text">
               Choose your romantic destiny
             </p>
           </div>
