@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Card, CardContent } from '../ui/card';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
@@ -9,7 +10,13 @@ import { ArrowLeft, Heart } from 'lucide-react';
 
 export function CharacterSelection() {
   const { characters, setPhase, selectCharacter } = useDatingSim();
-  const { } = useAudio();
+  const { stopAllMusic } = useAudio();
+  
+  // Force stop all music when this component loads
+  useEffect(() => {
+    console.log("🔇 Character Selection: Force stopping all audio");
+    stopAllMusic();
+  }, [stopAllMusic]);
   
   const handleCharacterSelect = (characterId: string) => {
     selectCharacter(characterId);

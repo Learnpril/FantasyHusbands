@@ -15,26 +15,35 @@ function App() {
     isMusicMuted 
   } = useAudio();
 
-  // Initialize audio on component mount - NO BACKGROUND MUSIC
+  // Initialize audio on component mount - NO BACKGROUND MUSIC EVER
   useEffect(() => {
-    // Kill ALL existing background music completely
+    console.log("🔇 FORCE KILLING ALL AUDIO ON STARTUP");
+    
+    // Kill ALL audio elements completely - no exceptions
     const existingAudio = document.querySelectorAll('audio');
     existingAudio.forEach(audio => {
-      if (audio.src.includes('background.mp3')) {
-        console.log("🔇 Removing background music as requested");
-        audio.pause();
-        audio.currentTime = 0;
-        audio.src = '';
+      console.log("🔇 Destroying audio element:", audio.src);
+      audio.pause();
+      audio.currentTime = 0;
+      audio.volume = 0;
+      audio.muted = true;
+      audio.src = '';
+      audio.loop = false;
+      // Remove from DOM completely
+      try {
         if (audio.parentNode) {
           audio.parentNode.removeChild(audio);
         }
+      } catch (e) {
+        // Continue cleanup
       }
     });
 
-    // Clear global background music references
+    // Clear ALL global audio references
     (window as any).globalBackgroundMusic = null;
+    (window as any).globalSoundsInitialized = false; // Reset to force fresh initialization
 
-    console.log("🔊 Initializing sounds without background music");
+    console.log("🔊 Initializing sounds with NO BACKGROUND MUSIC");
 
     // Initialize other sounds only if they don't exist
     if (!(window as any).globalSoundsInitialized) {

@@ -328,31 +328,42 @@ export const useAudio = create<AudioState>((set, get) => ({
     }
   },
   
-  // Stop ambient sounds and any remaining background music
+  // Stop ALL audio completely - no music allowed
   stopAllMusic: () => {
-    const { ambientSound } = get();
+    const { ambientSound, backgroundMusic } = get();
     
-    console.log("🔇 Stopping all music and ambient sounds (background music disabled)");
+    console.log("🔇 FORCIBLY STOPPING ALL AUDIO - no background music allowed");
     
-    // Stop ALL audio including any remaining background music
+    // Stop EVERY audio element on the page
     const existingAudio = document.querySelectorAll('audio');
     existingAudio.forEach(audio => {
-      if (audio.src.includes('ambient/') || audio.src.includes('background.mp3')) {
-        console.log("🔇 Stopping audio:", audio.src);
-        audio.pause();
-        audio.currentTime = 0;
-        audio.src = '';
+      console.log("🔇 Force stopping audio:", audio.src);
+      audio.pause();
+      audio.currentTime = 0;
+      audio.volume = 0;
+      audio.muted = true;
+      audio.src = '';
+      // Try to remove from DOM
+      try {
         if (audio.parentNode) {
           audio.parentNode.removeChild(audio);
         }
+      } catch (e) {
+        // Ignore removal errors
       }
     });
     
-    // Clear ambient sound
+    // Clear all stored audio references
     if (ambientSound) {
       ambientSound.pause();
       ambientSound.currentTime = 0;
       ambientSound.src = '';
+    }
+    
+    if (backgroundMusic) {
+      backgroundMusic.pause();
+      backgroundMusic.currentTime = 0;
+      backgroundMusic.src = '';
     }
     
     set({ ambientSound: null, backgroundMusic: null });
