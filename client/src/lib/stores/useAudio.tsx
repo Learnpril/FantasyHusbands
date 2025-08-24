@@ -430,14 +430,14 @@ export const useAudio = create<AudioState>((set, get) => ({
       return;
     }
     
-    // Create speech synthesis utterance
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    
     // Check if Speech Synthesis is available (mobile compatibility)
-    if (!window.speechSynthesis) {
+    if (!window.speechSynthesis || !window.SpeechSynthesisUtterance) {
       console.log(`🚫 Speech synthesis not available on this device for ${characterId}`);
       return;
     }
+    
+    // Create speech synthesis utterance
+    const utterance = new SpeechSynthesisUtterance(cleanText);
 
     // Wait for voices to load if needed
     const configureAndSpeak = (voices: SpeechSynthesisVoice[]) => {
