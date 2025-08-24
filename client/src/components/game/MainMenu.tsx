@@ -9,19 +9,13 @@ export function MainMenu() {
   const { setPhase, toggleSettings, toggleSaveLoad, getSaves } = useDatingSim();
   const { 
     playButtonClick, 
-    playButtonHover, 
-    playPageTransition,
-    stopAllMusic
+    playButtonHover
   } = useAudio();
   
   const saves = getSaves();
   
-  const handleMenuAction = (action: () => void, playTransition = false) => {
-    if (playTransition) {
-      playPageTransition();
-    } else {
-      playButtonClick();
-    }
+  const handleMenuAction = (action: () => void) => {
+    playButtonClick();
     action();
   };
   
@@ -66,9 +60,8 @@ export function MainMenu() {
             {/* New Game Button */}
             <button
               onClick={() => handleMenuAction(() => {
-                stopAllMusic(); // Stop all existing music first
                 setPhase('character-selection');
-              }, true)}
+              })}
               onMouseEnter={() => playButtonHover()}
               className="group relative w-full py-4 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105"
             >

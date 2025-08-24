@@ -10,13 +10,7 @@ import { ArrowLeft, Heart } from 'lucide-react';
 
 export function CharacterSelection() {
   const { characters, setPhase, selectCharacter } = useDatingSim();
-  const { stopAllMusic } = useAudio();
-  
-  // Force stop all music when this component loads
-  useEffect(() => {
-    console.log("🔇 Character Selection: Force stopping all audio");
-    stopAllMusic();
-  }, [stopAllMusic]);
+  // No audio initialization needed - using new simplified system
   
   const handleCharacterSelect = (characterId: string) => {
     selectCharacter(characterId);

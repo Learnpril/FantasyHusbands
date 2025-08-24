@@ -14,11 +14,13 @@ export function AudioControls({
 }: AudioControlsProps) {
   const { 
     toggleMusicMute, 
-    toggleSoundMute, 
     isMusicMuted, 
-    isSoundMuted, 
+    isMuted,
+    toggleMute, 
     playButtonHover,
-    playButtonClick 
+    playButtonClick,
+    toggleBackgroundMusic,
+    isBackgroundMusicPlaying
   } = useAudio();
 
   const sizeClasses = {
@@ -44,29 +46,32 @@ export function AudioControls({
         onClick={() => {
           playButtonClick();
           toggleMusicMute();
+          if (!isMusicMuted && !isBackgroundMusicPlaying) {
+            toggleBackgroundMusic();
+          }
         }}
         onMouseEnter={() => playButtonHover()}
         className={buttonClass}
-        title={isMusicMuted ? 'Turn Music On' : 'Turn Music Off'}
+        title={isMusicMuted ? 'Turn Fantasy Music On' : 'Turn Fantasy Music Off'}
       >
-        {isMusicMuted ? (
+        {isMusicMuted || !isBackgroundMusicPlaying ? (
           <VolumeX className={iconSizes[size]} />
         ) : (
           <Music className={iconSizes[size]} />
         )}
       </button>
       
-      {/* Sound Effects Toggle */}
+      {/* Master Audio Toggle */}
       <button
         onClick={() => {
           playButtonClick();
-          toggleSoundMute();
+          toggleMute();
         }}
         onMouseEnter={() => playButtonHover()}
         className={buttonClass}
-        title={isSoundMuted ? 'Turn Sound Effects On' : 'Turn Sound Effects Off'}
+        title={isMuted ? 'Turn All Audio On' : 'Turn All Audio Off'}
       >
-        {isSoundMuted ? (
+        {isMuted ? (
           <VolumeX className={iconSizes[size]} />
         ) : (
           <Zap className={iconSizes[size]} />

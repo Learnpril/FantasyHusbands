@@ -1,231 +1,308 @@
 import { create } from "zustand";
 
 interface AudioState {
-  // Music and ambient sounds
+  // Web Audio API context for programmatic sound generation
+  audioContext: AudioContext | null;
+  
+  // Single background music system
   backgroundMusic: HTMLAudioElement | null;
-  ambientSound: HTMLAudioElement | null;
-  
-  // UI Sound effects
-  hitSound: HTMLAudioElement | null;
-  successSound: HTMLAudioElement | null;
-  buttonHoverSound: HTMLAudioElement | null;
-  buttonClickSound: HTMLAudioElement | null;
-  pageTransitionSound: HTMLAudioElement | null;
-  
-  // Voice acting
-  currentVoice: HTMLAudioElement | null;
-  characterVoices: Record<string, HTMLAudioElement>;
+  isBackgroundMusicPlaying: boolean;
   
   // Volume controls
   isMuted: boolean;
   isMusicMuted: boolean;
-  isSoundMuted: boolean;
   masterVolume: number;
   musicVolume: number;
-  soundVolume: number;
   voiceVolume: number;
-  ambientVolume: number;
   
-  // Current playback state
+  // Voice playback state (text-to-speech only)
   isVoicePlaying: boolean;
   currentVoiceId: string | null;
   
-  // Setter functions
-  setBackgroundMusic: (music: HTMLAudioElement) => void;
-  setAmbientSound: (sound: HTMLAudioElement) => void;
-  setHitSound: (sound: HTMLAudioElement) => void;
-  setSuccessSound: (sound: HTMLAudioElement) => void;
-  setButtonHoverSound: (sound: HTMLAudioElement) => void;
-  setButtonClickSound: (sound: HTMLAudioElement) => void;
-  setPageTransitionSound: (sound: HTMLAudioElement) => void;
-  setCharacterVoice: (characterId: string, voice: HTMLAudioElement) => void;
+  // Control functions
+  initAudioContext: () => void;
+  
+  // Background music controls
+  playBackgroundMusic: () => void;
+  stopBackgroundMusic: () => void;
+  toggleBackgroundMusic: () => void;
   
   // Volume controls
   setMasterVolume: (volume: number) => void;
   setMusicVolume: (volume: number) => void;
-  setSoundVolume: (volume: number) => void;
   setVoiceVolume: (volume: number) => void;
-  setAmbientVolume: (volume: number) => void;
-  
-  // Control functions
   toggleMute: () => void;
   toggleMusicMute: () => void;
-  toggleSoundMute: () => void;
-  playHit: () => void;
-  playSuccess: () => void;
+  
+  // Simple UI sound effects (programmatically generated)
   playButtonHover: () => void;
   playButtonClick: () => void;
-  playPageTransition: () => void;
-  playCharacterVoice: (characterId: string, dialogueId: string) => void;
+  playSuccess: () => void;
+  
+  // Voice acting (text-to-speech)
+  playCharacterVoice: (characterId: string, text: string) => void;
   stopVoice: () => void;
   pauseVoice: () => void;
   resumeVoice: () => void;
-  playAmbient: (soundKey: string) => void;
-  stopAmbient: () => void;
-  stopAllMusic: () => void;
 }
 
 export const useAudio = create<AudioState>((set, get) => ({
   // Initial state
+  audioContext: null,
   backgroundMusic: null,
-  ambientSound: null,
-  hitSound: null,
-  successSound: null,
-  buttonHoverSound: null,
-  buttonClickSound: null,
-  pageTransitionSound: null,
-  currentVoice: null,
-  characterVoices: {},
+  isBackgroundMusicPlaying: false,
   
-  // Volume state
-  isMuted: false, // Start unmuted so voice can be heard
+  // Volume controls
+  isMuted: false,
   isMusicMuted: false,
-  isSoundMuted: false,
-  masterVolume: 1.0,
-  musicVolume: 0.7,
-  soundVolume: 0.8,
-  voiceVolume: 0.9,
-  ambientVolume: 0.6,
+  masterVolume: 0.7,
+  musicVolume: 0.5,
+  voiceVolume: 0.8,
   
-  // Playback state
+  // Voice state
   isVoicePlaying: false,
   currentVoiceId: null,
   
-  // Setters
-  setBackgroundMusic: (music) => {
-    // Background music is disabled - reject all attempts to set it
-    console.log("🔇 Background music disabled - ignoring setBackgroundMusic call");
-    if (music) {
-      music.pause();
-      music.src = '';
+  // Initialize Web Audio API context
+  initAudioContext: () => {
+    const { audioContext } = get();
+    if (!audioContext) {
+      const context = new (window.AudioContext || (window as any).webkitAudioContext)();
+      set({ audioContext: context });
+      
+      // Create a simple fantasy background music using Web Audio API
+      const createFantasyMusicLoop = () => {
+        if (!context) return;
+        
+        try {
+          // Create a simple, pleasant background loop
+          const createTone = (frequency: number, startTime: number, duration: number, volume: number = 0.05) => {
+            const oscillator = context.createOscillator();
+            const gainNode = context.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(context.destination);
+            
+            oscillator.frequency.setValueAtTime(frequency, startTime);
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0, startTime);
+            gainNode.gain.linearRampToValueAtTime(volume, startTime + 0.1);
+            gainNode.gain.linearRampToValueAtTime(volume * 0.7, startTime + duration - 0.5);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+            
+            oscillator.start(startTime);
+            oscillator.stop(startTime + duration);
+          };
+          
+          // Simple fantasy chord progression
+          const playChord = (startTime: number) => {
+            // Am chord (A-C-E)
+            createTone(220, startTime, 2, 0.03); // A3
+            createTone(261.63, startTime, 2, 0.025); // C4
+            createTone(329.63, startTime, 2, 0.02); // E4
+            
+            // F chord (F-A-C) 
+            createTone(174.61, startTime + 2, 2, 0.03); // F3
+            createTone(220, startTime + 2, 2, 0.025); // A3
+            createTone(261.63, startTime + 2, 2, 0.02); // C4
+            
+            // C chord (C-E-G)
+            createTone(130.81, startTime + 4, 2, 0.03); // C3
+            createTone(164.81, startTime + 4, 2, 0.025); // E3
+            createTone(196, startTime + 4, 2, 0.02); // G3
+            
+            // G chord (G-B-D)
+            createTone(98, startTime + 6, 2, 0.03); // G2
+            createTone(123.47, startTime + 6, 2, 0.025); // B2
+            createTone(146.83, startTime + 6, 2, 0.02); // D3
+          };
+          
+          // Play the progression and loop
+          const loopMusic = () => {
+            const now = context.currentTime;
+            playChord(now);
+            
+            // Schedule next loop
+            setTimeout(() => {
+              if (get().isBackgroundMusicPlaying) {
+                loopMusic();
+              }
+            }, 8000); // 8 second loop
+          };
+          
+          return loopMusic;
+        } catch (error) {
+          console.log('Failed to create fantasy music:', error);
+          return null;
+        }
+      };
+      
+      const musicLoop = createFantasyMusicLoop();
+      set({ backgroundMusic: musicLoop as any });
+      console.log('🎵 Fantasy music system created with Web Audio API');
+      
+      console.log('🎵 Audio system initialized with fantasy soundtrack');
     }
-    set({ backgroundMusic: null });
   },
-  setAmbientSound: (sound) => set({ ambientSound: sound }),
-  setHitSound: (sound) => set({ hitSound: sound }),
-  setSuccessSound: (sound) => set({ successSound: sound }),
-  setButtonHoverSound: (sound) => set({ buttonHoverSound: sound }),
-  setButtonClickSound: (sound) => set({ buttonClickSound: sound }),
-  setPageTransitionSound: (sound) => set({ pageTransitionSound: sound }),
-  setCharacterVoice: (characterId, voice) => {
-    console.log(`🎤 Setting voice for ${characterId}`);
-    const { characterVoices } = get();
-    const newVoices = { 
-      ...characterVoices, 
-      [characterId]: voice 
-    };
-    console.log(`Voice storage updated:`, Object.keys(newVoices));
-    set({ 
-      characterVoices: newVoices
-    });
+  
+  // Background music controls
+  playBackgroundMusic: () => {
+    const { backgroundMusic, isMusicMuted, isMuted } = get();
+    if (backgroundMusic && !isMusicMuted && !isMuted) {
+      set({ isBackgroundMusicPlaying: true });
+      (backgroundMusic as any)(); // Call the music loop function
+      console.log('🎵 Fantasy soundtrack started');
+    }
+  },
+  
+  stopBackgroundMusic: () => {
+    set({ isBackgroundMusicPlaying: false });
+    console.log('🎵 Fantasy soundtrack stopped');
+  },
+  
+  toggleBackgroundMusic: () => {
+    const { isBackgroundMusicPlaying } = get();
+    if (isBackgroundMusicPlaying) {
+      get().stopBackgroundMusic();
+    } else {
+      get().playBackgroundMusic();
+    }
   },
   
   // Volume controls
-  setMasterVolume: (volume) => set({ masterVolume: volume }),
-  setMusicVolume: (volume) => set({ musicVolume: volume }),
-  setSoundVolume: (volume) => set({ soundVolume: volume }),
+  setMasterVolume: (volume) => {
+    set({ masterVolume: volume });
+    const { backgroundMusic, musicVolume } = get();
+    if (backgroundMusic) {
+      backgroundMusic.volume = musicVolume * volume;
+    }
+  },
+  
+  setMusicVolume: (volume) => {
+    set({ musicVolume: volume });
+    const { backgroundMusic, masterVolume } = get();
+    if (backgroundMusic) {
+      backgroundMusic.volume = volume * masterVolume;
+    }
+  },
+  
   setVoiceVolume: (volume) => set({ voiceVolume: volume }),
-  setAmbientVolume: (volume) => set({ ambientVolume: volume }),
   
   toggleMute: () => {
-    const { isMuted, backgroundMusic, ambientSound, currentVoice } = get();
-    const newMutedState = !isMuted;
-    
+    const newMutedState = !get().isMuted;
     set({ isMuted: newMutedState });
     
-    // Update volume for currently playing audio
+    const { backgroundMusic } = get();
     if (backgroundMusic) {
       backgroundMusic.muted = newMutedState;
     }
-    if (ambientSound) {
-      ambientSound.muted = newMutedState;
-    }
-    if (currentVoice) {
-      currentVoice.muted = newMutedState;
+    
+    if (window.speechSynthesis.speaking) {
+      if (newMutedState) {
+        window.speechSynthesis.pause();
+      } else {
+        window.speechSynthesis.resume();
+      }
     }
     
-    console.log(`Sound ${newMutedState ? 'muted' : 'unmuted'}`);
+    console.log(`Audio ${newMutedState ? 'muted' : 'unmuted'}`);
   },
   
   toggleMusicMute: () => {
-    const { isMusicMuted, ambientSound } = get();
-    const newMutedState = !isMusicMuted;
-    
+    const newMutedState = !get().isMusicMuted;
     set({ isMusicMuted: newMutedState });
     
-    console.log('🔇 Background music disabled - music mute toggle has no effect');
-    
-    if (ambientSound) {
-      ambientSound.muted = newMutedState;
+    const { backgroundMusic } = get();
+    if (backgroundMusic) {
+      backgroundMusic.muted = newMutedState || get().isMuted;
     }
     
-    console.log(`Music controls ${newMutedState ? 'muted' : 'unmuted'} (background music disabled)`);
+    console.log(`Music ${newMutedState ? 'muted' : 'unmuted'}`);
   },
   
-  toggleSoundMute: () => {
-    const { isSoundMuted } = get();
-    const newMutedState = !isSoundMuted;
-    
-    set({ isSoundMuted: newMutedState });
-    
-    console.log(`Sound effects ${newMutedState ? 'muted' : 'unmuted'}`);
-  },
-  
-  playHit: () => {
-    const { hitSound, isSoundMuted, soundVolume, masterVolume } = get();
-    if (hitSound && !isSoundMuted) {
-      const soundClone = hitSound.cloneNode() as HTMLAudioElement;
-      soundClone.volume = soundVolume * masterVolume * 0.5;
-      soundClone.play().catch(error => {
-        console.log("Hit sound play prevented:", error);
-      });
-    }
-  },
-  
-  playSuccess: () => {
-    const { successSound, isSoundMuted, soundVolume, masterVolume } = get();
-    if (successSound && !isSoundMuted) {
-      successSound.currentTime = 0;
-      successSound.volume = soundVolume * masterVolume * 0.6;
-      successSound.play().catch(error => {
-        console.log("Success sound play prevented:", error);
-      });
-    }
-  },
-  
+  // Simple UI sound effects using Web Audio API
   playButtonHover: () => {
-    const { buttonHoverSound, isSoundMuted, soundVolume, masterVolume } = get();
-    if (buttonHoverSound && !isSoundMuted) {
-      const soundClone = buttonHoverSound.cloneNode() as HTMLAudioElement;
-      soundClone.volume = soundVolume * masterVolume * 0.3;
-      soundClone.play().catch(error => {
-        console.log("Button hover sound play prevented:", error);
-      });
+    const { audioContext, isMuted, masterVolume } = get();
+    if (!audioContext || isMuted) return;
+    
+    try {
+      // Create a brief soft tone for hover
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+      gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+      gainNode.gain.linearRampToValueAtTime(0.1 * masterVolume, audioContext.currentTime + 0.01);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.1);
+    } catch (error) {
+      console.log('Button hover sound failed:', error);
     }
   },
   
   playButtonClick: () => {
-    const { buttonClickSound, isSoundMuted, soundVolume, masterVolume } = get();
-    if (buttonClickSound && !isSoundMuted) {
-      const soundClone = buttonClickSound.cloneNode() as HTMLAudioElement;
-      soundClone.volume = soundVolume * masterVolume * 0.4;
-      soundClone.play().catch(error => {
-        console.log("Button click sound play prevented:", error);
-      });
+    const { audioContext, isMuted, masterVolume } = get();
+    if (!audioContext || isMuted) return;
+    
+    try {
+      // Create a click sound
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.setValueAtTime(1200, audioContext.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.1);
+      
+      gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+      gainNode.gain.linearRampToValueAtTime(0.15 * masterVolume, audioContext.currentTime + 0.01);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.15);
+    } catch (error) {
+      console.log('Button click sound failed:', error);
     }
   },
   
-  playPageTransition: () => {
-    const { pageTransitionSound, isSoundMuted, soundVolume, masterVolume } = get();
-    if (pageTransitionSound && !isSoundMuted) {
-      pageTransitionSound.currentTime = 0;
-      pageTransitionSound.volume = soundVolume * masterVolume * 0.5;
-      pageTransitionSound.play().catch(error => {
-        console.log("Page transition sound play prevented:", error);
+  playSuccess: () => {
+    const { audioContext, isMuted, masterVolume } = get();
+    if (!audioContext || isMuted) return;
+    
+    try {
+      // Create a pleasant success chime
+      const frequencies = [523, 659, 784]; // C5, E5, G5 chord
+      
+      frequencies.forEach((freq, index) => {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
+        
+        const startTime = audioContext.currentTime + (index * 0.1);
+        gainNode.gain.setValueAtTime(0, startTime);
+        gainNode.gain.linearRampToValueAtTime(0.1 * masterVolume, startTime + 0.05);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.4);
+        
+        oscillator.start(startTime);
+        oscillator.stop(startTime + 0.4);
       });
+    } catch (error) {
+      console.log('Success sound failed:', error);
     }
   },
   
+  // Text-to-speech voice acting
   playCharacterVoice: (characterId: string, text: string) => {
     const { voiceVolume, isMuted } = get();
     
@@ -240,7 +317,7 @@ export const useAudio = create<AudioState>((set, get) => ({
     }
     
     // Filter out action text in asterisks - only speak the dialogue
-    const cleanText = text.replace(/\*[^*]*\*/g, '').trim();
+    const cleanText = text.replace(/\\*[^*]*\\*/g, '').trim();
     
     if (!cleanText) {
       console.log(`No dialogue to speak for ${characterId} after filtering actions`);
@@ -276,19 +353,8 @@ export const useAudio = create<AudioState>((set, get) => ({
          voice.name.toLowerCase().includes('alex'))
       );
       
-      // Look for Korean voices for Ryuu
-      const koreanVoices = voices.filter(voice => 
-        voice.lang.includes('ko') || 
-        voice.name.toLowerCase().includes('korean') ||
-        voice.name.toLowerCase().includes('korea')
-      );
-      
       // Combine for maximum masculine voice selection
       const maleVoices = [...explicitMaleVoices, ...deepMaleVoices];
-      
-      console.log(`Available voices: ${voices.map(v => v.name).join(', ')}`);
-      console.log(`Male voices found: ${maleVoices.map(v => v.name).join(', ')}`);
-      console.log(`Korean voices found: ${koreanVoices.map(v => v.name).join(', ')}`);
       
       // Assign different voices to each character
       switch (characterId) {
@@ -425,60 +491,6 @@ export const useAudio = create<AudioState>((set, get) => ({
     if (window.speechSynthesis.paused) {
       window.speechSynthesis.resume();
       set({ isVoicePlaying: true });
-    }
-  },
-  
-  // Stop ALL audio completely - no music allowed
-  stopAllMusic: () => {
-    const { ambientSound, backgroundMusic } = get();
-    
-    console.log("🔇 FORCIBLY STOPPING ALL AUDIO - no background music allowed");
-    
-    // Stop EVERY audio element on the page
-    const existingAudio = document.querySelectorAll('audio');
-    existingAudio.forEach(audio => {
-      console.log("🔇 Force stopping audio:", audio.src);
-      audio.pause();
-      audio.currentTime = 0;
-      audio.volume = 0;
-      audio.muted = true;
-      audio.src = '';
-      // Try to remove from DOM
-      try {
-        if (audio.parentNode) {
-          audio.parentNode.removeChild(audio);
-        }
-      } catch (e) {
-        // Ignore removal errors
-      }
-    });
-    
-    // Clear all stored audio references
-    if (ambientSound) {
-      ambientSound.pause();
-      ambientSound.currentTime = 0;
-      ambientSound.src = '';
-    }
-    
-    if (backgroundMusic) {
-      backgroundMusic.pause();
-      backgroundMusic.currentTime = 0;
-      backgroundMusic.src = '';
-    }
-    
-    set({ ambientSound: null, backgroundMusic: null });
-  },
-
-  playAmbient: (soundKey: string) => {
-    console.log(`🔇 Ambient sound playback disabled - ignoring ${soundKey}`);
-    // All ambient sounds are disabled - do nothing
-  },
-  
-  stopAmbient: () => {
-    const { ambientSound } = get();
-    if (ambientSound) {
-      ambientSound.pause();
-      set({ ambientSound: null });
     }
   }
 }));

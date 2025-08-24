@@ -23,15 +23,13 @@ export function DialogueBox() {
   } = useDatingSim();
   
   const { 
-    playHit, 
     playCharacterVoice, 
     stopVoice, 
     isVoicePlaying,
     pauseVoice,
     resumeVoice,
-    playAmbient,
-    stopAmbient,
-    playButtonClick
+    playButtonClick,
+    playSuccess
   } = useAudio();
   const [displayedText, setDisplayedText] = useState('');
   const [isTextComplete, setIsTextComplete] = useState(false);
