@@ -331,17 +331,16 @@ export const useAudio = create<AudioState>((set, get) => ({
           utterance.pitch = 0.65; // Very deep, mysterious voice
           break;
         case 'ryuu':
-          // Korean-accented masculine voice - try Korean voices first, then deep male voices
-          selectedVoice = koreanVoices.find(voice => 
-            voice.name.toLowerCase().includes('male') || voice.gender === 'male'
-          ) || koreanVoices[0] || explicitMaleVoices.find(voice => 
+          // Strong, confident masculine English voice
+          selectedVoice = explicitMaleVoices.find(voice => 
             voice.name.toLowerCase().includes('male')
           ) || deepMaleVoices.find(voice => 
             voice.name.toLowerCase().includes('james') || 
             voice.name.toLowerCase().includes('john') ||
-            voice.name.toLowerCase().includes('daniel')
+            voice.name.toLowerCase().includes('daniel') ||
+            voice.name.toLowerCase().includes('thomas')
           ) || maleVoices[4] || voices.find(voice => voice.lang.startsWith('en'));
-          utterance.pitch = 0.7; // Deep, confident Korean-accented voice
+          utterance.pitch = 0.75; // Deep, confident masculine voice
           break;
         case 'zephyr':
           // Intelligent, sophisticated voice
