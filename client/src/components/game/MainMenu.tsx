@@ -23,7 +23,7 @@ export function MainMenu() {
     <div 
       className="min-h-screen w-full flex items-center justify-center relative overflow-hidden"
       style={{
-        backgroundImage: 'url(/images/backgrounds/main-menu.png)',
+        backgroundImage: 'url(/images/backgrounds/main-menu.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
