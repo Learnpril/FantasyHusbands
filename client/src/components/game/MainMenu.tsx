@@ -11,75 +11,105 @@ export function MainMenu() {
   const saves = getSaves();
   
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-20 w-4 h-4 bg-pink-300 rounded-full animate-pulse opacity-60"></div>
-        <div className="absolute top-40 right-32 w-6 h-6 bg-blue-300 rounded-full animate-bounce opacity-40"></div>
-        <div className="absolute bottom-32 left-1/4 w-3 h-3 bg-purple-300 rounded-full animate-ping opacity-50"></div>
-        <div className="absolute bottom-20 right-20 w-5 h-5 bg-pink-400 rounded-full animate-pulse opacity-30"></div>
-      </div>
-      
-      <Card className="w-full max-w-md mx-4 bg-white/10 backdrop-blur-sm border-white/20 text-white">
-        <CardContent className="pt-8">
+    <div 
+      className="min-h-screen w-full flex items-center justify-center relative overflow-hidden"
+      style={{
+        backgroundImage: 'url(/images/backgrounds/main-menu.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Ornate UI Panel */}
+      <div className="relative w-full max-w-lg mx-4">
+        {/* Main UI Container with ornate styling */}
+        <div className="relative bg-gradient-to-b from-indigo-900/80 to-purple-900/80 backdrop-blur-sm rounded-lg border-2 border-purple-300/30 shadow-2xl p-8">
+          {/* Decorative border corners */}
+          <div className="absolute -top-1 -left-1 w-8 h-8 border-l-2 border-t-2 border-purple-300 rounded-tl-lg"></div>
+          <div className="absolute -top-1 -right-1 w-8 h-8 border-r-2 border-t-2 border-purple-300 rounded-tr-lg"></div>
+          <div className="absolute -bottom-1 -left-1 w-8 h-8 border-l-2 border-b-2 border-purple-300 rounded-bl-lg"></div>
+          <div className="absolute -bottom-1 -right-1 w-8 h-8 border-r-2 border-b-2 border-purple-300 rounded-br-lg"></div>
+          
+          {/* Title Section */}
           <div className="text-center mb-8">
-            <Heart className="w-16 h-16 mx-auto mb-4 text-pink-400 animate-pulse" />
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
+            {/* Heart gem icon */}
+            <div className="relative mx-auto mb-4 w-16 h-16">
+              <div className="absolute inset-0 bg-gradient-to-b from-purple-400 to-pink-500 rounded-full animate-pulse shadow-lg shadow-purple-500/50"></div>
+              <Heart className="relative w-16 h-16 text-white drop-shadow-lg" />
+            </div>
+            
+            <h1 className="text-4xl font-bold text-white mb-2 drop-shadow-lg tracking-wide">
               Fantasy Hearts
             </h1>
-            <p className="text-lg text-gray-300 mt-2">
+            <p className="text-purple-200 text-lg font-medium">
               An Anime Dating Simulation
             </p>
           </div>
           
+          {/* Buttons */}
           <div className="space-y-4">
-            <Button
+            {/* New Game Button */}
+            <button
               onClick={() => setPhase('character-selection')}
-              className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white border-0 py-6 text-lg font-semibold"
+              className="group relative w-full py-4 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105"
             >
-              <Play className="w-5 h-5 mr-2" />
-              New Game
-            </Button>
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg border-2 border-purple-300/50 shadow-lg group-hover:shadow-purple-500/50 group-hover:border-purple-300"></div>
+              <div className="relative flex items-center justify-center">
+                <Play className="w-5 h-5 mr-2" />
+                New Game
+              </div>
+            </button>
             
+            {/* Load Game Button */}
             {saves.length > 0 && (
-              <Button
+              <button
                 onClick={() => toggleSaveLoad()}
-                variant="outline"
-                className="w-full border-white/30 text-white hover:bg-white/10 py-6 text-lg"
+                className="group relative w-full py-4 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105"
               >
-                <Save className="w-5 h-5 mr-2" />
-                Load Game
-              </Button>
+                <div className="absolute inset-0 bg-transparent rounded-lg border-2 border-purple-300/60 shadow-lg group-hover:shadow-purple-400/50 group-hover:border-purple-300 group-hover:bg-purple-600/20"></div>
+                <div className="relative flex items-center justify-center">
+                  <Save className="w-5 h-5 mr-2" />
+                  Load Game
+                </div>
+              </button>
             )}
             
-            <Button
+            {/* Settings Button */}
+            <button
               onClick={() => toggleSettings()}
-              variant="outline"
-              className="w-full border-white/30 text-white hover:bg-white/10 py-6 text-lg"
+              className="group relative w-full py-4 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105"
             >
-              <Settings className="w-5 h-5 mr-2" />
-              Settings
-            </Button>
+              <div className="absolute inset-0 bg-transparent rounded-lg border-2 border-purple-300/60 shadow-lg group-hover:shadow-purple-400/50 group-hover:border-purple-300 group-hover:bg-purple-600/20"></div>
+              <div className="relative flex items-center justify-center">
+                <Settings className="w-5 h-5 mr-2" />
+                Settings
+              </div>
+            </button>
             
-            <Button
+            {/* Audio Toggle Button */}
+            <button
               onClick={() => toggleMute()}
-              variant="ghost"
-              className="w-full text-white hover:bg-white/10 py-4"
+              className="group relative w-full py-3 px-6 text-purple-200 font-medium transition-all duration-300 hover:text-white"
             >
-              {isMuted ? (
-                <VolumeX className="w-5 h-5 mr-2" />
-              ) : (
-                <Volume2 className="w-5 h-5 mr-2" />
-              )}
-              {isMuted ? 'Unmute' : 'Mute'} Sound
-            </Button>
+              <div className="relative flex items-center justify-center">
+                {isMuted ? (
+                  <VolumeX className="w-5 h-5 mr-2" />
+                ) : (
+                  <Volume2 className="w-5 h-5 mr-2" />
+                )}
+                {isMuted ? 'Unmute' : 'Mute'} Sound
+              </div>
+            </button>
           </div>
           
-          <div className="mt-8 text-center text-sm text-gray-400">
-            <p>Choose your romantic destiny</p>
+          {/* Footer text */}
+          <div className="mt-8 text-center">
+            <p className="text-purple-200 font-medium tracking-wide">
+              Choose your romantic destiny
+            </p>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }
