@@ -10,7 +10,8 @@ export function MainMenu() {
   const { 
     playButtonClick, 
     playButtonHover, 
-    playPageTransition 
+    playPageTransition,
+    stopAllMusic
   } = useAudio();
   
   const saves = getSaves();
@@ -64,7 +65,10 @@ export function MainMenu() {
           <div className="space-y-4">
             {/* New Game Button */}
             <button
-              onClick={() => handleMenuAction(() => setPhase('character-selection'), true)}
+              onClick={() => handleMenuAction(() => {
+                stopAllMusic(); // Stop all existing music first
+                setPhase('character-selection');
+              }, true)}
               onMouseEnter={() => playButtonHover()}
               className="group relative w-full py-4 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105"
             >

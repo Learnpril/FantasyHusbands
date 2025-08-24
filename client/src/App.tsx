@@ -19,12 +19,14 @@ function App() {
   // Initialize audio on component mount
   useEffect(() => {
     const initAudio = () => {
-      // Stop any existing background music first
+      // Stop ANY existing background music first - more thorough cleanup
       const existingAudio = document.querySelectorAll('audio');
       existingAudio.forEach(audio => {
         if (audio.src.includes('background.mp3')) {
           audio.pause();
           audio.currentTime = 0;
+          audio.src = ''; // Clear source completely
+          audio.remove(); // Remove from DOM if possible
         }
       });
       

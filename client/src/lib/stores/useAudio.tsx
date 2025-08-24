@@ -62,6 +62,7 @@ interface AudioState {
   resumeVoice: () => void;
   playAmbient: (soundKey: string) => void;
   stopAmbient: () => void;
+  stopAllMusic: () => void;
 }
 
 export const useAudio = create<AudioState>((set, get) => ({
@@ -93,11 +94,24 @@ export const useAudio = create<AudioState>((set, get) => ({
   // Setters
   setBackgroundMusic: (music) => {
     const { backgroundMusic } = get();
-    // Stop any existing background music first
+    
+    // Stop ALL existing audio elements that might be background music
+    const existingAudio = document.querySelectorAll('audio');
+    existingAudio.forEach(audio => {
+      if (audio.src.includes('background.mp3') && !audio.paused) {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.src = ''; // Clear source to prevent reuse
+      }
+    });
+    
+    // Stop current stored music if exists
     if (backgroundMusic) {
       backgroundMusic.pause();
       backgroundMusic.currentTime = 0;
+      backgroundMusic.src = '';
     }
+    
     set({ backgroundMusic: music });
   },
   setAmbientSound: (sound) => set({ ambientSound: sound }),
@@ -148,6 +162,17 @@ export const useAudio = create<AudioState>((set, get) => ({
     const newMutedState = !isMusicMuted;
     
     set({ isMusicMuted: newMutedState });
+    
+    // Stop ALL background music if muting
+    if (newMutedState) {
+      const existingAudio = document.querySelectorAll('audio');
+      existingAudio.forEach(audio => {
+        if (audio.src.includes('background.mp3')) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      });
+    }
     
     if (backgroundMusic) {
       backgroundMusic.muted = newMutedState;
@@ -321,12 +346,44 @@ export const useAudio = create<AudioState>((set, get) => ({
     }
   },
   
+  // Global music cleanup function
+  stopAllMusic: () => {
+    const { backgroundMusic, ambientSound } = get();
+    
+    // Stop ALL audio elements that could be background music
+    const existingAudio = document.querySelectorAll('audio');
+    existingAudio.forEach(audio => {
+      if (audio.src.includes('background.mp3') || audio.src.includes('ambient/')) {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.src = '';
+      }
+    });
+    
+    // Clear stored references
+    if (backgroundMusic) {
+      backgroundMusic.pause();
+      backgroundMusic.currentTime = 0;
+      backgroundMusic.src = '';
+    }
+    
+    if (ambientSound) {
+      ambientSound.pause();
+      ambientSound.currentTime = 0;
+      ambientSound.src = '';
+    }
+    
+    set({ backgroundMusic: null, ambientSound: null });
+  },
+
   playAmbient: (soundKey: string) => {
     const { ambientSound, isMusicMuted, ambientVolume, masterVolume } = get();
     
     // Stop current ambient sound
     if (ambientSound) {
       ambientSound.pause();
+      ambientSound.currentTime = 0;
+      ambientSound.src = '';
     }
     
     // Create new ambient audio
