@@ -22,7 +22,7 @@ export const characters: Character[] = [
     occupation: 'Court Mage',
     personality: 'Playful and mischievous, loves experimenting with magic',
     backstory: 'A prodigy in the magical arts, Felix comes from a long line of distinguished mages. Despite his talent, he prefers to use magic for fun rather than formal duties, much to the court\'s dismay.',
-    sprite: '/images/characters/felix.svg',
+    sprite: '/images/characters/felix.png',
     affection: 0,
     maxAffection: 100,
     favoriteGifts: ['rare crystal', 'magic tome', 'star map'],
