@@ -74,10 +74,14 @@ export const useDatingSim = create<DatingSimState>()(
     setPhase: (phase) => set({ phase }),
     
     selectCharacter: (characterId) => {
+      const state = get();
+      const isFromForestJourney = state.phase === 'forest-journey';
+      const dialogueId = isFromForestJourney ? `forest_encounter_${characterId}` : `intro_${characterId}`;
+      
       set({ 
         currentCharacterId: characterId,
         currentSceneId: 'introduction',
-        currentDialogueId: `intro_${characterId}`,
+        currentDialogueId: dialogueId,
         phase: 'dialogue'
       });
     },

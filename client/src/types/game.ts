@@ -60,4 +60,4 @@ export interface GameSave {
   gameProgress: number;
 }
 
-export type GamePhase = 'menu' | 'character-selection' | 'scene' | 'dialogue' | 'settings' | 'save-load';
+export type GamePhase = 'menu' | 'forest-journey' | 'character-selection' | 'scene' | 'dialogue' | 'settings' | 'save-load';

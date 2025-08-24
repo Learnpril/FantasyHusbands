@@ -1,5 +1,6 @@
 import { useDatingSim } from '../../lib/stores/useDatingSim';
 import { MainMenu } from './MainMenu';
+import { ForestJourney } from './ForestJourney';
 import { CharacterSelection } from './CharacterSelection';
 import { DialogueBox } from './DialogueBox';
 import { SettingsMenu } from './SettingsMenu';
@@ -12,6 +13,7 @@ export function GameScene() {
     <div className="relative w-full h-full">
       {/* Main game content */}
       {phase === 'menu' && <MainMenu />}
+      {phase === 'forest-journey' && <ForestJourney />}
       {phase === 'character-selection' && <CharacterSelection />}
       {phase === 'dialogue' && <DialogueBox />}
       

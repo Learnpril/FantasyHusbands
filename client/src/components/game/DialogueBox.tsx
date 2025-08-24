@@ -84,9 +84,14 @@ export function DialogueBox() {
     if (choice.nextDialogueId) {
       if (choice.nextDialogueId === 'character_selection') {
         setPhase('character-selection');
+      } else if (choice.nextDialogueId === 'return_to_forest') {
+        setPhase('forest-journey');
       } else {
         setCurrentDialogue(choice.nextDialogueId);
       }
+    } else if (currentDialogue?.isEnd) {
+      // Return to forest journey by default
+      setPhase('forest-journey');
     }
   };
   

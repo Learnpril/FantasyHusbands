@@ -60,7 +60,7 @@ export function MainMenu() {
             {/* New Game Button */}
             <button
               onClick={() => handleMenuAction(() => {
-                setPhase('character-selection');
+                setPhase('forest-journey');
               })}
               onMouseEnter={() => playButtonHover()}
               className="group relative w-full py-4 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105 ui-text"
