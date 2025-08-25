@@ -51,9 +51,13 @@ export const useAudio = create<AudioState>()(
           // Create background music audio element
           const bgMusic = new Audio();
           
-          // No audio file loaded - silence until real music files are added
-          // TODO: Replace with actual music file: bgMusic.src = '/audio/fantasy-background.mp3';
-          // bgMusic.src = 'data:audio/wav;base64,UklGRigBAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQQAAAAAAA==';
+          // Set up for romantic medieval fantasy music
+          bgMusic.src = '/audio/fantasy-romance-background.mp3';
+          
+          // Handle load errors gracefully
+          bgMusic.addEventListener('error', () => {
+            console.log('🎵 Background music file not found - add fantasy-romance-background.mp3 to /public/audio/');
+          });
           
           bgMusic.loop = true;
           bgMusic.volume = currentState.musicVolume;

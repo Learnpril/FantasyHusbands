@@ -23,13 +23,7 @@ export function DialogueBox() {
   } = useDatingSim();
   
   const { 
-    playCharacterVoice, 
-    stopVoice, 
-    isVoicePlaying,
-    pauseVoice,
-    resumeVoice,
-    playUISound,
-    playSuccess
+    playUISound
   } = useAudio();
   const [displayedText, setDisplayedText] = useState('');
   const [isTextComplete, setIsTextComplete] = useState(false);
@@ -44,10 +38,8 @@ export function DialogueBox() {
     setDisplayedText('');
     setIsTextComplete(false);
     
-    // Play character voice when dialogue starts
-    if (currentDialogue.characterId) {
-      playCharacterVoice(currentDialogue.characterId, currentDialogue.text);
-    }
+    // Character voice would play here when audio files are available
+    // TODO: Add character voice files to /public/audio/characters/
     
     // Ambient sounds disabled - no background audio will play
     

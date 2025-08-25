@@ -23,10 +23,6 @@ export function SettingsMenu() {
   } = useDatingSim();
   
   const {
-    voiceVolume,
-    ambientVolume,
-    setVoiceVolume,
-    setAmbientVolume,
     playUISound
   } = useAudio();
   
@@ -66,70 +62,10 @@ export function SettingsMenu() {
               Audio
             </h3>
             
-            <div className="space-y-3">
-              <div>
-                <Label className="text-sm text-gray-300">Music Volume</Label>
-                <div className="mt-2">
-                  <Slider
-                    value={[musicVolume * 100]}
-                    onValueChange={(value) => setMusicVolume(value[0] / 100)}
-                    max={100}
-                    step={1}
-                    className="w-full"
-                  />
-                  <div className="text-xs text-gray-400 mt-1">
-                    {Math.round(musicVolume * 100)}%
-                  </div>
-                </div>
-              </div>
-              
-              <div>
-                <Label className="text-sm text-gray-300">Sound Effects Volume</Label>
-                <div className="mt-2">
-                  <Slider
-                    value={[soundVolume * 100]}
-                    onValueChange={(value) => setSoundVolume(value[0] / 100)}
-                    max={100}
-                    step={1}
-                    className="w-full"
-                  />
-                  <div className="text-xs text-gray-400 mt-1">
-                    {Math.round(soundVolume * 100)}%
-                  </div>
-                </div>
-              </div>
-              
-              <div>
-                <Label className="text-sm text-gray-300">Voice Acting Volume</Label>
-                <div className="mt-2">
-                  <Slider
-                    value={[voiceVolume * 100]}
-                    onValueChange={(value) => setVoiceVolume(value[0] / 100)}
-                    max={100}
-                    step={1}
-                    className="w-full"
-                  />
-                  <div className="text-xs text-gray-400 mt-1">
-                    {Math.round(voiceVolume * 100)}%
-                  </div>
-                </div>
-              </div>
-              
-              <div>
-                <Label className="text-sm text-gray-300">Ambient Sounds Volume</Label>
-                <div className="mt-2">
-                  <Slider
-                    value={[ambientVolume * 100]}
-                    onValueChange={(value) => setAmbientVolume(value[0] / 100)}
-                    max={100}
-                    step={1}
-                    className="w-full"
-                  />
-                  <div className="text-xs text-gray-400 mt-1">
-                    {Math.round(ambientVolume * 100)}%
-                  </div>
-                </div>
-              </div>
+            <div className="text-center text-gray-300 p-4 bg-gray-800/50 rounded-lg">
+              <p className="text-sm mb-2">🎵 Music and sound controls are available</p>
+              <p className="text-sm mb-2">using the audio buttons in the top-right corner.</p>
+              <p className="text-xs text-gray-400 mt-4">Add music files to /public/audio/ folder to enable background music.</p>
             </div>
           </div>
           
