@@ -1,13 +1,12 @@
 import React from 'react';
 import { Play, Settings, Save } from 'lucide-react';
-import { useGameStore } from '../../store/gameStore';
-import { useAudioStore } from '../../store/audioStore';
-import { getSaves } from '../../store/saveGameStore';
+import { useDatingSim } from '../../lib/stores/useDatingSim';
+import { useAudio } from '../../lib/stores/useAudio';
 import { AudioControls } from '../ui/AudioControls';
 
 export function MainMenu() {
-  const { setPhase, toggleSettings, toggleSaveLoad } = useGameStore();
-  const { playButtonClick, playButtonHover } = useAudioStore();
+  const { setPhase, toggleSettings, toggleSaveLoad, getSaves } = useDatingSim();
+  const { playButtonClick, playButtonHover } = useAudio();
   
   const saves = getSaves();
 
