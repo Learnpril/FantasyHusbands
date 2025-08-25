@@ -1,5 +1,8 @@
 import { create } from "zustand";
 
+// Global flag to prevent multiple audio systems
+let globalAudioInitialized = false;
+
 interface AudioState {
   // Web Audio API context for programmatic sound generation
   audioContext: AudioContext | null;
@@ -71,6 +74,12 @@ export const useAudio = create<AudioState>((set, get) => ({
   
   // Initialize Web Audio API context
   initAudioContext: () => {
+    // Check global flag first to prevent any duplicate systems
+    if (globalAudioInitialized) {
+      console.log('🎵 Audio system already globally initialized, skipping');
+      return;
+    }
+
     const currentState = get();
     if (currentState.audioContext && currentState.isMusicSystemInitialized) {
       console.log('🎵 Audio system already initialized');
@@ -272,6 +281,9 @@ export const useAudio = create<AudioState>((set, get) => ({
         backgroundMusic: musicLoop as any,
         isMusicSystemInitialized: true
       });
+      
+      // Set global flag to prevent any future initializations
+      globalAudioInitialized = true;
       console.log('🎵 Fantasy music system created with Web Audio API');
       
       console.log('🎵 Audio system initialized with fantasy soundtrack');
