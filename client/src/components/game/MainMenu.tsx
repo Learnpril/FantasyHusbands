@@ -69,7 +69,7 @@ export function MainMenu() {
         </div>
         
         {/* New Game and Settings Buttons */}
-        <div className="space-y-2 mb-2">
+        <div className="space-y-2 mb-2 -mt-7">
           {/* New Game Button */}
           <button
             onClick={() => handleMenuAction(() => {
