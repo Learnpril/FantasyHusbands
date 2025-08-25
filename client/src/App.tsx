@@ -10,7 +10,7 @@ import "@fontsource/eb-garamond/400.css";
 import "@fontsource/eb-garamond/500.css";
 
 function App() {
-  const { initAudioContext } = useAudio();
+  const { initAudioContext, playBackgroundMusic } = useAudio();
 
   // Initialize the simplified audio system
   useEffect(() => {
@@ -18,6 +18,11 @@ function App() {
     
     // Initialize Web Audio API and background music
     initAudioContext();
+    
+    // Auto-start the fantasy background music
+    setTimeout(() => {
+      playBackgroundMusic();
+    }, 100); // Small delay to ensure audio context is ready
     
     console.log("✨ Audio system ready with fantasy soundtrack and programmatic UI sounds");
   }, []); // Only run once on mount
