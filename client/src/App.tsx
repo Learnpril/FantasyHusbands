@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useAudio } from "./lib/stores/useAudio";
 import { GameScene } from "./components/game/GameScene";
 import "@fontsource/cinzel/400.css";
@@ -11,9 +11,15 @@ import "@fontsource/eb-garamond/500.css";
 
 function App() {
   const { initAudioContext, playBackgroundMusic } = useAudio();
+  const audioInitialized = useRef(false);
 
-  // Initialize the simplified audio system
+  // Initialize the simplified audio system once only
   useEffect(() => {
+    if (audioInitialized.current) {
+      console.log("🎵 Audio system already initialized, skipping");
+      return;
+    }
+    
     console.log("🎵 Initializing simplified audio system");
     
     // Initialize Web Audio API and background music
@@ -24,6 +30,7 @@ function App() {
       playBackgroundMusic();
     }, 100); // Small delay to ensure audio context is ready
     
+    audioInitialized.current = true;
     console.log("✨ Audio system ready with fantasy soundtrack and programmatic UI sounds");
   }, []); // Only run once on mount
 

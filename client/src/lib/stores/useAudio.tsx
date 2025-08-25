@@ -9,6 +9,7 @@ interface AudioState {
   isBackgroundMusicPlaying: boolean;
   activeOscillators: OscillatorNode[];
   musicTimeout: NodeJS.Timeout | null;
+  isMusicSystemInitialized: boolean;
   
   // Volume controls
   isMuted: boolean;
@@ -55,6 +56,7 @@ export const useAudio = create<AudioState>((set, get) => ({
   isBackgroundMusicPlaying: false,
   activeOscillators: [],
   musicTimeout: null,
+  isMusicSystemInitialized: false,
   
   // Volume controls
   isMuted: false,
@@ -69,8 +71,18 @@ export const useAudio = create<AudioState>((set, get) => ({
   
   // Initialize Web Audio API context
   initAudioContext: () => {
-    const { audioContext } = get();
-    if (!audioContext) {
+    const currentState = get();
+    if (currentState.audioContext && currentState.isMusicSystemInitialized) {
+      console.log('🎵 Audio system already initialized');
+      return;
+    }
+
+    // Stop any existing music first
+    if (currentState.isBackgroundMusicPlaying) {
+      get().stopBackgroundMusic();
+    }
+
+    if (!currentState.audioContext) {
       const context = new (window.AudioContext || (window as any).webkitAudioContext)();
       set({ audioContext: context });
       
@@ -256,7 +268,10 @@ export const useAudio = create<AudioState>((set, get) => ({
       };
       
       const musicLoop = createFantasyMusicLoop();
-      set({ backgroundMusic: musicLoop as any });
+      set({ 
+        backgroundMusic: musicLoop as any,
+        isMusicSystemInitialized: true
+      });
       console.log('🎵 Fantasy music system created with Web Audio API');
       
       console.log('🎵 Audio system initialized with fantasy soundtrack');
@@ -265,7 +280,14 @@ export const useAudio = create<AudioState>((set, get) => ({
   
   // Background music controls
   playBackgroundMusic: () => {
-    const { backgroundMusic, isMusicMuted, isMuted } = get();
+    const { backgroundMusic, isMusicMuted, isMuted, isBackgroundMusicPlaying } = get();
+    
+    // Prevent starting music if already playing
+    if (isBackgroundMusicPlaying) {
+      console.log('🎵 Music already playing, ignoring request');
+      return;
+    }
+    
     if (backgroundMusic && !isMusicMuted && !isMuted) {
       set({ isBackgroundMusicPlaying: true });
       (backgroundMusic as any)(); // Call the music loop function
