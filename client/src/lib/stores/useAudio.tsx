@@ -83,11 +83,12 @@ export const useAudio = create<AudioState>((set, get) => ({
   
   // Initialize Web Audio API context
   initAudioContext: () => {
-    // Check global flag first to prevent any duplicate systems
+    // CRITICAL: Set global flag immediately to prevent race conditions
     if (globalAudioInitialized) {
       console.log('🎵 Audio system already globally initialized, skipping');
       return;
     }
+    globalAudioInitialized = true; // Set immediately to prevent duplicates
 
     const currentState = get();
     if (currentState.audioContext && currentState.isMusicSystemInitialized) {
@@ -291,23 +292,23 @@ export const useAudio = create<AudioState>((set, get) => ({
         isMusicSystemInitialized: true
       });
       
-      // Set global flag to prevent any future initializations
-      globalAudioInitialized = true;
       console.log('🎵 Fantasy music system created with Web Audio API');
-      
       console.log('🎵 Audio system initialized with fantasy soundtrack');
     }
   },
   
   // Background music controls
   playBackgroundMusic: () => {
-    const { backgroundMusic, isMusicMuted, isMuted, isBackgroundMusicPlaying } = get();
+    const { backgroundMusic, isMusicMuted, isMuted, isBackgroundMusicPlaying, musicTimeout } = get();
     
-    // Prevent starting music if already playing
-    if (isBackgroundMusicPlaying) {
-      console.log('🎵 Music already playing, ignoring request');
+    // CRITICAL: Prevent multiple music instances
+    if (isBackgroundMusicPlaying || musicTimeout) {
+      console.log('🎵 Music already playing or scheduled, ignoring request');
       return;
     }
+    
+    // Stop any existing music completely before starting
+    get().stopBackgroundMusic();
     
     if (backgroundMusic && !isMusicMuted && !isMuted) {
       set({ isBackgroundMusicPlaying: true });
@@ -322,13 +323,13 @@ export const useAudio = create<AudioState>((set, get) => ({
     // Stop all currently playing oscillators immediately
     activeOscillators.forEach(oscillator => {
       try {
-        oscillator.stop();
+        oscillator.stop(0); // Stop immediately
       } catch (error) {
         // Oscillator might already be stopped, ignore error
       }
     });
     
-    // Clear the music loop timeout
+    // Clear any scheduled music loop timeouts
     if (musicTimeout) {
       clearTimeout(musicTimeout);
     }
