@@ -21,7 +21,7 @@ export function MainMenu() {
   
   return (
     <div 
-      className="min-h-screen w-full flex items-center justify-center relative overflow-hidden"
+      className="min-h-screen w-full flex items-start justify-center pt-8 relative overflow-hidden"
       style={{
         backgroundImage: 'url(/images/backgrounds/main-menu.jpg)',
         backgroundSize: 'cover',
@@ -55,9 +55,9 @@ export function MainMenu() {
       </div>
 
       {/* Ornate UI Panel */}
-      <div className="relative w-full max-w-lg mx-4">
+      <div className="relative w-full max-w-sm mx-4">
         {/* Main UI Container with ornate styling */}
-        <div className="relative bg-gradient-to-b from-indigo-900/80 to-purple-900/80 backdrop-blur-sm rounded-lg border-2 border-purple-300/30 shadow-2xl p-8">
+        <div className="relative bg-gradient-to-b from-indigo-900/80 to-purple-900/80 backdrop-blur-sm rounded-lg border-2 border-purple-300/30 shadow-2xl p-4">
           {/* Decorative border corners */}
           <div className="absolute -top-1 -left-1 w-8 h-8 border-l-2 border-t-2 border-purple-300 rounded-tl-lg"></div>
           <div className="absolute -top-1 -right-1 w-8 h-8 border-r-2 border-t-2 border-purple-300 rounded-tr-lg"></div>
@@ -65,30 +65,30 @@ export function MainMenu() {
           <div className="absolute -bottom-1 -right-1 w-8 h-8 border-r-2 border-b-2 border-purple-300 rounded-br-lg"></div>
           
           {/* Title Section */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-4">
             {/* Fantasy Hearts Logo */}
-            <div className="relative mx-auto mb-4">
+            <div className="relative mx-auto mb-2">
               <img 
                 src="/images/logo.png" 
                 alt="Fantasy Hearts" 
-                className="w-96 h-auto mx-auto"
+                className="w-56 h-auto mx-auto"
               />
             </div>
             
-            <p className="text-purple-200 text-lg font-medium ui-text">
-              An Anime Dating Simulation
+            <p className="text-purple-200 text-sm font-medium ui-text">
+              Choose your Romantic Destiny
             </p>
           </div>
           
           {/* Buttons */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             {/* New Game Button */}
             <button
               onClick={() => handleMenuAction(() => {
                 setPhase('forest-journey');
               })}
               onMouseEnter={() => playButtonHover()}
-              className="group relative w-full py-4 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105 ui-text"
+              className="group relative w-full py-3 px-4 text-white font-semibold text-base tracking-wide transition-all duration-300 hover:scale-105 ui-text"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg border-2 border-purple-300/50 shadow-lg group-hover:shadow-purple-500/50 group-hover:border-purple-300"></div>
               <div className="relative flex items-center justify-center">
@@ -102,7 +102,7 @@ export function MainMenu() {
               <button
                 onClick={() => handleMenuAction(() => toggleSaveLoad())}
                 onMouseEnter={() => playButtonHover()}
-                className="group relative w-full py-4 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105"
+                className="group relative w-full py-3 px-4 text-white font-semibold text-base tracking-wide transition-all duration-300 hover:scale-105"
               >
                 <div className="absolute inset-0 bg-transparent rounded-lg border-2 border-purple-300/60 shadow-lg group-hover:shadow-purple-400/50 group-hover:border-purple-300 group-hover:bg-purple-600/20"></div>
                 <div className="relative flex items-center justify-center">
@@ -116,7 +116,7 @@ export function MainMenu() {
             <button
               onClick={() => handleMenuAction(() => toggleSettings())}
               onMouseEnter={() => playButtonHover()}
-              className="group relative w-full py-4 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105"
+              className="group relative w-full py-3 px-4 text-white font-semibold text-base tracking-wide transition-all duration-300 hover:scale-105"
             >
               <div className="absolute inset-0 bg-transparent rounded-lg border-2 border-purple-300/60 shadow-lg group-hover:shadow-purple-400/50 group-hover:border-purple-300 group-hover:bg-purple-600/20"></div>
               <div className="relative flex items-center justify-center">
