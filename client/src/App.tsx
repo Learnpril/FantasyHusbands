@@ -18,7 +18,7 @@ import "@fontsource/eb-garamond/500.css";
  * Main application component that initializes the audio system and renders the game
  */
 function App() {
-  const { initAudioContext, playBackgroundMusic } = useAudio();
+  const { initAudioSystem, playBackgroundMusic } = useAudio();
   const audioInitialized = useRef(false);
 
   /**
@@ -31,19 +31,16 @@ function App() {
       return;
     }
     
-    console.log("🎵 Initializing simplified audio system");
+    // Initialize HTML5 audio system
+    initAudioSystem();
     
-    // Initialize Web Audio API context
-    initAudioContext();
-    
-    // Auto-start background music with small delay for context readiness
+    // Auto-start background music with small delay
     setTimeout(() => {
       playBackgroundMusic();
     }, 100);
     
     audioInitialized.current = true;
-    console.log("✨ Audio system ready with fantasy soundtrack and programmatic UI sounds");
-  }, [initAudioContext, playBackgroundMusic]);
+  }, [initAudioSystem, playBackgroundMusic]);
 
   return (
     <div className="min-h-screen">
