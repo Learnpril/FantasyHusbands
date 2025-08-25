@@ -1,16 +1,27 @@
+/**
+ * MainMenu - Fantasy Hearts main menu with animated fireflies
+ * Features new game, load game, and settings buttons with ethereal atmosphere
+ */
+
 import React, { useMemo } from 'react';
 import { Play, Settings, Save } from 'lucide-react';
 import { useDatingSim } from '../../lib/stores/useDatingSim';
 import { useAudio } from '../../lib/stores/useAudio';
 import { AudioControls } from '../ui/AudioControls';
 
+/**
+ * Main menu component with animated firefly background and game navigation
+ */
 export function MainMenu() {
   const { setPhase, toggleSettings, toggleSaveLoad, getSaves } = useDatingSim();
   const { playButtonClick, playButtonHover } = useAudio();
   
   const saves = getSaves();
 
-  // Generate stable firefly properties that don't change on re-renders
+  /**
+   * Generate stable firefly animation properties
+   * Memoized to prevent re-calculation on every render
+   */
   const fireflies = useMemo(() => {
     return Array.from({ length: 20 }, (_, i) => ({
       id: i,
@@ -22,6 +33,9 @@ export function MainMenu() {
     }));
   }, []);
 
+  /**
+   * Handle menu button clicks with audio feedback
+   */
   const handleMenuAction = (action: () => void) => {
     playButtonClick();
     action();

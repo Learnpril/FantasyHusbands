@@ -1,8 +1,17 @@
+/**
+ * useAudio - Audio management store for Fantasy Hearts
+ * Handles background music, UI sounds, and character voice simulation
+ * Uses Web Audio API for programmatic sound generation and HTML5 Audio for music
+ */
+
 import { create } from "zustand";
 
-// Global flag to prevent multiple audio systems
+// Global flag to prevent multiple audio context initialization
 let globalAudioInitialized = false;
 
+/**
+ * Audio state interface defining all audio-related functionality
+ */
 interface AudioState {
   // Web Audio API context for programmatic sound generation
   audioContext: AudioContext | null;

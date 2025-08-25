@@ -1,3 +1,8 @@
+/**
+ * Fantasy Hearts - Main Application Component
+ * Initializes the dating simulation game with audio system and routing
+ */
+
 import { useEffect, useRef } from "react";
 import { useAudio } from "./lib/stores/useAudio";
 import { GameScene } from "./components/game/GameScene";
@@ -9,11 +14,17 @@ import "@fontsource/crimson-text/600.css";
 import "@fontsource/eb-garamond/400.css";
 import "@fontsource/eb-garamond/500.css";
 
+/**
+ * Main application component that initializes the audio system and renders the game
+ */
 function App() {
   const { initAudioContext, playBackgroundMusic } = useAudio();
   const audioInitialized = useRef(false);
 
-  // Initialize the simplified audio system once only
+  /**
+   * Initialize audio system once on app startup
+   * Prevents multiple audio contexts from being created on re-renders
+   */
   useEffect(() => {
     if (audioInitialized.current) {
       console.log("🎵 Audio system already initialized, skipping");
@@ -22,17 +33,17 @@ function App() {
     
     console.log("🎵 Initializing simplified audio system");
     
-    // Initialize Web Audio API and background music
+    // Initialize Web Audio API context
     initAudioContext();
     
-    // Auto-start the fantasy background music
+    // Auto-start background music with small delay for context readiness
     setTimeout(() => {
       playBackgroundMusic();
-    }, 100); // Small delay to ensure audio context is ready
+    }, 100);
     
     audioInitialized.current = true;
     console.log("✨ Audio system ready with fantasy soundtrack and programmatic UI sounds");
-  }, []); // Only run once on mount
+  }, [initAudioContext, playBackgroundMusic]);
 
   return (
     <div className="min-h-screen">

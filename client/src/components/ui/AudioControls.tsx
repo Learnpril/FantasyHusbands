@@ -1,3 +1,8 @@
+/**
+ * AudioControls - Reusable audio control component
+ * Provides music toggle functionality with customizable styling
+ */
+
 import { Music, VolumeX, Zap } from 'lucide-react';
 import { useAudio } from '../../lib/stores/useAudio';
 
@@ -7,6 +12,10 @@ interface AudioControlsProps {
   variant?: 'default' | 'minimal';
 }
 
+/**
+ * Audio control button component with size and variant options
+ * Displays current music state and allows toggling background music
+ */
 export function AudioControls({ 
   className = "", 
   size = 'md',

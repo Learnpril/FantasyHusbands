@@ -1,15 +1,19 @@
+/**
+ * API Routes - Currently minimal as Fantasy Hearts is a client-side game
+ * Can be extended for future multiplayer features or cloud saves
+ */
+
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
 
+/**
+ * Registers API routes for the application
+ * Currently minimal as the dating sim runs entirely client-side
+ */
 export async function registerRoutes(app: Express): Promise<Server> {
-  // put application routes here
-  // prefix all routes with /api
-
-  // use storage to perform CRUD operations on the storage interface
-  // e.g. storage.insertUser(user) or storage.getUserByUsername(username)
-
+  // API routes would go here with /api prefix
+  // Currently unused as the game is entirely client-side
+  
   const httpServer = createServer(app);
-
   return httpServer;
 }

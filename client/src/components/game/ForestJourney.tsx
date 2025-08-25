@@ -1,3 +1,9 @@
+/**
+ * ForestJourney - Mystical forest exploration component
+ * Players discover character locations through atmospheric path descriptions
+ * Features "Veiled Paths" mechanic where character roles are hinted at indirectly
+ */
+
 import { useState } from 'react';
 import { Card, CardContent } from '../ui/card';
 import { Button } from '../ui/button';
@@ -6,6 +12,9 @@ import { useAudio } from '../../lib/stores/useAudio';
 import { AudioControls } from '../ui/AudioControls';
 import { ArrowLeft, MapPin, Trees, Mountain, Sparkles, BookOpen, Swords } from 'lucide-react';
 
+/**
+ * Forest location interface with character discovery hints
+ */
 interface ForestLocation {
   id: string;
   name: string;

@@ -1,3 +1,8 @@
+/**
+ * useDatingSim - Main game state management for Fantasy Hearts
+ * Handles character relationships, game progression, settings, and save/load functionality
+ */
+
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 import { Character, GamePhase, GameSave, Scene } from '../../types/game';
@@ -5,6 +10,9 @@ import { characters as initialCharacters } from '../../data/characters';
 import { scenes } from '../../data/scenes';
 import { getLocalStorage, setLocalStorage } from '../utils';
 
+/**
+ * Complete dating simulation state interface
+ */
 interface DatingSimState {
   // Game state
   phase: GamePhase;

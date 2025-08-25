@@ -1,3 +1,8 @@
+/**
+ * CharacterCard - Individual character display component
+ * Shows character portrait, affection level, and role information
+ */
+
 import { Card, CardContent } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Progress } from '../ui/progress';
@@ -9,7 +14,13 @@ interface CharacterCardProps {
   onClick: () => void;
 }
 
+/**
+ * Character card component displaying portrait, affection, and details
+ */
 export function CharacterCard({ character, onClick }: CharacterCardProps) {
+  /**
+   * Calculate affection as percentage for progress bar
+   */
   const affectionPercentage = (character.affection / character.maxAffection) * 100;
   
   return (

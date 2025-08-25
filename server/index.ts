@@ -1,7 +1,13 @@
+/**
+ * Express Server - Serves the Fantasy Hearts dating simulation
+ * Handles development with Vite HMR and production static serving
+ */
+
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
+// Initialize Express application
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
