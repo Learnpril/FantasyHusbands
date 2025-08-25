@@ -17,7 +17,7 @@ export function MainMenu() {
 
   return (
     <div 
-      className="min-h-screen w-full flex items-start justify-center pt-8 relative overflow-hidden"
+      className="min-h-screen w-full flex items-start justify-center pt-4 relative overflow-hidden"
       style={{
         backgroundImage: 'url(/images/backgrounds/main-menu.jpg)',
         backgroundSize: 'cover',
@@ -51,9 +51,9 @@ export function MainMenu() {
       </div>
 
       {/* Clean UI Layout */}
-      <div className="relative w-full max-w-md mx-4">
+      <div className="relative w-full max-w-md mx-4 -mt-8">
         {/* Fantasy Hearts Logo */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-2">
           <img 
             src="/images/fantasy-hearts-logo.png" 
             alt="Fantasy Hearts" 
@@ -62,7 +62,7 @@ export function MainMenu() {
         </div>
         
         {/* New Game and Settings Buttons */}
-        <div className="space-y-4 mb-6">
+        <div className="space-y-2 mb-2">
           {/* New Game Button */}
           <button
             onClick={() => handleMenuAction(() => {
