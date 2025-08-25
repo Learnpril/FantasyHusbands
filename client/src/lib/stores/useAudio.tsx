@@ -24,11 +24,11 @@ if (typeof window !== 'undefined') {
   window.__FANTASY_HEARTS_MUSIC_PLAYING__ = window.__FANTASY_HEARTS_MUSIC_PLAYING__ || false;
 }
 
-// Helper function to stop ALL audio globally
-function stopAllGlobalAudio() {
+// Helper function to stop current audio (not all contexts)
+function stopCurrentAudio() {
   if (typeof window === 'undefined') return;
   
-  // Stop all oscillators
+  // Stop all oscillators but don't clear the array completely
   window.__FANTASY_HEARTS_OSCILLATORS__?.forEach(osc => {
     try {
       osc.stop(0);
@@ -42,16 +42,9 @@ function stopAllGlobalAudio() {
   });
   window.__FANTASY_HEARTS_TIMEOUTS__ = [];
   
-  // Close all audio contexts
-  window.__FANTASY_HEARTS_AUDIO_CONTEXTS__?.forEach(ctx => {
-    try {
-      ctx.close();
-    } catch (e) {}
-  });
-  window.__FANTASY_HEARTS_AUDIO_CONTEXTS__ = [];
-  
+  // Don't close audio contexts - just mark as not playing
   window.__FANTASY_HEARTS_MUSIC_PLAYING__ = false;
-  console.log('🎵 All global audio stopped and cleaned up');
+  console.log('🎵 Current audio stopped');
 }
 
 /**
@@ -140,12 +133,9 @@ export const useAudio = create<AudioState>((set, get) => ({
       return;
     }
 
-    // Stop ALL global audio first
-    stopAllGlobalAudio();
-    
-    // Stop any existing local music
-    if (currentState.isBackgroundMusicPlaying) {
-      get().stopBackgroundMusic();
+    // Stop current audio if playing
+    if (window.__FANTASY_HEARTS_MUSIC_PLAYING__ || currentState.isBackgroundMusicPlaying) {
+      stopCurrentAudio();
     }
 
     if (!currentState.audioContext) {
@@ -362,15 +352,16 @@ export const useAudio = create<AudioState>((set, get) => ({
     const state = get();
     const { backgroundMusic, isMusicMuted, isMuted, isBackgroundMusicPlaying, musicTimeout } = state;
     
-    // CRITICAL: Check global state first
-    if (window.__FANTASY_HEARTS_MUSIC_PLAYING__ || isBackgroundMusicPlaying || musicTimeout) {
-      console.log('🎵 Music already playing globally, ignoring request');
+    // Check if music is already playing
+    if (isBackgroundMusicPlaying || musicTimeout) {
+      console.log('🎵 Music already playing locally, ignoring request');
       return;
     }
     
-    // Stop ALL existing music completely before starting
-    stopAllGlobalAudio();
-    get().stopBackgroundMusic();
+    // Stop current music if playing from another instance
+    if (window.__FANTASY_HEARTS_MUSIC_PLAYING__) {
+      stopCurrentAudio();
+    }
     
     if (backgroundMusic && !isMusicMuted && !isMuted) {
       window.__FANTASY_HEARTS_MUSIC_PLAYING__ = true;
@@ -381,8 +372,8 @@ export const useAudio = create<AudioState>((set, get) => ({
   },
   
   stopBackgroundMusic: () => {
-    // Stop ALL global audio first
-    stopAllGlobalAudio();
+    // Stop current global audio
+    stopCurrentAudio();
     
     const { activeOscillators, musicTimeout } = get();
     
