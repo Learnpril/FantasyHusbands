@@ -6,8 +6,27 @@
 
 import { create } from "zustand";
 
-// Global flag to prevent multiple audio context initialization
-let globalAudioInitialized = false;
+// Robust singleton pattern to prevent multiple audio systems
+interface AudioSingleton {
+  initialized: boolean;
+  context: AudioContext | null;
+  musicFunction: (() => void) | null;
+}
+
+// Use window object to ensure persistence across hot reloads
+declare global {
+  interface Window {
+    __FANTASY_HEARTS_AUDIO__?: AudioSingleton;
+  }
+}
+
+if (typeof window !== 'undefined' && !window.__FANTASY_HEARTS_AUDIO__) {
+  window.__FANTASY_HEARTS_AUDIO__ = {
+    initialized: false,
+    context: null,
+    musicFunction: null
+  };
+}
 
 /**
  * Audio state interface defining all audio-related functionality
@@ -83,22 +102,30 @@ export const useAudio = create<AudioState>((set, get) => ({
   
   // Initialize Web Audio API context
   initAudioContext: () => {
-    // CRITICAL: Set global flag immediately to prevent race conditions
-    if (globalAudioInitialized) {
-      console.log('🎵 Audio system already globally initialized, skipping');
+    // Check singleton instance first
+    const singleton = window.__FANTASY_HEARTS_AUDIO__;
+    if (singleton?.initialized) {
+      console.log('🎵 Audio system already globally initialized, reusing existing instance');
+      if (singleton.context && singleton.musicFunction) {
+        set({ 
+          audioContext: singleton.context,
+          backgroundMusic: singleton.musicFunction as any,
+          isMusicSystemInitialized: true 
+        });
+      }
       return;
     }
-    globalAudioInitialized = true; // Set immediately to prevent duplicates
 
     const currentState = get();
-    if (currentState.audioContext && currentState.isMusicSystemInitialized) {
-      console.log('🎵 Audio system already initialized');
-      return;
-    }
-
+    
     // Stop any existing music first
     if (currentState.isBackgroundMusicPlaying) {
       get().stopBackgroundMusic();
+    }
+
+    // Mark as initialized immediately
+    if (singleton) {
+      singleton.initialized = true;
     }
 
     if (!currentState.audioContext) {
@@ -292,6 +319,12 @@ export const useAudio = create<AudioState>((set, get) => ({
         isMusicSystemInitialized: true
       });
       
+      // Store in singleton for persistence
+      if (singleton) {
+        singleton.context = context;
+        singleton.musicFunction = musicLoop || null;
+      }
+      
       console.log('🎵 Fantasy music system created with Web Audio API');
       console.log('🎵 Audio system initialized with fantasy soundtrack');
     }
@@ -299,11 +332,13 @@ export const useAudio = create<AudioState>((set, get) => ({
   
   // Background music controls
   playBackgroundMusic: () => {
-    const { backgroundMusic, isMusicMuted, isMuted, isBackgroundMusicPlaying, musicTimeout } = get();
+    const state = get();
+    const { backgroundMusic, isMusicMuted, isMuted, isBackgroundMusicPlaying, musicTimeout } = state;
     
-    // CRITICAL: Prevent multiple music instances
-    if (isBackgroundMusicPlaying || musicTimeout) {
-      console.log('🎵 Music already playing or scheduled, ignoring request');
+    // CRITICAL: Check both local state and global singleton
+    const singleton = window.__FANTASY_HEARTS_AUDIO__;
+    if (isBackgroundMusicPlaying || musicTimeout || (singleton && singleton.initialized && state.isBackgroundMusicPlaying)) {
+      console.log('🎵 Music already playing, ignoring request');
       return;
     }
     
