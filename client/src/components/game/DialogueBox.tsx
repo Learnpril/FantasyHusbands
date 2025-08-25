@@ -62,7 +62,7 @@ export function DialogueBox() {
     }, 100 - textSpeed);
     
     return () => clearInterval(interval);
-  }, [currentDialogue, textSpeed, autoAdvance, playCharacterVoice]);
+  }, [currentDialogue, textSpeed, autoAdvance]);
   
   const handleChoiceSelect = (choice: any) => {
     playUISound('click');
@@ -194,39 +194,11 @@ export function DialogueBox() {
                 )}
               </div>
               
-              {/* Voice Controls */}
+              {/* Voice Controls - Coming Soon */}
               <div className="flex items-center gap-1">
-                <Button
-                  onClick={() => {
-                    if (currentDialogue?.characterId) {
-                      playCharacterVoice(currentDialogue.characterId, currentDialogue.text);
-                    }
-                  }}
-                  variant="ghost"
-                  size="sm"
-                  className="text-white hover:bg-white/10 p-1 h-8 w-8"
-                  title="Play voice"
-                >
-                  <Play className="w-4 h-4" />
-                </Button>
-                <Button
-                  onClick={isVoicePlaying ? pauseVoice : resumeVoice}
-                  variant="ghost"
-                  size="sm"
-                  className="text-white hover:bg-white/10 p-1 h-8 w-8"
-                  title={isVoicePlaying ? "Pause voice" : "Resume voice"}
-                >
-                  {isVoicePlaying ? <Pause className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                </Button>
-                <Button
-                  onClick={stopVoice}
-                  variant="ghost"
-                  size="sm"
-                  className="text-white hover:bg-white/10 p-1 h-8 w-8"
-                  title="Stop voice"
-                >
-                  <SkipForward className="w-4 h-4" />
-                </Button>
+                <div className="text-xs text-gray-400 px-2">
+                  🎤 Voice acting coming soon
+                </div>
               </div>
             </div>
             
