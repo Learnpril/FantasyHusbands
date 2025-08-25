@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Play, Settings, Save } from 'lucide-react';
 import { useDatingSim } from '../../lib/stores/useDatingSim';
 import { useAudio } from '../../lib/stores/useAudio';
@@ -9,6 +9,18 @@ export function MainMenu() {
   const { playButtonClick, playButtonHover } = useAudio();
   
   const saves = getSaves();
+
+  // Generate stable firefly properties that don't change on re-renders
+  const fireflies = useMemo(() => {
+    return Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      size: 0.3 + Math.random() * 0.5,
+      left: Math.random() * 100,
+      animationDelay: Math.random() * 25,
+      animationDuration: 20 + Math.random() * 15,
+      meanderOffset: (Math.random() - 0.5) * 200,
+    }));
+  }, []);
 
   const handleMenuAction = (action: () => void) => {
     playButtonClick();
@@ -27,27 +39,22 @@ export function MainMenu() {
     >
       {/* Ethereal Firefly Particles */}
       <div className="absolute inset-0 pointer-events-none">
-        {Array.from({ length: 20 }, (_, i) => {
-          const size = 0.3 + Math.random() * 0.5; // Random size from 0.3rem to 0.8rem
-          const meanderOffset = (Math.random() - 0.5) * 200; // Random sideways drift
-          return (
-            <div
-              key={i}
-              className="absolute bg-yellow-200 rounded-full opacity-60 animate-firefly"
-              style={{
-                width: `${size}rem`,
-                height: `${size}rem`,
-                left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 25}s`, // More staggered emission
-                animationDuration: `${20 + Math.random() * 15}s`, // Slower: 20-35s
-                boxShadow: `0 0 ${size * 6}px rgba(255, 255, 150, 0.8), 0 0 ${size * 12}px rgba(255, 255, 150, 0.4)`,
-                filter: 'blur(0.5px)',
-                //@ts-ignore
-                '--meander-offset': `${meanderOffset}px`
-              } as React.CSSProperties}
-            />
-          );
-        })}
+        {fireflies.map((firefly) => (
+          <div
+            key={firefly.id}
+            className="absolute bg-yellow-200 rounded-full opacity-60 animate-firefly"
+            style={{
+              width: `${firefly.size}rem`,
+              height: `${firefly.size}rem`,
+              left: `${firefly.left}%`,
+              animationDelay: `${firefly.animationDelay}s`,
+              animationDuration: `${firefly.animationDuration}s`,
+              boxShadow: `0 0 ${firefly.size * 6}px rgba(255, 255, 150, 0.8), 0 0 ${firefly.size * 12}px rgba(255, 255, 150, 0.4)`,
+              filter: 'blur(0.5px)',
+              '--meander-offset': `${firefly.meanderOffset}px`
+            } as React.CSSProperties & { '--meander-offset': string }}
+          />
+        ))}
       </div>
 
       {/* Clean UI Layout */}

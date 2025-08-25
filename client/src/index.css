@@ -58,33 +58,32 @@
 
   @keyframes firefly {
     0% {
-      transform: translateY(100vh) translateX(0px);
+      transform: translateY(110vh) translateX(0px);
       opacity: 0;
     }
     5% {
-      opacity: 0.3;
+      opacity: 0.4;
     }
-    15% {
-      opacity: 1;
+    10% {
+      opacity: 0.8;
     }
     25% {
-      transform: translateY(75vh) translateX(calc(var(--meander-offset) * 0.2));
+      transform: translateY(75vh) translateX(calc(var(--meander-offset) * 0.25));
+      opacity: 1;
     }
     50% {
       transform: translateY(50vh) translateX(calc(var(--meander-offset) * 0.6));
-    }
-    75% {
-      transform: translateY(25vh) translateX(calc(var(--meander-offset) * 0.9));
       opacity: 1;
     }
-    85% {
-      opacity: 0.7;
+    75% {
+      transform: translateY(25vh) translateX(calc(var(--meander-offset) * 0.85));
+      opacity: 0.8;
     }
-    95% {
-      opacity: 0.3;
+    90% {
+      opacity: 0.4;
     }
     100% {
-      transform: translateY(-10vh) translateX(var(--meander-offset));
+      transform: translateY(-15vh) translateX(var(--meander-offset));
       opacity: 0;
     }
   }
