@@ -60,7 +60,7 @@ export function MainMenu() {
       {/* Clean UI Layout */}
       <div className="relative w-full max-w-md mx-4 -mt-8">
         {/* Fantasy Hearts Logo */}
-        <div className="text-center mb-2">
+        <div className="text-center mb-2 mt-5">
           <img 
             src="/images/fantasy-hearts-logo.png" 
             alt="Fantasy Hearts" 
