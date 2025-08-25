@@ -14,7 +14,7 @@ import { AudioControls } from '../ui/AudioControls';
  */
 export function MainMenu() {
   const { setPhase, toggleSettings, toggleSaveLoad, getSaves } = useDatingSim();
-  const { playButtonClick, playButtonHover } = useAudio();
+  const { playUISound } = useAudio();
   
   const saves = getSaves();
 
@@ -37,7 +37,7 @@ export function MainMenu() {
    * Handle menu button clicks with audio feedback
    */
   const handleMenuAction = (action: () => void) => {
-    playButtonClick();
+    playUISound('click');
     action();
   };
 
@@ -89,7 +89,7 @@ export function MainMenu() {
             onClick={() => handleMenuAction(() => {
               setPhase('forest-journey');
             })}
-            onMouseEnter={() => playButtonHover()}
+            onMouseEnter={() => playUISound('hover')}
             className="group relative w-full py-3 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105 ui-text"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg border-2 border-purple-300/50 shadow-lg group-hover:shadow-purple-500/50 group-hover:border-purple-300"></div>
@@ -103,7 +103,7 @@ export function MainMenu() {
           {saves.length > 0 && (
             <button
               onClick={() => handleMenuAction(() => toggleSaveLoad())}
-              onMouseEnter={() => playButtonHover()}
+              onMouseEnter={() => playUISound('hover')}
               className="group relative w-full py-3 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105"
             >
               <div className="absolute inset-0 bg-transparent rounded-lg border-2 border-purple-300/60 shadow-lg group-hover:shadow-purple-400/50 group-hover:border-purple-300 group-hover:bg-purple-600/20"></div>
@@ -117,7 +117,7 @@ export function MainMenu() {
           {/* Settings Button */}
           <button
             onClick={() => handleMenuAction(() => toggleSettings())}
-            onMouseEnter={() => playButtonHover()}
+            onMouseEnter={() => playUISound('hover')}
             className="group relative w-full py-3 px-6 text-white font-semibold text-lg tracking-wide transition-all duration-300 hover:scale-105"
           >
             <div className="absolute inset-0 bg-transparent rounded-lg border-2 border-purple-300/60 shadow-lg group-hover:shadow-purple-400/50 group-hover:border-purple-300 group-hover:bg-purple-600/20"></div>

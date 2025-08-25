@@ -26,8 +26,7 @@ export function AudioControls({
     isMusicMuted, 
     isMuted,
     toggleMute, 
-    playButtonHover,
-    playButtonClick,
+    playUISound,
     toggleBackgroundMusic,
     isBackgroundMusicPlaying
   } = useAudio();
@@ -53,10 +52,10 @@ export function AudioControls({
       {/* Music Toggle */}
       <button
         onClick={() => {
-          playButtonClick();
+          playUISound('click');
           toggleMusicMute();
         }}
-        onMouseEnter={() => playButtonHover()}
+        onMouseEnter={() => playUISound('hover')}
         className={buttonClass}
         title={isMusicMuted ? 'Turn Fantasy Music On' : 'Turn Fantasy Music Off'}
       >
@@ -70,10 +69,10 @@ export function AudioControls({
       {/* Master Audio Toggle */}
       <button
         onClick={() => {
-          playButtonClick();
+          playUISound('click');
           toggleMute();
         }}
-        onMouseEnter={() => playButtonHover()}
+        onMouseEnter={() => playUISound('hover')}
         className={buttonClass}
         title={isMuted ? 'Turn All Audio On' : 'Turn All Audio Off'}
       >

@@ -51,9 +51,9 @@ export const useAudio = create<AudioState>()(
           // Create background music audio element
           const bgMusic = new Audio();
           
-          // For now, create a minimal silent track
+          // No audio file loaded - silence until real music files are added
           // TODO: Replace with actual music file: bgMusic.src = '/audio/fantasy-background.mp3';
-          bgMusic.src = 'data:audio/wav;base64,UklGRigBAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQQAAAAAAA==';
+          // bgMusic.src = 'data:audio/wav;base64,UklGRigBAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQQAAAAAAA==';
           
           bgMusic.loop = true;
           bgMusic.volume = currentState.musicVolume;
@@ -178,7 +178,8 @@ export const useAudio = create<AudioState>()(
           
           // TODO: Replace with actual sound files
           // sound.src = `/audio/ui-${soundType}.mp3`;
-          sound.src = 'data:audio/wav;base64,UklGRigBAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQQAAAAAAA==';
+          // Disable placeholder sounds for now
+          return;
           
           sound.volume = volume * 0.3; // UI sounds are quieter
           sound.play().catch(() => {
