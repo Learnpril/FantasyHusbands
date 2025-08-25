@@ -31,19 +31,27 @@ export function MainMenu() {
     >
       {/* Ethereal Firefly Particles */}
       <div className="absolute inset-0 pointer-events-none">
-        {Array.from({ length: 12 }, (_, i) => (
-          <div
-            key={i}
-            className="absolute w-2 h-2 bg-yellow-200 rounded-full opacity-60 animate-firefly"
-            style={{
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 10}s`,
-              animationDuration: `${15 + Math.random() * 10}s`,
-              boxShadow: '0 0 6px rgba(255, 255, 150, 0.8), 0 0 12px rgba(255, 255, 150, 0.4)',
-              filter: 'blur(0.5px)'
-            }}
-          />
-        ))}
+        {Array.from({ length: 20 }, (_, i) => {
+          const size = 0.3 + Math.random() * 0.5; // Random size from 0.3rem to 0.8rem
+          const meanderOffset = (Math.random() - 0.5) * 200; // Random sideways drift
+          return (
+            <div
+              key={i}
+              className="absolute bg-yellow-200 rounded-full opacity-60 animate-firefly"
+              style={{
+                width: `${size}rem`,
+                height: `${size}rem`,
+                left: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 25}s`, // More staggered emission
+                animationDuration: `${20 + Math.random() * 15}s`, // Slower: 20-35s
+                boxShadow: `0 0 ${size * 6}px rgba(255, 255, 150, 0.8), 0 0 ${size * 12}px rgba(255, 255, 150, 0.4)`,
+                filter: 'blur(0.5px)',
+                //@ts-ignore
+                '--meander-offset': `${meanderOffset}px`
+              } as React.CSSProperties}
+            />
+          );
+        })}
       </div>
 
       {/* Ornate UI Panel */}

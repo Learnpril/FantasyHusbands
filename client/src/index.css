@@ -61,20 +61,36 @@
       transform: translateY(100vh) translateX(0px);
       opacity: 0;
     }
-    10% {
+    5% {
+      opacity: 0.3;
+    }
+    15% {
       opacity: 1;
     }
-    90% {
+    25% {
+      transform: translateY(75vh) translateX(calc(var(--meander-offset) * 0.2));
+    }
+    50% {
+      transform: translateY(50vh) translateX(calc(var(--meander-offset) * 0.6));
+    }
+    75% {
+      transform: translateY(25vh) translateX(calc(var(--meander-offset) * 0.9));
       opacity: 1;
+    }
+    85% {
+      opacity: 0.7;
+    }
+    95% {
+      opacity: 0.3;
     }
     100% {
-      transform: translateY(-100px) translateX(50px);
+      transform: translateY(-10vh) translateX(var(--meander-offset));
       opacity: 0;
     }
   }
 
   .animate-firefly {
-    animation: firefly linear infinite;
+    animation: firefly ease-in-out infinite;
   }
 }
 
