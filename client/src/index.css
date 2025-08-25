@@ -55,6 +55,27 @@
     letter-spacing: 0.15em;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
+
+  @keyframes firefly {
+    0% {
+      transform: translateY(100vh) translateX(0px);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100px) translateX(50px);
+      opacity: 0;
+    }
+  }
+
+  .animate-firefly {
+    animation: firefly linear infinite;
+  }
 }
 
 #root {

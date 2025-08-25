@@ -29,6 +29,23 @@ export function MainMenu() {
         backgroundRepeat: 'no-repeat'
       }}
     >
+      {/* Ethereal Firefly Particles */}
+      <div className="absolute inset-0 pointer-events-none">
+        {Array.from({ length: 12 }, (_, i) => (
+          <div
+            key={i}
+            className="absolute w-2 h-2 bg-yellow-200 rounded-full opacity-60 animate-firefly"
+            style={{
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 10}s`,
+              animationDuration: `${15 + Math.random() * 10}s`,
+              boxShadow: '0 0 6px rgba(255, 255, 150, 0.8), 0 0 12px rgba(255, 255, 150, 0.4)',
+              filter: 'blur(0.5px)'
+            }}
+          />
+        ))}
+      </div>
+
       {/* Ornate UI Panel */}
       <div className="relative w-full max-w-lg mx-4">
         {/* Main UI Container with ornate styling */}
