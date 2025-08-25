@@ -6,26 +6,52 @@
 
 import { create } from "zustand";
 
-// Robust singleton pattern to prevent multiple audio systems
-interface AudioSingleton {
-  initialized: boolean;
-  context: AudioContext | null;
-  musicFunction: (() => void) | null;
-}
-
-// Use window object to ensure persistence across hot reloads
+// Global audio tracking to prevent multiple instances
 declare global {
   interface Window {
-    __FANTASY_HEARTS_AUDIO__?: AudioSingleton;
+    __FANTASY_HEARTS_AUDIO_CONTEXTS__?: AudioContext[];
+    __FANTASY_HEARTS_OSCILLATORS__?: OscillatorNode[];
+    __FANTASY_HEARTS_TIMEOUTS__?: NodeJS.Timeout[];
+    __FANTASY_HEARTS_MUSIC_PLAYING__?: boolean;
   }
 }
 
-if (typeof window !== 'undefined' && !window.__FANTASY_HEARTS_AUDIO__) {
-  window.__FANTASY_HEARTS_AUDIO__ = {
-    initialized: false,
-    context: null,
-    musicFunction: null
-  };
+// Initialize global tracking arrays
+if (typeof window !== 'undefined') {
+  window.__FANTASY_HEARTS_AUDIO_CONTEXTS__ = window.__FANTASY_HEARTS_AUDIO_CONTEXTS__ || [];
+  window.__FANTASY_HEARTS_OSCILLATORS__ = window.__FANTASY_HEARTS_OSCILLATORS__ || [];
+  window.__FANTASY_HEARTS_TIMEOUTS__ = window.__FANTASY_HEARTS_TIMEOUTS__ || [];
+  window.__FANTASY_HEARTS_MUSIC_PLAYING__ = window.__FANTASY_HEARTS_MUSIC_PLAYING__ || false;
+}
+
+// Helper function to stop ALL audio globally
+function stopAllGlobalAudio() {
+  if (typeof window === 'undefined') return;
+  
+  // Stop all oscillators
+  window.__FANTASY_HEARTS_OSCILLATORS__?.forEach(osc => {
+    try {
+      osc.stop(0);
+    } catch (e) {}
+  });
+  window.__FANTASY_HEARTS_OSCILLATORS__ = [];
+  
+  // Clear all timeouts
+  window.__FANTASY_HEARTS_TIMEOUTS__?.forEach(timeout => {
+    clearTimeout(timeout);
+  });
+  window.__FANTASY_HEARTS_TIMEOUTS__ = [];
+  
+  // Close all audio contexts
+  window.__FANTASY_HEARTS_AUDIO_CONTEXTS__?.forEach(ctx => {
+    try {
+      ctx.close();
+    } catch (e) {}
+  });
+  window.__FANTASY_HEARTS_AUDIO_CONTEXTS__ = [];
+  
+  window.__FANTASY_HEARTS_MUSIC_PLAYING__ = false;
+  console.log('🎵 All global audio stopped and cleaned up');
 }
 
 /**
@@ -102,34 +128,32 @@ export const useAudio = create<AudioState>((set, get) => ({
   
   // Initialize Web Audio API context
   initAudioContext: () => {
-    // Check singleton instance first
-    const singleton = window.__FANTASY_HEARTS_AUDIO__;
-    if (singleton?.initialized) {
-      console.log('🎵 Audio system already globally initialized, reusing existing instance');
-      if (singleton.context && singleton.musicFunction) {
-        set({ 
-          audioContext: singleton.context,
-          backgroundMusic: singleton.musicFunction as any,
-          isMusicSystemInitialized: true 
-        });
-      }
+    // Check if any music is already playing globally
+    if (window.__FANTASY_HEARTS_MUSIC_PLAYING__) {
+      console.log('🎵 Audio already playing globally, skipping initialization');
       return;
     }
 
     const currentState = get();
+    if (currentState.isMusicSystemInitialized) {
+      console.log('🎵 Local audio system already initialized');
+      return;
+    }
+
+    // Stop ALL global audio first
+    stopAllGlobalAudio();
     
-    // Stop any existing music first
+    // Stop any existing local music
     if (currentState.isBackgroundMusicPlaying) {
       get().stopBackgroundMusic();
     }
 
-    // Mark as initialized immediately
-    if (singleton) {
-      singleton.initialized = true;
-    }
-
     if (!currentState.audioContext) {
       const context = new (window.AudioContext || (window as any).webkitAudioContext)();
+      
+      // Track this context globally
+      window.__FANTASY_HEARTS_AUDIO_CONTEXTS__?.push(context);
+      
       set({ audioContext: context });
       
       // Create a simple fantasy background music using Web Audio API
@@ -143,10 +167,11 @@ export const useAudio = create<AudioState>((set, get) => ({
             const gainNode = context.createGain();
             const filterNode = context.createBiquadFilter();
             
-            // Track this oscillator so we can stop it if needed
+            // Track this oscillator both locally and globally
             set(state => ({
               activeOscillators: [...state.activeOscillators, oscillator]
             }));
+            window.__FANTASY_HEARTS_OSCILLATORS__?.push(oscillator);
             
             oscillator.connect(filterNode);
             filterNode.connect(gainNode);
@@ -212,6 +237,13 @@ export const useAudio = create<AudioState>((set, get) => ({
               set(state => ({
                 activeOscillators: state.activeOscillators.filter(osc => osc !== oscillator)
               }));
+              // Also remove from global tracking
+              if (window.__FANTASY_HEARTS_OSCILLATORS__) {
+                const index = window.__FANTASY_HEARTS_OSCILLATORS__.indexOf(oscillator);
+                if (index > -1) {
+                  window.__FANTASY_HEARTS_OSCILLATORS__.splice(index, 1);
+                }
+              }
             };
           };
           
@@ -302,8 +334,9 @@ export const useAudio = create<AudioState>((set, get) => ({
               }
             }, 12000); // 12 second loop for richer progression
             
-            // Store the timeout so we can clear it if needed
+            // Store the timeout locally and globally
             set({ musicTimeout: timeout });
+            window.__FANTASY_HEARTS_TIMEOUTS__?.push(timeout);
           };
           
           return loopMusic;
@@ -319,12 +352,6 @@ export const useAudio = create<AudioState>((set, get) => ({
         isMusicSystemInitialized: true
       });
       
-      // Store in singleton for persistence
-      if (singleton) {
-        singleton.context = context;
-        singleton.musicFunction = musicLoop || null;
-      }
-      
       console.log('🎵 Fantasy music system created with Web Audio API');
       console.log('🎵 Audio system initialized with fantasy soundtrack');
     }
@@ -335,17 +362,18 @@ export const useAudio = create<AudioState>((set, get) => ({
     const state = get();
     const { backgroundMusic, isMusicMuted, isMuted, isBackgroundMusicPlaying, musicTimeout } = state;
     
-    // CRITICAL: Check both local state and global singleton
-    const singleton = window.__FANTASY_HEARTS_AUDIO__;
-    if (isBackgroundMusicPlaying || musicTimeout || (singleton && singleton.initialized && state.isBackgroundMusicPlaying)) {
-      console.log('🎵 Music already playing, ignoring request');
+    // CRITICAL: Check global state first
+    if (window.__FANTASY_HEARTS_MUSIC_PLAYING__ || isBackgroundMusicPlaying || musicTimeout) {
+      console.log('🎵 Music already playing globally, ignoring request');
       return;
     }
     
-    // Stop any existing music completely before starting
+    // Stop ALL existing music completely before starting
+    stopAllGlobalAudio();
     get().stopBackgroundMusic();
     
     if (backgroundMusic && !isMusicMuted && !isMuted) {
+      window.__FANTASY_HEARTS_MUSIC_PLAYING__ = true;
       set({ isBackgroundMusicPlaying: true });
       (backgroundMusic as any)(); // Call the music loop function
       console.log('🎵 Fantasy soundtrack started');
@@ -353,6 +381,9 @@ export const useAudio = create<AudioState>((set, get) => ({
   },
   
   stopBackgroundMusic: () => {
+    // Stop ALL global audio first
+    stopAllGlobalAudio();
+    
     const { activeOscillators, musicTimeout } = get();
     
     // Stop all currently playing oscillators immediately
