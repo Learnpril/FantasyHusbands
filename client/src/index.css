@@ -80,18 +80,28 @@
       transform: translateY(25vh) translateX(calc(var(--meander-offset) * 0.85));
       opacity: 0.8;
     }
-    85% {
-      transform: translateY(10vh) translateX(calc(var(--meander-offset) * 0.95));
-      opacity: 0.3;
+    80% {
+      transform: translateY(15vh) translateX(calc(var(--meander-offset) * 0.9));
+      opacity: 0.5;
     }
-    95% {
+    85% {
+      transform: translateY(5vh) translateX(calc(var(--meander-offset) * 0.95));
+      opacity: 0.2;
+    }
+    90% {
       transform: translateY(-5vh) translateX(var(--meander-offset));
       opacity: 0.1;
     }
+    95% {
+      transform: translateY(-15vh) translateX(var(--meander-offset));
+      opacity: 0;
+      visibility: visible;
+    }
     100% {
-      transform: translateY(-25vh) translateX(var(--meander-offset));
+      transform: translateY(-50vh) translateX(var(--meander-offset));
       opacity: 0;
       visibility: hidden;
+      display: none;
     }
   }
 
