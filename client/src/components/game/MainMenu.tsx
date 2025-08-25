@@ -1,16 +1,16 @@
 /**
- * MainMenu - Fantasy Hearts main menu with animated fireflies
- * Features new game, load game, and settings buttons with ethereal atmosphere
+ * MainMenu - Fantasy Hearts main menu
+ * Features new game, load game, and settings buttons with clean atmosphere
  */
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Play, Settings, Save } from 'lucide-react';
 import { useDatingSim } from '../../lib/stores/useDatingSim';
 import { useAudio } from '../../lib/stores/useAudio';
 import { AudioControls } from '../ui/AudioControls';
 
 /**
- * Main menu component with animated firefly background and game navigation
+ * Main menu component with clean background and game navigation
  */
 export function MainMenu() {
   const { setPhase, toggleSettings, toggleSaveLoad, getSaves } = useDatingSim();
@@ -18,20 +18,6 @@ export function MainMenu() {
   
   const saves = getSaves();
 
-  /**
-   * Generate stable firefly animation properties
-   * Memoized to prevent re-calculation on every render
-   */
-  const fireflies = useMemo(() => {
-    return Array.from({ length: 20 }, (_, i) => ({
-      id: i,
-      size: 0.3 + Math.random() * 0.5,
-      left: Math.random() * 100,
-      animationDelay: Math.random() * 25,
-      animationDuration: 20 + Math.random() * 15,
-      meanderOffset: (Math.random() - 0.5) * 200,
-    }));
-  }, []);
 
   /**
    * Handle menu button clicks with audio feedback
@@ -51,25 +37,6 @@ export function MainMenu() {
         backgroundRepeat: 'no-repeat'
       }}
     >
-      {/* Ethereal Firefly Particles */}
-      <div className="absolute inset-0 pointer-events-none">
-        {fireflies.map((firefly) => (
-          <div
-            key={firefly.id}
-            className="absolute bg-yellow-200 rounded-full opacity-60 animate-firefly"
-            style={{
-              width: `${firefly.size}rem`,
-              height: `${firefly.size}rem`,
-              left: `${firefly.left}%`,
-              animationDelay: `${firefly.animationDelay}s`,
-              animationDuration: `${firefly.animationDuration}s`,
-              boxShadow: `0 0 ${firefly.size * 6}px rgba(255, 255, 150, 0.8), 0 0 ${firefly.size * 12}px rgba(255, 255, 150, 0.4)`,
-              filter: 'blur(0.5px)',
-              '--meander-offset': `${firefly.meanderOffset}px`
-            } as React.CSSProperties & { '--meander-offset': string }}
-          />
-        ))}
-      </div>
 
       {/* Clean UI Layout */}
       <div className="relative w-full max-w-md mx-4 -mt-8">
