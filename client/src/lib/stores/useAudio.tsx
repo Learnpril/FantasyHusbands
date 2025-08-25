@@ -51,12 +51,12 @@ export const useAudio = create<AudioState>()(
           // Create background music audio element
           const bgMusic = new Audio();
           
-          // Set up for romantic medieval fantasy music
-          bgMusic.src = '/audio/fantasy-romance-background.mp3';
+          // Set up Whispers of the Vale ambient soundtrack
+          bgMusic.src = '/audio/whispers-of-the-vale.mp3';
           
           // Handle load errors gracefully
           bgMusic.addEventListener('error', () => {
-            console.log('🎵 Background music file not found - add fantasy-romance-background.mp3 to /public/audio/');
+            console.log('🎵 Whispers of the Vale soundtrack not found - add whispers-of-the-vale.mp3 to /public/audio/');
           });
           
           bgMusic.loop = true;

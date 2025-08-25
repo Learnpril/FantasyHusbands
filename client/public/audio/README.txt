@@ -4,7 +4,7 @@ Audio Files for Fantasy Hearts
 To add a romantic medieval fantasy soundtrack to your game, place audio files here:
 
 Required Files:
-- fantasy-romance-background.mp3 (main background music - should loop seamlessly)
+- whispers-of-the-vale.mp3 (main ambient soundtrack - should loop seamlessly)
 - ui-click.mp3 (button click sound)
 - ui-hover.mp3 (button hover sound)
 - ui-select.mp3 (selection/confirmation sound)
