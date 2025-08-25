@@ -52,11 +52,11 @@ export const useAudio = create<AudioState>()(
           const bgMusic = new Audio();
           
           // Set up Whispers of the Vale ambient soundtrack
-          bgMusic.src = '/audio/whispers-of-the-vale.mp3';
+          bgMusic.src = '/audio/Whispers of the Vale.mp3';
           
           // Handle load errors gracefully
           bgMusic.addEventListener('error', () => {
-            console.log('🎵 Whispers of the Vale soundtrack not found - add whispers-of-the-vale.mp3 to /public/audio/');
+            console.log('🎵 Whispers of the Vale soundtrack not found - check audio file in /public/audio/');
           });
           
           bgMusic.loop = true;
