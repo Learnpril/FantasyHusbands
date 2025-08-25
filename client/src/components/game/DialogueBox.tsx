@@ -28,7 +28,7 @@ export function DialogueBox() {
     isVoicePlaying,
     pauseVoice,
     resumeVoice,
-    playButtonClick,
+    playUISound,
     playSuccess
   } = useAudio();
   const [displayedText, setDisplayedText] = useState('');
@@ -73,7 +73,7 @@ export function DialogueBox() {
   }, [currentDialogue, textSpeed, autoAdvance, playCharacterVoice]);
   
   const handleChoiceSelect = (choice: any) => {
-    playButtonClick();
+    playUISound('click');
     
     // Update affection if specified
     if (choice.affectionChange && choice.characterId) {

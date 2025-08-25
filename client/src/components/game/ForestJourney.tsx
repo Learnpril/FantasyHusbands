@@ -91,12 +91,12 @@ const forestLocations: ForestLocation[] = [
 
 export function ForestJourney() {
   const { setPhase, selectCharacter } = useDatingSim();
-  const { playButtonClick, playButtonHover } = useAudio();
+  const { playUISound } = useAudio();
   const [locations, setLocations] = useState(forestLocations);
   const [currentLocationId, setCurrentLocationId] = useState<string | null>(null);
 
   const handleMenuAction = (action: () => void) => {
-    playButtonClick();
+    playUISound('click');
     action();
   };
 
@@ -240,7 +240,7 @@ export function ForestJourney() {
               <Button
                 onClick={() => handleMenuAction(() => setPhase('character-selection'))}
                 className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3"
-                onMouseEnter={() => playButtonHover()}
+                onMouseEnter={() => playUISound('hover')}
               >
                 Visit Character Gallery
               </Button>

@@ -27,7 +27,6 @@ export function AudioControls({
     isMuted,
     toggleMute, 
     playUISound,
-    toggleBackgroundMusic,
     isBackgroundMusicPlaying
   } = useAudio();
 

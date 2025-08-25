@@ -27,7 +27,7 @@ export function SettingsMenu() {
     ambientVolume,
     setVoiceVolume,
     setAmbientVolume,
-    playButtonClick
+    playUISound
   } = useAudio();
   
   const handleReset = () => {
@@ -46,7 +46,7 @@ export function SettingsMenu() {
             <AudioControls size="sm" variant="minimal" />
             <Button
               onClick={() => {
-              playButtonClick();
+              playUISound('click');
               toggleSettings();
             }}
             variant="ghost"
