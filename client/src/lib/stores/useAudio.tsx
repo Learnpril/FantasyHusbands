@@ -7,6 +7,8 @@ interface AudioState {
   // Single background music system
   backgroundMusic: HTMLAudioElement | null;
   isBackgroundMusicPlaying: boolean;
+  activeOscillators: OscillatorNode[];
+  musicTimeout: NodeJS.Timeout | null;
   
   // Volume controls
   isMuted: boolean;
@@ -51,6 +53,8 @@ export const useAudio = create<AudioState>((set, get) => ({
   audioContext: null,
   backgroundMusic: null,
   isBackgroundMusicPlaying: false,
+  activeOscillators: [],
+  musicTimeout: null,
   
   // Volume controls
   isMuted: false,
@@ -80,6 +84,11 @@ export const useAudio = create<AudioState>((set, get) => ({
             const oscillator = context.createOscillator();
             const gainNode = context.createGain();
             const filterNode = context.createBiquadFilter();
+            
+            // Track this oscillator so we can stop it if needed
+            set(state => ({
+              activeOscillators: [...state.activeOscillators, oscillator]
+            }));
             
             oscillator.connect(filterNode);
             filterNode.connect(gainNode);
@@ -139,6 +148,13 @@ export const useAudio = create<AudioState>((set, get) => ({
             
             oscillator.start(startTime);
             oscillator.stop(startTime + duration);
+            
+            // Remove from active oscillators when it ends
+            oscillator.onended = () => {
+              set(state => ({
+                activeOscillators: state.activeOscillators.filter(osc => osc !== oscillator)
+              }));
+            };
           };
           
           // Medieval fantasy chord progression (Am - F - C - G - Dm - Am - E - Am)
@@ -222,11 +238,14 @@ export const useAudio = create<AudioState>((set, get) => ({
             playFantasyProgression(now);
             
             // Schedule next loop (12 seconds for full progression)
-            setTimeout(() => {
+            const timeout = setTimeout(() => {
               if (get().isBackgroundMusicPlaying) {
                 loopMusic();
               }
             }, 12000); // 12 second loop for richer progression
+            
+            // Store the timeout so we can clear it if needed
+            set({ musicTimeout: timeout });
           };
           
           return loopMusic;
@@ -255,7 +274,27 @@ export const useAudio = create<AudioState>((set, get) => ({
   },
   
   stopBackgroundMusic: () => {
-    set({ isBackgroundMusicPlaying: false });
+    const { activeOscillators, musicTimeout } = get();
+    
+    // Stop all currently playing oscillators immediately
+    activeOscillators.forEach(oscillator => {
+      try {
+        oscillator.stop();
+      } catch (error) {
+        // Oscillator might already be stopped, ignore error
+      }
+    });
+    
+    // Clear the music loop timeout
+    if (musicTimeout) {
+      clearTimeout(musicTimeout);
+    }
+    
+    set({ 
+      isBackgroundMusicPlaying: false,
+      activeOscillators: [],
+      musicTimeout: null
+    });
     console.log('🎵 Fantasy soundtrack stopped');
   },
   
