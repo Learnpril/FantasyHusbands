@@ -34,10 +34,7 @@ function App() {
     // Initialize HTML5 audio system
     initAudioSystem();
     
-    // Auto-start background music with small delay
-    setTimeout(() => {
-      playBackgroundMusic();
-    }, 100);
+    // Background music will start on first user interaction instead of auto-playing
     
     audioInitialized.current = true;
   }, [initAudioSystem, playBackgroundMusic]);

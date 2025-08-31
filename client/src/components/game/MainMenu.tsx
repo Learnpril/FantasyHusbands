@@ -14,7 +14,7 @@ import { AudioControls } from '../ui/AudioControls';
  */
 export function MainMenu() {
   const { setPhase, toggleSettings, toggleSaveLoad, getSaves } = useDatingSim();
-  const { playUISound } = useAudio();
+  const { playUISound, playBackgroundMusic } = useAudio();
   
   const saves = getSaves();
 
@@ -38,6 +38,8 @@ export function MainMenu() {
    */
   const handleMenuAction = (action: () => void) => {
     playUISound('click');
+    // Start background music on first user interaction (browser security requirement)
+    playBackgroundMusic();
     action();
   };
 
