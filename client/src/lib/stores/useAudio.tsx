@@ -52,8 +52,8 @@ export const useAudio = create<AudioState>()(
           const bgMusic = new Audio();
           
           // Set up Whispers of the Vale ambient soundtrack
-          // Use relative path to work with GitHub Pages base path
-          bgMusic.src = './audio/Whispers of the Vale.mp3';
+          // Use base URL to work with GitHub Pages
+          bgMusic.src = `${import.meta.env.BASE_URL}audio/Whispers of the Vale.mp3`;
           
           // Handle load errors gracefully
           bgMusic.addEventListener('error', () => {

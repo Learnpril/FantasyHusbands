@@ -45,7 +45,7 @@ export function MainMenu() {
     <div 
       className="min-h-screen w-full flex items-start justify-center pt-4 relative overflow-hidden"
       style={{
-        backgroundImage: 'url(./images/backgrounds/main-menu.jpg)',
+        backgroundImage: `url(${import.meta.env.BASE_URL}images/backgrounds/main-menu.jpg)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
@@ -76,7 +76,7 @@ export function MainMenu() {
         {/* Fantasy Hearts Logo */}
         <div className="text-center mb-2 mt-5">
           <img 
-            src="./images/fantasy-hearts-logo.png" 
+            src={`${import.meta.env.BASE_URL}images/fantasy-hearts-logo.png`} 
             alt="Fantasy Hearts" 
             className="w-96 h-auto mx-auto"
           />
