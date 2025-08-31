@@ -26,6 +26,6 @@ export default defineConfig({
   },
   // Add support for large models and audio files
   assetsInclude: ["**/*.gltf", "**/*.glb", "**/*.mp3", "**/*.ogg", "**/*.wav"],
-  // GitHub Pages configuration - you'll need to replace 'your-repo-name' with your actual repository name
-  base: "/learnpril.github.io/FantasyHusbands/",
+  // GitHub Pages configuration - just the repository name
+  base: "/FantasyHusbands/",
 });
