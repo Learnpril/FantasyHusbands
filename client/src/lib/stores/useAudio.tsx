@@ -80,6 +80,11 @@ export const useAudio = create<AudioState>()(
           set({ backgroundMusic: bgMusic });
           console.log('🎵 Audio system initialized with HTML5 audio');
           console.log('✨ Audio system ready - add music files to /audio folder');
+          
+          // Auto-start background music if not muted
+          if (!currentState.isMuted && !currentState.isMusicMuted) {
+            get().playBackgroundMusic();
+          }
         } catch (error) {
           console.log('Failed to initialize audio system:', error);
         }
