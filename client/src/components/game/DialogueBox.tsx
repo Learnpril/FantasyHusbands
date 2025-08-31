@@ -5,6 +5,7 @@ import { Badge } from '../ui/badge';
 import { useDatingSim } from '../../lib/stores/useDatingSim';
 import { useAudio } from '../../lib/stores/useAudio';
 import { dialogueNodes } from '../../data/dialogue';
+import { getAssetPath } from '../../lib/utils/paths';
 import { ArrowLeft, Heart, Save, Settings, Volume2, VolumeX, Pause, Play, SkipForward } from 'lucide-react';
 import { AudioControls } from '../ui/AudioControls';
 
@@ -114,7 +115,7 @@ export function DialogueBox() {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ 
           backgroundImage: currentDialogue.background 
-            ? `url(${currentDialogue.background})` 
+            ? `url(${getAssetPath(currentDialogue.background)})` 
             : 'linear-gradient(to bottom right, #1a1a2e, #16213e, #0f3460)'
         }}
       >
@@ -125,7 +126,7 @@ export function DialogueBox() {
       {currentDialogue.characterSprite && (
         <div className="absolute bottom-72 sm:bottom-64 right-4 sm:right-8 w-48 h-72 sm:w-80 sm:h-96 z-10">
           <img 
-            src={currentDialogue.characterSprite}
+            src={getAssetPath(currentDialogue.characterSprite)}
             alt={currentDialogue.speaker}
             className="w-full h-full object-contain"
             onError={(e) => {
