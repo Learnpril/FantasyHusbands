@@ -130,7 +130,11 @@ export function DialogueBox() {
             alt={currentDialogue.speaker}
             className="w-full h-full object-contain"
             onError={(e) => {
+              console.error('Failed to load character sprite:', getAssetPath(currentDialogue.characterSprite!));
               e.currentTarget.style.display = 'none';
+            }}
+            onLoad={() => {
+              console.log('Successfully loaded character sprite:', getAssetPath(currentDialogue.characterSprite!));
             }}
           />
         </div>
