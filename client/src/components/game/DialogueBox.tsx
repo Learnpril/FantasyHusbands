@@ -182,9 +182,9 @@ export function DialogueBox() {
       </div>
       
       {/* Dialogue Box */}
-      <div className="absolute bottom-4 left-4 right-4 z-20">
-        <Card className="bg-black/80 backdrop-blur-sm border-white/20">
-          <CardContent className="p-6">
+      <div className="absolute bottom-4 left-4 right-4 z-20 max-h-[60vh] md:max-h-none">
+        <Card className="bg-black/80 backdrop-blur-sm border-white/20 max-h-full">
+          <CardContent className="p-4 md:p-6 max-h-full overflow-y-auto">
             {/* Speaker Name and Voice Controls */}
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -209,7 +209,7 @@ export function DialogueBox() {
             
             {/* Dialogue Text */}
             <div 
-              className="text-white text-lg leading-relaxed mb-4 min-h-[3rem] cursor-pointer dialogue-text"
+              className="text-white text-base md:text-lg leading-relaxed mb-4 min-h-[3rem] cursor-pointer dialogue-text max-h-32 md:max-h-none overflow-y-auto"
               onClick={!isTextComplete ? skipToEnd : undefined}
             >
               {displayedText}
@@ -220,13 +220,13 @@ export function DialogueBox() {
             
             {/* Choices */}
             {isTextComplete && currentDialogue.choices.length > 0 && (
-              <div className="space-y-2">
+              <div className="space-y-2 max-h-40 overflow-y-auto">
                 {currentDialogue.choices.map((choice) => (
                   <Button
                     key={choice.id}
                     onClick={() => handleChoiceSelect(choice)}
                     variant="outline"
-                    className="w-full text-left justify-start border-white/30 text-white hover:bg-white/10 ui-text"
+                    className="w-full text-left justify-start border-white/30 text-white hover:bg-white/10 ui-text text-sm md:text-base py-2 md:py-3"
                   >
                     <span className="flex-1">{choice.text}</span>
                     {choice.affectionChange && (
