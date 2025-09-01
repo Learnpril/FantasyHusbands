@@ -182,9 +182,9 @@ export function DialogueBox() {
       </div>
       
       {/* Dialogue Box */}
-      <div className="absolute bottom-4 left-4 right-4 z-20 max-h-[60vh] md:max-h-none">
+      <div className="absolute bottom-2 left-2 right-2 z-20 max-h-[75vh] md:max-h-none md:bottom-4 md:left-4 md:right-4">
         <Card className="bg-black/80 backdrop-blur-sm border-white/20 max-h-full">
-          <CardContent className="p-4 md:p-6 max-h-full overflow-y-auto">
+          <CardContent className="p-3 md:p-6 max-h-full overflow-y-auto">
             {/* Speaker Name and Voice Controls */}
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -209,7 +209,7 @@ export function DialogueBox() {
             
             {/* Dialogue Text */}
             <div 
-              className="text-white text-base md:text-lg leading-relaxed mb-4 min-h-[3rem] cursor-pointer dialogue-text max-h-32 md:max-h-none overflow-y-auto"
+              className="text-white text-sm md:text-lg leading-relaxed mb-4 min-h-[3rem] cursor-pointer dialogue-text max-h-48 md:max-h-none overflow-y-auto"
               onClick={!isTextComplete ? skipToEnd : undefined}
             >
               {displayedText}
@@ -220,13 +220,13 @@ export function DialogueBox() {
             
             {/* Choices */}
             {isTextComplete && currentDialogue.choices.length > 0 && (
-              <div className="space-y-2 max-h-40 overflow-y-auto">
+              <div className="space-y-1.5 md:space-y-2 max-h-64 overflow-y-auto">
                 {currentDialogue.choices.map((choice) => (
                   <Button
                     key={choice.id}
                     onClick={() => handleChoiceSelect(choice)}
                     variant="outline"
-                    className="w-full text-left justify-start border-white/30 text-white hover:bg-white/10 ui-text text-sm md:text-base py-2 md:py-3"
+                    className="w-full text-left justify-start border-white/30 text-white hover:bg-white/10 ui-text text-xs md:text-base py-1.5 md:py-3 px-3 md:px-4"
                   >
                     <span className="flex-1">{choice.text}</span>
                     {choice.affectionChange && (
